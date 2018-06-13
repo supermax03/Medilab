@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MedicinaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="MedicinaEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Articulo" EntityType="MedicinaModel.Articulo" />
+    <EntitySet Name="Item" EntityType="MedicinaModel.Item" />
+    <EntitySet Name="Topico" EntityType="MedicinaModel.Topico" />
+    <AssociationSet Name="FK__Articulo__IdTopi__2D27B809" Association="MedicinaModel.FK__Articulo__IdTopi__2D27B809">
+      <End Role="Topico" EntitySet="Topico" />
+      <End Role="Articulo" EntitySet="Articulo" />
+    </AssociationSet>
+    <EntitySet Name="Imagen" EntityType="MedicinaModel.Imagen" />
+    <AssociationSet Name="FK__Imagen__IdArticu__300424B4" Association="MedicinaModel.FK__Imagen__IdArticu__300424B4">
+      <End Role="Articulo" EntitySet="Articulo" />
+      <End Role="Imagen" EntitySet="Imagen" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Articulo">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Titulo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Comentarios" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="FechaPublicacion" Type="DateTime" Precision="3" />
+    <Property Name="IdTopico" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Topico" Relationship="MedicinaModel.FK__Articulo__IdTopi__2D27B809" FromRole="Articulo" ToRole="Topico" />
+    <NavigationProperty Name="Imagen" Relationship="MedicinaModel.FK__Imagen__IdArticu__300424B4" FromRole="Articulo" ToRole="Imagen" />
+  </EntityType>
+  <EntityType Name="Item">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="Descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Padre" Type="Int32" />
+    <Property Name="Hermano" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Topico">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="Descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Padre" Type="Int32" />
+    <Property Name="Hermano" Type="Int32" />
+    <NavigationProperty Name="Articulo" Relationship="MedicinaModel.FK__Articulo__IdTopi__2D27B809" FromRole="Topico" ToRole="Articulo" />
+  </EntityType>
+  <Association Name="FK__Articulo__IdTopi__2D27B809">
+    <End Type="MedicinaModel.Topico" Role="Topico" Multiplicity="1" />
+    <End Type="MedicinaModel.Articulo" Role="Articulo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Topico">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Articulo">
+        <PropertyRef Name="IdTopico" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Imagen">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Titulo" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+    <Property Name="Comentarios" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Path" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="esPadre" Type="Int32" />
+    <Property Name="IdArticulo" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Articulo" Relationship="MedicinaModel.FK__Imagen__IdArticu__300424B4" FromRole="Imagen" ToRole="Articulo" />
+  </EntityType>
+  <Association Name="FK__Imagen__IdArticu__300424B4">
+    <End Type="MedicinaModel.Articulo" Role="Articulo" Multiplicity="1" />
+    <End Type="MedicinaModel.Imagen" Role="Imagen" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Articulo">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Imagen">
+        <PropertyRef Name="IdArticulo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

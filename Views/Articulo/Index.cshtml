@@ -1,0 +1,221 @@
+﻿@model IEnumerable<MediLab.Models.Articulo>
+
+@{
+    ViewBag.Title = "BuscarArticulos";
+}
+
+<style>
+    .search_button {
+        display: inline-block;
+        border-radius: 4px;
+        background-color: #008CBA;
+        border: none;
+        color: #FFFFFF;
+        text-align: center;
+        font-size: 16px;
+        padding: 10px;
+        width: 200px;
+        transition: all 0.5s;
+        cursor: pointer;
+        margin: 5px;
+    }
+
+        .search_button span {
+            cursor: pointer;
+            display: inline-block;
+            position: relative;
+            transition: 0.5s;
+        }
+
+            .search_button span:after {
+                content: '\00bb';
+                position: absolute;
+                opacity: 0;
+                top: 0;
+                right: -20px;
+                transition: 0.5s;
+            }
+
+        .search_button:hover span {
+            padding-right: 25px;
+        }
+
+            .search_button:hover span:after {
+                opacity: 1;
+                right: 0;
+            }
+
+    .button {
+        background-color: dodgerblue;
+        border-radius: 12px;
+        border: none;
+        color: white;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 14px;
+    }
+</style>
+
+@if (Model.Count() > 0)
+{
+    if (Convert.ToInt32(ViewBag.topico) != -1)
+    {
+        <h2>Lista de Artículos</h2>
+    }   
+    <p>
+        @if (Convert.ToInt32(ViewBag.topico) == -1)
+        {
+            <a href='@Url.Action("Create", "Articulo")'>
+                <img src="https://cdn.icon-icons.com/icons2/1146/PNG/512/1486485557-add-create-new-more-plus_81188.png" data-toggle="tooltip" data-placement="right" title="Crear nuevo Artículo" width="30" height="30" />
+            </a>
+        }
+    </p>
+
+    <table class="table">
+        <tr>
+            <th></th>
+            <th>
+                Título
+            </th>
+            <th>
+                Fecha de Publicación
+            </th>
+            @if (Convert.ToInt32(ViewBag.topico) == -1)
+            {
+                <th>Tópico</th>
+            }
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @if (Convert.ToInt32(ViewBag.topico) != -1)
+                    {
+                        <img src="https://cdn2.iconfinder.com/data/icons/flat-seo-web-ikooni/128/flat_seo2-32-512.png" style="width:40px;height:40px;" />
+                    }
+                    else
+                    {
+                        <img src="https://cdn.icon-icons.com/icons2/112/PNG/512/documents_folder_18875.png" style="width:40px;height:40px;" />
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Titulo)
+                </td>
+                <td>
+                    @DateTime.Parse(Html.DisplayFor(modelItem => item.FechaPublicacion).ToString()).ToLongDateString()
+                </td>
+                @if (Convert.ToInt32(ViewBag.topico) != -1)
+                {
+                    <td>
+                        @Html.ActionLink("Ver mas..", "GetArticulo", new { codigo = item.Id }, new { @class = "btn btn-primary btn-large" })
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Topico.Nombre)
+                    </td>
+                    <td>
+                        <a href='@Url.Action("Edit", "Articulo",new { id=item.Id })'>
+                            <img src="https://cdn.icon-icons.com/icons2/215/PNG/256/edit-validated256_25237.png" data-toggle="tooltip" data-placement="top" title="Editar" width="20" height="20" />
+                        </a>
+                        &nbsp;
+                        <a href='@Url.Action("Delete", "Articulo",new { id=item.Id })' target="_blank" data-toggle="confirmation" data-title="Confirma eliminar topico?">
+                            <img src="https://cdn.icon-icons.com/icons2/624/PNG/512/Delete-80_icon-icons.com_57340.png" data-toggle="tooltip" data-placement="top" title="Borrar" width="20" height="20" />
+                        </a>
+                    </td>
+
+                }
+            </tr>
+        }
+    </table>
+    for (int i = 1; i <= ViewBag.dbCount; i++)
+    {
+        <ul class="pagination">
+            <li>@Html.ActionLink(@i.ToString(), "Index", "Articulo", new { topico = (int)ViewBag.topico, page = @i }, null)</li>
+        </ul>
+    }
+    <div class="panel-group">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" href="#collapse1"><b>Filtros</b></a>
+                </h4>
+            </div>
+            <div id="collapse1" class="panel-collapse collapse">
+                <!--<div class="panel-body">
+                    <div class="form-group">
+                        <label>Buscar</label>
+                        <input type="text" class="form-control"  placeholder="Ingrese Texto" />
+                     </div>
+                    <div class="form-group">
+                        <label>Fecha Desde</label>
+                        <input type="text" id="dtpfechadesde" class="form-control" readonly>
+                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                        <label class="form-check-label" for="exampleCheck1">Deshabilitar</label>
+                    </div>
+                    <div class="form-group">
+                        <label>Fecha Hasta</label>
+                        <input type="text" id="dtpfechahasta" class="form-control" readonly>
+                        <input type="checkbox" class="form-check-input" id="exampleCheck2">
+                        <label class="form-check-label" for="exampleCheck2">Deshabilitar</label>
+                    </div>
+
+                </div> -->
+            </div>
+        </div>
+    </div>
+
+
+}
+else
+{
+    <p></p>
+    <p></p>
+    <div class="alert alert-info">
+        <strong>Información</strong> No existen articulos cargados para este tópico
+    </div>
+    <p></p>
+    <table style="width: 100%; text-align: center;">
+        <tr>
+            <td>
+                <img src="https://image.flaticon.com/icons/svg/123/123377.svg" width="150" height="150" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <button class="search_button" id="btnBuscador" onclick="location.href='@Url.Action("Index", "Home")'"><span>Volver a Buscar</span></button>
+            </td>
+        </tr>
+    </table>
+    <p></p>
+
+
+}
+@section scripts {
+
+<script>
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+</script>
+    <!--<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script type="text/javascript">
+            $(function () {
+                $("#dtpfechadesde").datepicker(
+                    { dateFormat: 'dd/mm/yy' }
+                    );
+                $("#dtpfechahasta").datepicker(
+                  { dateFormat: 'dd/mm/yy' }
+                  )
+            });
+        </script>-->
+
+
+}

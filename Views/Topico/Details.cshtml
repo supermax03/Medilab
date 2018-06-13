@@ -1,0 +1,54 @@
+﻿@model MediLab.Models.Topico
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div>
+        <h4>Topico</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Nombre)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Descripcion)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Descripcion)
+            </dd> 
+             
+        </dl>
+    </div>
+    <p>
+       
+        <a href='@Url.Action("Index", "Topico")'>
+            <img src="https://cdn.icon-icons.com/icons2/217/PNG/512/checklist_25365.png" data-toggle="tooltip" data-placement="top" title="Volver al listado" width="30" height="30" />
+        </a>
+        &nbsp;
+        <a href='@Url.Action("Edit", "Topico",new { id=Model.Id })'>
+            <img src="https://cdn.icon-icons.com/icons2/215/PNG/256/edit-validated256_25237.png" data-toggle="tooltip" data-placement="top" title="Editar" width="30" height="30" />
+        </a>  
+
+    </p>
+</body>
+</html>
+@section scripts {
+
+
+    <script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+});
+    </script>
+}

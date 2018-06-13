@@ -1,0 +1,248 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MedicinaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Articulo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Titulo" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Comentarios" Type="ntext" />
+          <Property Name="FechaPublicacion" Type="datetime" />
+          <Property Name="IdTopico" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Imagen">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Titulo" Type="nchar" MaxLength="20" />
+          <Property Name="Comentarios" Type="nvarchar" MaxLength="50" />
+          <Property Name="Path" Type="nvarchar" MaxLength="250" />
+          <Property Name="esPadre" Type="int" />
+          <Property Name="IdArticulo" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Item">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="100" />
+          <Property Name="Padre" Type="int" />
+          <Property Name="Hermano" Type="int" />
+        </EntityType>
+        <EntityType Name="Topico">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="100" />
+          <Property Name="Padre" Type="int" />
+          <Property Name="Hermano" Type="int" />
+        </EntityType>
+        <Association Name="FK__Articulo__IdTopi__2D27B809">
+          <End Role="Topico" Type="Self.Topico" Multiplicity="1" />
+          <End Role="Articulo" Type="Self.Articulo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Topico">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Articulo">
+              <PropertyRef Name="IdTopico" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Imagen__IdArticu__300424B4">
+          <End Role="Articulo" Type="Self.Articulo" Multiplicity="1" />
+          <End Role="Imagen" Type="Self.Imagen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Articulo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Imagen">
+              <PropertyRef Name="IdArticulo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MedicinaModelStoreContainer">
+          <EntitySet Name="Articulo" EntityType="Self.Articulo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Imagen" EntityType="Self.Imagen" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Item" EntityType="Self.Item" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Topico" EntityType="Self.Topico" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Articulo__IdTopi__2D27B809" Association="Self.FK__Articulo__IdTopi__2D27B809">
+            <End Role="Topico" EntitySet="Topico" />
+            <End Role="Articulo" EntitySet="Articulo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Imagen__IdArticu__300424B4" Association="Self.FK__Imagen__IdArticu__300424B4">
+            <End Role="Articulo" EntitySet="Articulo" />
+            <End Role="Imagen" EntitySet="Imagen" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MedicinaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="MedicinaEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Articulo" EntityType="MedicinaModel.Articulo" />
+          <EntitySet Name="Item" EntityType="MedicinaModel.Item" />
+          <EntitySet Name="Topico" EntityType="MedicinaModel.Topico" />
+          <AssociationSet Name="FK__Articulo__IdTopi__2D27B809" Association="MedicinaModel.FK__Articulo__IdTopi__2D27B809">
+            <End Role="Topico" EntitySet="Topico" />
+            <End Role="Articulo" EntitySet="Articulo" />
+          </AssociationSet>
+          <EntitySet Name="Imagen" EntityType="MedicinaModel.Imagen" />
+          <AssociationSet Name="FK__Imagen__IdArticu__300424B4" Association="MedicinaModel.FK__Imagen__IdArticu__300424B4">
+            <End Role="Articulo" EntitySet="Articulo" />
+            <End Role="Imagen" EntitySet="Imagen" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Articulo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Titulo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Comentarios" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FechaPublicacion" Type="DateTime" Precision="3" />
+          <Property Name="IdTopico" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Topico" Relationship="MedicinaModel.FK__Articulo__IdTopi__2D27B809" FromRole="Articulo" ToRole="Topico" />
+          <NavigationProperty Name="Imagen" Relationship="MedicinaModel.FK__Imagen__IdArticu__300424B4" FromRole="Articulo" ToRole="Imagen" />
+        </EntityType>
+        <EntityType Name="Item">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Padre" Type="Int32" />
+          <Property Name="Hermano" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Topico">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Padre" Type="Int32" />
+          <Property Name="Hermano" Type="Int32" />
+          <NavigationProperty Name="Articulo" Relationship="MedicinaModel.FK__Articulo__IdTopi__2D27B809" FromRole="Topico" ToRole="Articulo" />
+        </EntityType>
+        <Association Name="FK__Articulo__IdTopi__2D27B809">
+          <End Type="MedicinaModel.Topico" Role="Topico" Multiplicity="1" />
+          <End Type="MedicinaModel.Articulo" Role="Articulo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Topico">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Articulo">
+              <PropertyRef Name="IdTopico" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Imagen">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Titulo" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="Comentarios" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Path" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="esPadre" Type="Int32" />
+          <Property Name="IdArticulo" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Articulo" Relationship="MedicinaModel.FK__Imagen__IdArticu__300424B4" FromRole="Imagen" ToRole="Articulo" />
+        </EntityType>
+        <Association Name="FK__Imagen__IdArticu__300424B4">
+          <End Type="MedicinaModel.Articulo" Role="Articulo" Multiplicity="1" />
+          <End Type="MedicinaModel.Imagen" Role="Imagen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Articulo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Imagen">
+              <PropertyRef Name="IdArticulo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MedicinaModelStoreContainer" CdmEntityContainer="MedicinaEntities">
+          <EntitySetMapping Name="Articulo">
+            <EntityTypeMapping TypeName="MedicinaModel.Articulo">
+              <MappingFragment StoreEntitySet="Articulo">
+                <ScalarProperty Name="IdTopico" ColumnName="IdTopico" />
+                <ScalarProperty Name="FechaPublicacion" ColumnName="FechaPublicacion" />
+                <ScalarProperty Name="Comentarios" ColumnName="Comentarios" />
+                <ScalarProperty Name="Titulo" ColumnName="Titulo" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Item">
+            <EntityTypeMapping TypeName="MedicinaModel.Item">
+              <MappingFragment StoreEntitySet="Item">
+                <ScalarProperty Name="Hermano" ColumnName="Hermano" />
+                <ScalarProperty Name="Padre" ColumnName="Padre" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Topico">
+            <EntityTypeMapping TypeName="MedicinaModel.Topico">
+              <MappingFragment StoreEntitySet="Topico">
+                <ScalarProperty Name="Hermano" ColumnName="Hermano" />
+                <ScalarProperty Name="Padre" ColumnName="Padre" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Imagen">
+            <EntityTypeMapping TypeName="MedicinaModel.Imagen">
+              <MappingFragment StoreEntitySet="Imagen">
+                <ScalarProperty Name="IdArticulo" ColumnName="IdArticulo" />
+                <ScalarProperty Name="esPadre" ColumnName="esPadre" />
+                <ScalarProperty Name="Path" ColumnName="Path" />
+                <ScalarProperty Name="Comentarios" ColumnName="Comentarios" />
+                <ScalarProperty Name="Titulo" ColumnName="Titulo" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

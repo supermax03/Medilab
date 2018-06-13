@@ -1,0 +1,65 @@
+﻿@model MediLab.Models.Articulo
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Edit</title>
+</head>
+<body>
+
+
+    <div class="container">
+        @using (Html.BeginForm())
+        {
+
+            @Html.AntiForgeryToken()
+
+
+
+            <div class="form-horizontal">
+                <h4>Articulo</h4>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.Id)
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Titulo, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Titulo, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Titulo, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Comentarios, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextAreaFor(model => model.Comentarios, 15, 50, htmlAttributes: new { @class = "form-control", style = "width: 100%; max-width: 100%;" })
+                        @Html.ValidationMessageFor(model => model.Comentarios, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Guardar Cambios" class="btn btn-primary" />
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <div>
+        <a href='@Url.Action("Index", "Articulo")'>
+            <img src="https://cdn.icon-icons.com/icons2/217/PNG/512/checklist_25365.png" data-toggle="tooltip" data-placement="top" title="Volver al listado" width="30" height="30" />
+        </a>
+    </div>
+</body>
+</html>
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
+}

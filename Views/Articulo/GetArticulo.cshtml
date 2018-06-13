@@ -1,0 +1,152 @@
+﻿@model MediLab.Models.Articulo
+
+@{
+    ViewBag.Title = "GetArticulo";
+
+}
+
+
+
+@section scripts {
+
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+
+    <script>
+        var slideIndex = 1;
+        showDivs(slideIndex);
+
+        function plusDivs(n) {
+            showDivs(slideIndex += n);
+        }
+
+        function showDivs(n) {
+            var i;
+            var x = document.getElementsByClassName("mySlides");
+            if (n > x.length) { slideIndex = 1 }
+            if (n < 1) { slideIndex = x.length }
+            for (i = 0; i < x.length; i++) {
+                x[i].style.display = "none";
+            }
+            x[slideIndex - 1].style.display = "block";
+        }
+    </script>
+
+
+
+}
+
+<h2>@Html.DisplayFor(model => model.Titulo)</h2>
+<p>
+</p>
+<p>
+</p>
+   
+    <div class="panel-group" id="accordion">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+                        <b>Galería de Imágenes</b>
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse1" class="panel-collapse collapse in">
+                <div class="panel-body">
+                  @if (Model.Imagen.Count > 0)
+                  {
+                    <div class="w3-content w3-display-container">
+                    
+                        @foreach (var item in Model.Imagen)
+                        {
+                            <div class="w3-display-container mySlides">
+                                <img src="@Url.Content(item.Path)" style="width:50%;">
+                                <!-- <div class="w3-display-bottomright w3-large w3-container w3-padding-16 w3-black">-->
+                                <div class="w3-display-topright w3-large w3-container w3-padding-16 w3-black">
+                                    @item.Comentarios
+                                </div>
+                            </div>
+                        }
+
+                        <button class="w3-button w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
+                        <button class="w3-button w3-display-right" onclick="plusDivs(1)">&#10095;</button>                      
+                     </div>
+                  }
+                  else
+                  {
+                    <table style="width: 100%; text-align: center;">
+                        <tr>
+                            <td>
+                                <img src="https://cdn.icon-icons.com/icons2/272/PNG/512/Camera_Moto_30013.png" height="100" width="100" />
+                            </td>                            
+                        </tr>
+                        <tr>
+                            <td>
+                                <b>[Sin Imágenes]</b>
+                            </td>
+                        </tr>
+                    </table>
+                  }
+
+</div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+                       <b>Información</b>
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse2" class="panel-collapse collapse in">
+                <div class="panel-body">
+                    @Html.DisplayFor(model => model.Comentarios)
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
+                        <b>Adjuntos</b>
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse3" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <table style="width: 100%; text-align: center;">
+                        <tr>
+                            <td>
+                                <img src="https://www.iconexperience.com/_img/v_collection_png/256x256/shadow/document_attachment.png" height="100" width="100" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <b>[Sin Adjuntos]</b>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>       
+    </div>
+<p>
+
+</p>
+
+
+<table style="width: 100%; text-align: center;">
+    <tr>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+    </tr>
+    <tr>
+        <td>
+            @Html.ActionLink("Volver a la lista", "Index", new { topico = Model.IdTopico }, new { @class = "btn btn-primary btn-large" })
+        </td>
+    </tr>
+</table>
+
