@@ -31,16 +31,24 @@
     <table class="table">
         <tr>
             <th>
+
+            </th>
+            <th>
                 Nombre
             </th>
             <th>
                Descripción
             </th>         
-            <th></th>
+            <th>
+                 ¿Qué hacer?
+            </th>
         </tr>
     
     @foreach (var item in Model) {
         <tr>
+            <td>
+               <img src="https://cdn.icon-icons.com/icons2/564/PNG/512/Idea_icon-icons.com_54173.png" width="30" height="30" />              
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Nombre)
             </td>
