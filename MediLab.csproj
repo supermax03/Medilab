@@ -338,10 +338,7 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Home\BuscarArticulos.cshtml" />
     <Content Include="Views\Articulo\GetArticulo.cshtml" />
-    <Content Include="Views\Articulo\ObtieneArticulos.cshtml" />
-    <Content Include="Views\Articulo\GetCarrousel.cshtml" />
     <Content Include="Views\Topico\Index.cshtml" />
     <Content Include="Views\Topico\Create.cshtml" />
     <Content Include="Views\Topico\Edit.cshtml" />
