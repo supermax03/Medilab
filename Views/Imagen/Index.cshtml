@@ -1,0 +1,58 @@
+﻿@model IEnumerable<MediLab.Models.Imagen>
+
+<p>
+    <a href='@Url.Action("Create", "Imagen")'>
+        <img src="https://cdn.icon-icons.com/icons2/1146/PNG/512/1486485557-add-create-new-more-plus_81188.png" data-toggle="tooltip" data-placement="right" title="Crear nuevo tópico" width="30" height="30" />
+    </a>
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Imagen
+        </th>   
+        <th>
+            @Html.DisplayNameFor(model => model.Titulo)
+        </th>  
+        <th>
+            Artículo
+        </th>
+        <th>¿Qué hacer?</th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            <img src="@Url.Content(item.Path)" width="150" height="150" /> 
+          
+        </td>      
+        <td>
+            @Html.DisplayFor(modelItem => item.Titulo)
+            
+        </td>     
+        <td>
+            @Html.DisplayFor(modelItem => item.Articulo.Titulo)
+        </td>
+        <td>
+            <a href='@Url.Action("Edit", "Imagen",new { id=item.Id })'>
+                <img src="https://cdn.icon-icons.com/icons2/215/PNG/256/edit-validated256_25237.png" data-toggle="tooltip" data-placement="top" title="Editar" width="20" height="20" />
+            </a>
+            &nbsp
+            <a href='@Url.Action("Details", "Imagen",new { id=item.Id })'>
+                <img src="https://cdn.icon-icons.com/icons2/39/PNG/128/xmag_search_find_export_locate_5984.png" data-toggle="tooltip" data-placement="top" title="Ver" width="20" height="20" />
+            </a>
+            &nbsp
+            <a href='@Url.Action("Delete", "Imagen",new { id=item.Id })' target="_blank" data-toggle="confirmation" data-title="Confirma eliminar topico?">
+                <img src="https://cdn.icon-icons.com/icons2/624/PNG/512/Delete-80_icon-icons.com_57340.png" data-toggle="tooltip" data-placement="top" title="Borrar" width="20" height="20" />
+            </a>
+
+        </td>
+    </tr>
+}
+
+</table>
+@for (int i = 1; i <= ViewBag.dbCount; i++)
+{
+    <ul class="pagination">
+        <li>@Html.ActionLink(@i.ToString(), "Index", "Imagen", new { page = @i }, null)</li>
+    </ul>
+}    

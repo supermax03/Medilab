@@ -209,6 +209,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\MyClasses\ResultSet.cs" />
+    <Compile Include="Controllers\ImagenController.cs" />
     <Compile Include="Controllers\TopicoController.cs" />
     <Compile Include="Controllers\ArticuloController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -346,6 +347,9 @@
     <Content Include="Views\Articulo\Index.cshtml" />
     <Content Include="Views\Articulo\Create.cshtml" />
     <Content Include="Views\Articulo\Edit.cshtml" />
+    <Content Include="Views\Imagen\Index.cshtml" />
+    <Content Include="Views\Imagen\Create.cshtml" />
+    <Content Include="Views\Imagen\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Adjuntos\" />
