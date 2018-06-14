@@ -12,18 +12,8 @@ namespace MediLab.Controllers
         public ActionResult Index()
         {
             return View();
-        }
+        }  
      
-        public JsonResult BuscarTopico(string term)
-        {
-            MedicinaEntities db = new MedicinaEntities();
-            var resultado = db.Topico.Where(s => s.Nombre.Contains(term))
-                .Select(s => new {value=s.Nombre,Id=s.Id}).Take(5).ToList();
-            return Json(resultado, JsonRequestBehavior.AllowGet);        
-    }
-
-
-
         public ActionResult About()
         {
             ViewBag.Message = "Medilab - Facultad de Medicina UBA";

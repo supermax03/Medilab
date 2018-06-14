@@ -52,6 +52,7 @@ namespace MediLab.Controllers
         {
             try
             {
+                //ModelState.AddModelError("Comentarios", "Comentarios es requerido");
                 /* ResultSet response = new ResultSet();
                  MedicinaEntities db = new MedicinaEntities();
                  Topico topico = new Topico()

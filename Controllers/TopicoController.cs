@@ -28,6 +28,16 @@ namespace MediLab.Controllers
             var topicos = db.Topico.OrderBy(s => s.Id).Skip((page - 1) * pageSize).Take(pageSize).ToList();        
             return View(topicos.AsEnumerable());
         }
+     
+        public JsonResult BuscarTopico(string term)
+        {
+            MedicinaEntities db = new MedicinaEntities();
+            var resultado = db.Topico.Where(s => s.Nombre.Contains(term))
+                .Select(s => new { value = s.Nombre, Id = s.Id }).Take(5).ToList();
+            return Json(resultado, JsonRequestBehavior.AllowGet);
+        }
+
+
         public ActionResult Create()
         {
             return View();
