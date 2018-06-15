@@ -64,7 +64,7 @@
                     <img src="https://cdn.icon-icons.com/icons2/39/PNG/128/xmag_search_find_export_locate_5984.png" data-toggle="tooltip" data-placement="top" title="Ver" width="20" height="20" />
                 </a>
                 &nbsp
-                <a href='@Url.Action("Delete", "Topico",new { id=item.Id })' target="_blank" data-toggle="confirmation" data-title="Confirma eliminar topico?">
+                <a href='@Url.Action("Delete", "Topico",new { id=item.Id })'>
                     <img src="https://cdn.icon-icons.com/icons2/624/PNG/512/Delete-80_icon-icons.com_57340.png" data-toggle="tooltip" data-placement="top" title="Borrar" width="20" height="20" />
                 </a>
                 
@@ -83,26 +83,3 @@
 </body>
 </html>
 
-@section scripts {
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
-   <script src="https://unpkg.com/popper.js/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap-confirmation2/dist/bootstrap-confirmation.min.js"></script>
-
-<script>
-   
-    $(document).ready(function () {
-      /*  $('body').confirmation({            
-                selector: '[data-toggle="confirmation"]'
-        
-          });*/
-
-            $('[data-toggle="tooltip"]').tooltip();
-            $('[data-toggle="confirmation"]').popover({ placement: 'left', html: true, trigger: 'hover' });
-            $('[data-toggle="confirmation"]').confirmation({
-                rootSelector: '[data-toggle=confirmation]',
-                // other options
-            });
-        });
-
-</script>
-    }
