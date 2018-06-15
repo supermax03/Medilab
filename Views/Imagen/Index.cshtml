@@ -27,8 +27,10 @@
                         <img src="@Url.Content(item.Path)" style="height:200px;" />
                         <div class="caption">
                             <dl> 
-                                 <dt>Artículo: @Html.DisplayFor(modelItem => item.Articulo.Titulo)</dt>  
-                                 <dd>@Html.DisplayFor(modelItem => item.Titulo)</dd>                          
+                                 <dt>Artículo: </dt>  
+                                <dd>-@Html.DisplayFor(modelItem => item.Articulo.Titulo)</dd>
+                                 <dt>Imagen: </dt>
+                                 <dd>-@Html.DisplayFor(modelItem => item.Titulo)</dd>                          
                             </dl>
                                  
                             <table align="center">                          
