@@ -112,6 +112,8 @@ namespace MediLab.Controllers
         {
             try
             {
+                MedicinaEntities db = new MedicinaEntities();
+                var imagen = db.Articulo.Include("Imagen").First();
                 // TODO: Add delete logic here
 
                 return RedirectToAction("Index");

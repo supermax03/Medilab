@@ -23,44 +23,46 @@
 
             <div class="col-md-4">
                 <div class="thumbnail">
-                         
-                        <img src="@Url.Content(item.Path)" style="height:200px;" />
-                        <div class="caption">
-                            <dl> 
-                                 <dt>Artículo: </dt>  
-                                <dd>-@Html.DisplayFor(modelItem => item.Articulo.Titulo)</dd>
-                                 <dt>Imagen: </dt>
-                                 <dd>-@Html.DisplayFor(modelItem => item.Titulo)</dd>                          
-                            </dl>
-                                 
-                            <table align="center">                          
-                                <tr>                                   
+                    <img src="@Url.Content(item.Path)" style="height:200px;" />
+                    <div class="caption">
+                        <dl>
+                            <dt>Artículo: </dt>
+                            <dd>-@Html.DisplayFor(modelItem => item.Articulo.Titulo)</dd>
+                            <dt>Imagen: </dt>
+                            <dd>-@Html.DisplayFor(modelItem => item.Titulo)</dd>
+                        </dl>
 
-                                    <td>
-                                        <a href='@Url.Action("Edit", "Imagen",new { id=item.Id })'>
-                                            <img src="https://cdn.icon-icons.com/icons2/402/PNG/512/edit-validated_40458.png" data-toggle="tooltip" data-placement="top" title="Editar" width="20" height="20" />
-                                        </a>                                       
-                                        
-                                    </td>   
-                                    <td>&nbsp;</td>                                
-                                    <td>
-                                        <a href='@Url.Action("Delete", "Imagen",new { id=item.Id })' target="_blank" data-toggle="confirmation" data-title="Confirma eliminar topico?">
-                                            <img src="https://cdn.icon-icons.com/icons2/1154/PNG/512/1486564399-close_81512.png" data-toggle="tooltip" data-placement="top" title="Borrar" width="20" height="20" />
-                                        </a>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>                    
+                        <table align="center">
+                            <tr>
+
+                                <td>
+                                    <a href='@Url.Action("Edit", "Imagen",new { id=item.Id })'>
+                                        <img src="https://cdn.icon-icons.com/icons2/402/PNG/512/edit-validated_40458.png" data-toggle="tooltip" data-placement="top" title="Editar" width="20" height="20" />
+                                    </a>
+
+                                </td>
+                                <td>&nbsp;</td>
+                                <td>
+
+                                    <a href='@Url.Action("Delete", "Imagen",new { id=item.Id })'>                                      
+                                         <img src="https://cdn.icon-icons.com/icons2/1154/PNG/512/1486564399-close_81512.png" data-toggle="tooltip" data-placement="top" title="Borrar" width="20" height="20" />
+                                     </a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
             </div>
 
         }
     </div>
-    </div>
-    <!--Fin del nuevo codigo-->  
     @for (int i = 1; i <= ViewBag.dbCount; i++)
             {
         <ul class="pagination">
             <li>@Html.ActionLink(@i.ToString(), "Index", "Imagen", new { page = @i }, null)</li>
         </ul>
     }
+
+</div>
+
+<!--Fin del nuevo codigo-->

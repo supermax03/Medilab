@@ -102,16 +102,24 @@ namespace MediLab.Controllers
         }
         public ActionResult Delete(int id)
         {
-            return View();
+            MedicinaEntities db = new MedicinaEntities();
+            Topico topico = db.Topico.Where(s => s.Id.Equals(id)).First();
+            return View(topico);
         }
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {
             try
             {
-                // TODO: Add delete logic here
+                ResultSet response = new ResultSet();
+                MedicinaEntities db = new MedicinaEntities();
+                Topico topico = db.Topico.Where(s => s.Id.Equals(id)).First();
+                db.Topico.Remove(topico);
+                db.SaveChanges();
+                response.Code = 1;
+                response.Msg = String.Format("Se borró el topico {0}", topico.Nombre);
+                return RedirectToAction("Index", new RouteValueDictionary(response));              
 
-                return RedirectToAction("Index");
             }
             catch
             {
