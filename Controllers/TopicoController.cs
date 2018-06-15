@@ -11,6 +11,13 @@ namespace MediLab.Controllers
 {
     public class TopicoController : Controller
     {
+
+        MedicinaEntities db;
+        public TopicoController()
+        {
+            db = new MedicinaEntities();
+
+        }
         public ActionResult Index(ResultSet response=null,int page=1,int pageSize=5)
         {
             if (page <= 0)
@@ -21,8 +28,7 @@ namespace MediLab.Controllers
             {
                 pageSize = 5;
             }
-            ViewBag.Operacion = response;
-            MedicinaEntities db = new MedicinaEntities();
+            ViewBag.Operacion = response;           
             int totalRecord = db.Topico.Count();
             ViewBag.dbcount = (totalRecord / pageSize) + ((totalRecord % pageSize) > 0 ? 1 : 0);
             var topicos = db.Topico.OrderBy(s => s.Id).Skip((page - 1) * pageSize).Take(pageSize).ToList();        
@@ -31,7 +37,7 @@ namespace MediLab.Controllers
      
         public JsonResult BuscarTopico(string term)
         {
-            MedicinaEntities db = new MedicinaEntities();
+           
             var resultado = db.Topico.Where(s => s.Nombre.Contains(term))
                 .Select(s => new { value = s.Nombre, Id = s.Id }).Take(5).ToList();
             return Json(resultado, JsonRequestBehavior.AllowGet);
@@ -46,8 +52,7 @@ namespace MediLab.Controllers
         public ActionResult Create(FormCollection collection)
         { try
             {
-                ResultSet response = new ResultSet();
-                MedicinaEntities db = new MedicinaEntities();
+                ResultSet response = new ResultSet();             
                 Topico topico = new Topico()
                 {
                     Nombre = collection["Nombre"],
@@ -68,8 +73,7 @@ namespace MediLab.Controllers
             }            
         }
         public ActionResult Edit(int id)
-        {
-            MedicinaEntities db = new MedicinaEntities();
+        {           
             Topico topico = db.Topico.Where(s => s.Id.Equals(id)).First();            
             return View(topico);
         }
@@ -78,8 +82,7 @@ namespace MediLab.Controllers
         {
             try
             {
-                ResultSet response = new ResultSet();
-                MedicinaEntities db = new MedicinaEntities();           
+                ResultSet response = new ResultSet();                       
                 Topico topico = db.Topico.Where(s => s.Id.Equals(id)).First();
                 topico.Nombre = collection["Nombre"];
                 topico.Descripcion = collection["Descripcion"];
@@ -96,13 +99,11 @@ namespace MediLab.Controllers
         }
         public ActionResult Details(int id)
         {
-            MedicinaEntities db = new MedicinaEntities();
             Topico topico = db.Topico.Where(s => s.Id.Equals(id)).First();
             return View(topico);
         }
         public ActionResult Delete(int id)
-        {
-            MedicinaEntities db = new MedicinaEntities();
+        {            
             Topico topico = db.Topico.Where(s => s.Id.Equals(id)).First();
             return View(topico);
         }
@@ -111,8 +112,7 @@ namespace MediLab.Controllers
         {
             try
             {
-                ResultSet response = new ResultSet();
-                MedicinaEntities db = new MedicinaEntities();
+                ResultSet response = new ResultSet();             
                 Topico topico = db.Topico.Where(s => s.Id.Equals(id)).First();
                 db.Topico.Remove(topico);
                 db.SaveChanges();
