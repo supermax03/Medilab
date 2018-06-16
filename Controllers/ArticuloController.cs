@@ -11,6 +11,13 @@ namespace MediLab.Controllers
 {
     public class ArticuloController : Controller
     {
+        MedicinaEntities db;
+        public ArticuloController()
+        {
+            db = new MedicinaEntities();
+
+        }
+
         public ActionResult Index(int topico = -1, int page = 1, int pageSize = 5)
         {
             ViewBag.topico = topico;
@@ -29,8 +36,7 @@ namespace MediLab.Controllers
             {
                 pageSize = 5;
             }
-
-            MedicinaEntities db = new MedicinaEntities();
+          
             int totalRecord = db.Articulo.Where(s => (s.IdTopico.Equals(topico) && !topico.Equals(-1)) || (s.IdTopico.Equals(s.IdTopico) && topico.Equals(-1))).Count();
             ViewBag.dbcount = (totalRecord / pageSize) + ((totalRecord % pageSize) > 0 ? 1 : 0);
             var articulos = db.Articulo.Where(s => (s.IdTopico.Equals(topico) && !topico.Equals(-1)) || (s.IdTopico.Equals(s.IdTopico) && topico.Equals(-1))).OrderBy(s => s.Id).Skip((page - 1) * pageSize).Take(pageSize).ToList();
@@ -39,7 +45,7 @@ namespace MediLab.Controllers
 
         public ActionResult GetArticulo(int codigo)
         {
-            MedicinaEntities db = new MedicinaEntities();
+           
             var articulo = db.Articulo.Where(s => s.Id.Equals(codigo)).First();
             return View(articulo);
         }
@@ -76,8 +82,7 @@ namespace MediLab.Controllers
             }
         }
         public ActionResult Edit(int id)
-        {          
-            MedicinaEntities db = new MedicinaEntities();
+        {                     
             Articulo articulo= db.Articulo.Where(s => s.Id.Equals(id)).First();
             return View(articulo);
         }
@@ -105,17 +110,18 @@ namespace MediLab.Controllers
         }
         public ActionResult Delete(int id)
         {
-            return View();
+            Articulo articulo= db.Articulo.Where(s => s.Id.Equals(id)).First();
+            return View(articulo);
+            
         }
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {
             try
             {
-                MedicinaEntities db = new MedicinaEntities();
-                var imagen = db.Articulo.Include("Imagen").First();
-                // TODO: Add delete logic here
-
+                Articulo articulo = db.Articulo.Where(s => s.Id.Equals(id)).First();
+                db.Articulo.Remove(articulo);
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
             catch

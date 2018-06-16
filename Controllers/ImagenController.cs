@@ -101,14 +101,17 @@ namespace MediLab.Controllers
         }
         public ActionResult Delete(int id)
         {
-            return View();
+            Imagen imagen = db.Imagen.Where(s => s.Id.Equals(id)).First();
+            return View(imagen);
         }
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {
             try
             {
-                
+                Imagen imagen = db.Imagen.Where(s => s.Id.Equals(id)).First();
+                db.Imagen.Remove(imagen);
+                db.SaveChanges();
                 // TODO: Add delete logic here
 
                 return RedirectToAction("Index");
