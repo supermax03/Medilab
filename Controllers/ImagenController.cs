@@ -102,12 +102,6 @@ namespace MediLab.Controllers
         }
         public ActionResult Delete(int id)
         {
-            Imagen imagen = db.Imagen.Where(s => s.Id.Equals(id)).First();
-            return View(imagen);
-        }
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
             try
             {
                 ResultSet response = new ResultSet();
@@ -116,12 +110,36 @@ namespace MediLab.Controllers
                 db.SaveChanges();
                 response.Code = 1;
                 response.Msg = String.Format("Se borró la imagen {0}", imagen.Titulo);
-                return RedirectToAction("Index", new RouteValueDictionary(response));            
+                return RedirectToAction("Index", new RouteValueDictionary(response));
             }
             catch
             {
                 return View();
             }
+
         }
+      /* public ActionResult Delete(int id)
+      {
+          Imagen imagen = db.Imagen.Where(s => s.Id.Equals(id)).First();
+          return View(imagen);
+      }
+     [HttpPost]
+      public ActionResult Delete(int id, FormCollection collection)
+      {
+          try
+          {
+              ResultSet response = new ResultSet();
+              Imagen imagen = db.Imagen.Where(s => s.Id.Equals(id)).First();
+              db.Imagen.Remove(imagen);
+              db.SaveChanges();
+              response.Code = 1;
+              response.Msg = String.Format("Se borró la imagen {0}", imagen.Titulo);
+              return RedirectToAction("Index", new RouteValueDictionary(response));            
+          }
+          catch
+          {
+              return View();
+          }
+      }*/
     }
 }

@@ -70,43 +70,23 @@
 
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Save" class="btn btn-default" />
+                        <input type="submit" value="Guardar Cambios"  class="btn btn-primary"  />
                     </div>
                 </div>
             </div>
     }
     
     <div>
-        @Html.ActionLink("Back to List", "Index")
+        <a href='@Url.Action("Index", "Imagen")'>
+            <img src="https://cdn.icon-icons.com/icons2/217/PNG/512/checklist_25365.png" data-toggle="tooltip" data-placement="top" title="Volver al listado" width="30" height="30" />
+        </a>
     </div>
 </body>
 </html>
 
 @section scripts {
 
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-
-
-    <script>
-        var slideIndex = 1;
-        showDivs(slideIndex);
-
-        function plusDivs(n) {
-            showDivs(slideIndex += n);
-        }
-
-        function showDivs(n) {
-            var i;
-            var x = document.getElementsByClassName("mySlides");
-            if (n > x.length) { slideIndex = 1 }
-            if (n < 1) { slideIndex = x.length }
-            for (i = 0; i < x.length; i++) {
-                x[i].style.display = "none";
-            }
-            x[slideIndex - 1].style.display = "block";
-        }
-    </script>
-
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>

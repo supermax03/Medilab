@@ -19,6 +19,11 @@
         <tr>
             <td><h3>Confirma eliminar este item?</h3></td>
         </tr>
+        <tr>
+            <td>
+                <img src="@Url.Content(Model.Path)" width="200" height="200" />
+            </td>
+        </tr>
     </table>
     <div>        
         <hr />
@@ -29,27 +34,10 @@
     
             <dd>
                 @Html.DisplayFor(model => model.Titulo)
-            </dd>
-    
+            </dd>    
+        
             <dt>
-                @Html.DisplayNameFor(model => model.Comentarios)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Comentarios)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.Path)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Path)
-            </dd>  
-           
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.Articulo.Titulo)
+                Artículo
             </dt>
     
             <dd>
