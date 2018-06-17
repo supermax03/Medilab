@@ -11,16 +11,12 @@
 <body>
     @using (Html.BeginForm())
     {
-        @Html.AntiForgeryToken()
-
-       
-
-     
-            <h4>Imagen</h4>
-            <hr />
+        @Html.AntiForgeryToken() 
+           
 
             <div class="form-horizontal">
-               
+                <h4>Imagen</h4>
+                <hr />
                 <div class="panel panel-info">
                     <div class="panel-heading">
                         <h4 class="panel-title">
@@ -29,7 +25,7 @@
                             </a>
                         </h4>
                     </div>
-                    <div id="collapse1" class="panel-collapse collapse in">
+                   <div id="collapse1" class="panel-collapse collapse in">
                         <div class="panel-body">
                             <img src="@Url.Content(Model.Path)" />
                         </div>
@@ -47,6 +43,14 @@
                 </div>
 
                 <div class="form-group">
+                    <label class="control-label col-md-2">Articulo</label>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Articulo.Titulo, new { htmlAttributes = new { @class = "form-control", @id = "buscador" } })
+                        @Html.ValidationMessageFor(model => model.Articulo.Titulo, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
                     @Html.LabelFor(model => model.Comentarios, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
                         @Html.TextAreaFor(model => model.Comentarios, 5, 5, htmlAttributes: new { @class = "form-control", style = "width: 40%; max-width: 40%;" })
@@ -60,10 +64,9 @@
                         @Html.EditorFor(model => model.Path, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.Path, "", new { @class = "text-danger" })
                     </div>
-                </div>
+                </div>              
 
-               
-
+                @Html.HiddenFor(model => model.IdArticulo)
 
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
@@ -104,6 +107,49 @@
         }
     </script>
 
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
+<script>
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+
+            $("#buscador").autocomplete(
+            {
+                minLength: 3, //Empieza a buscar a partir de los 3 caracteres ingresados
+                focus: function (event, ui) {
+                    event.preventDefault(); //Con esta llamada evito que se cargue con el value del autocomplete
+                    $("#buscador").val(ui.item.label);
+
+                },
+                select: function (event, ui) { //Cuando finaliza configuro los valores del campo oculto
+                    event.preventDefault();
+                    $("#buscador").val(ui.item.label);
+                    $("#IdArticulo").val(ui.item.value);
+                },
+                source: function (request, response) {
+
+                    $.ajax({
+                        url: '/Articulo/BuscarArticulo',
+                        type: 'POST',
+                        data: { term: $("#buscador").val() },
+                        cache: false,
+                        dataType: 'json',
+                        success: function (json) {
+                            response($.map(json, function (data) {
+                                return {
+                                    label: data.value,
+                                    value: data.Id
+                                };
+                            }));
+                        },
+                    })
+
+                }
+            }
+         );
+        });
+</script>
 
 }

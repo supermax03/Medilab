@@ -23,6 +23,17 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Topico">
+      <EntityTypeMapping TypeName="MedicinaModel.Topico">
+        <MappingFragment StoreEntitySet="Topico">
+          <ScalarProperty Name="Hermano" ColumnName="Hermano" />
+          <ScalarProperty Name="Padre" ColumnName="Padre" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Imagen">
       <EntityTypeMapping TypeName="MedicinaModel.Imagen">
         <MappingFragment StoreEntitySet="Imagen">
@@ -31,17 +42,6 @@
           <ScalarProperty Name="Path" ColumnName="Path" />
           <ScalarProperty Name="Comentarios" ColumnName="Comentarios" />
           <ScalarProperty Name="Titulo" ColumnName="Titulo" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Topico">
-      <EntityTypeMapping TypeName="MedicinaModel.Topico">
-        <MappingFragment StoreEntitySet="Topico">
-          <ScalarProperty Name="Hermano" ColumnName="Hermano" />
-          <ScalarProperty Name="Padre" ColumnName="Padre" />
-          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
           <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>

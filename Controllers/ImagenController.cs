@@ -29,6 +29,7 @@ namespace MediLab.Controllers
             {
                 pageSize = 5;
             }
+            ViewBag.Operacion = response;
             int totalRecord = db.Imagen.Count();
             ViewBag.dbcount= (totalRecord / pageSize) + ((totalRecord % pageSize) > 0 ? 1 : 0);
             var imagenes = db.Imagen.OrderBy(s => s.Id).Skip((page - 1) * pageSize).Take(pageSize).ToList();
@@ -46,22 +47,21 @@ namespace MediLab.Controllers
         { try
             {
                 ResultSet response = new ResultSet();
-                /* MedicinaEntities db = new MedicinaEntities();
-                 Topico topico = new Topico()
-                 {
-                     Nombre = collection["Nombre"],
-                     Descripcion = collection["Descripcion"]
-
-
-                 };
-                db.Topico.Add(topico);
+                Imagen imagen = new Imagen()
+                {
+                    Titulo = collection["Titulo"].Trim(),
+                    Comentarios = collection["Comentarios"].Trim(),
+                    Path = collection["Path"].Trim(),
+                    IdArticulo=Convert.ToInt32(collection["IdArticulo"])
+                };
+                db.Imagen.Add(imagen);
                 db.SaveChanges();
                 response.Code = 1;
-                response.Msg = String.Format("Se creó el topico {0}", topico.Nombre);     */
+                response.Msg = String.Format("Se creó la imagen {0}", imagen.Titulo);             
                 return RedirectToAction("Index", new RouteValueDictionary(response));
 
             }
-            catch
+            catch(Exception ex)
             {
                 return View();
             }            
@@ -76,19 +76,20 @@ namespace MediLab.Controllers
         public ActionResult Edit(int id, FormCollection collection)
         {
             try
-            {
+            {                
                 ResultSet response = new ResultSet();
-               /* MedicinaEntities db = new MedicinaEntities();           
-                Topico topico = db.Topico.Where(s => s.Id.Equals(id)).First();
-                topico.Nombre = collection["Nombre"];
-                topico.Descripcion = collection["Descripcion"];
+                Imagen imagen = db.Imagen.Where(s => s.Id.Equals(id)).First();
+                imagen.Titulo = collection["Titulo"].Trim();
+                imagen.Comentarios = collection["Comentarios"].Trim();
+                imagen.Path = collection["Path"].Trim();
+                imagen.IdArticulo = Convert.ToInt32(collection["IdArticulo"]);
                 db.SaveChanges();
                 response.Code = 1;
-                response.Msg = String.Format("Se editó el topico {0}", topico.Nombre); */
+                response.Msg = String.Format("Se editó la imagen {0}", imagen.Titulo);           
                 return RedirectToAction("Index", new RouteValueDictionary(response));
                 
             }
-            catch
+            catch(Exception ex)
             {
                 return View();
             }
@@ -109,12 +110,13 @@ namespace MediLab.Controllers
         {
             try
             {
+                ResultSet response = new ResultSet();
                 Imagen imagen = db.Imagen.Where(s => s.Id.Equals(id)).First();
                 db.Imagen.Remove(imagen);
                 db.SaveChanges();
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
+                response.Code = 1;
+                response.Msg = String.Format("Se borró la imagen {0}", imagen.Titulo);
+                return RedirectToAction("Index", new RouteValueDictionary(response));            
             }
             catch
             {

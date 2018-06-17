@@ -14,9 +14,9 @@
     <Key>
       <PropertyRef Name="Id" />
     </Key>
-    <Property Name="Id" Type="int" Nullable="false" />
-    <Property Name="Titulo" Type="nchar" MaxLength="20" />
-    <Property Name="Comentarios" Type="nvarchar" MaxLength="50" />
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Titulo" Type="nchar" MaxLength="50" />
+    <Property Name="Comentarios" Type="ntext" />
     <Property Name="Path" Type="nvarchar" MaxLength="250" />
     <Property Name="esPadre" Type="int" />
     <Property Name="IdArticulo" Type="int" Nullable="false" />
@@ -55,7 +55,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Imagen__IdArticu__35BCFE0A">
+  <Association Name="FK__Imagen__IdArticu__3E52440B">
     <End Role="Articulo" Type="Self.Articulo" Multiplicity="1">
       <OnDelete Action="Cascade" />
     </End>
@@ -78,7 +78,7 @@
       <End Role="Topico" EntitySet="Topico" />
       <End Role="Articulo" EntitySet="Articulo" />
     </AssociationSet>
-    <AssociationSet Name="FK__Imagen__IdArticu__35BCFE0A" Association="Self.FK__Imagen__IdArticu__35BCFE0A">
+    <AssociationSet Name="FK__Imagen__IdArticu__3E52440B" Association="Self.FK__Imagen__IdArticu__3E52440B">
       <End Role="Articulo" EntitySet="Articulo" />
       <End Role="Imagen" EntitySet="Imagen" />
     </AssociationSet>

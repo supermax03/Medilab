@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using MediLab.Models;
 using MediLab.Controllers.MyClasses;
 using System.Web.Routing;
+using System.Globalization;
 
 namespace MediLab.Controllers
 {
@@ -42,6 +43,12 @@ namespace MediLab.Controllers
             var articulos = db.Articulo.Where(s => (s.IdTopico.Equals(topico) && !topico.Equals(-1)) || (s.IdTopico.Equals(s.IdTopico) && topico.Equals(-1))).OrderBy(s => s.Id).Skip((page - 1) * pageSize).Take(pageSize).ToList();
             return articulos;
         }
+        public JsonResult BuscarArticulo(string term)
+        {
+            var resultado = db.Articulo.Where(s => s.Titulo.Contains(term))
+                .Select(s => new { value = s.Titulo, Id = s.Id }).Take(5).ToList();
+            return Json(resultado, JsonRequestBehavior.AllowGet);
+        }
 
         public ActionResult GetArticulo(int codigo)
         {
@@ -58,25 +65,23 @@ namespace MediLab.Controllers
         {
             try
             {
-                //ModelState.AddModelError("Comentarios", "Comentarios es requerido");
-                /* ResultSet response = new ResultSet();
-                 MedicinaEntities db = new MedicinaEntities();
-                 Topico topico = new Topico()
-                 {
-                     Nombre = collection["Nombre"],
-                     Descripcion = collection["Descripcion"]
-
-
-                 };
-                 db.Topico.Add(topico);
-                 db.SaveChanges();
-                 response.Code = 1;
-                 response.Msg = String.Format("Se creó el topico {0}", topico.Nombre);
-                 return RedirectToAction("Index", new RouteValueDictionary(response));*/
+                ResultSet response = new ResultSet();
+                Articulo articulo = new Articulo()
+                {
+                    Titulo = collection["Titulo"].Trim(),
+                    Comentarios = collection["Comentarios"].Trim(),
+                    FechaPublicacion = DateTime.Now,
+                    IdTopico = Convert.ToInt32(collection["IdTopico"])
+                };
+                db.Articulo.Add(articulo);
+                db.SaveChanges();
+                response.Code = 1;
+                response.Msg = String.Format("Se creó el artículo {0}", articulo.Titulo);               
+                /* return RedirectToAction("Index", new RouteValueDictionary(response));*/
                 return RedirectToAction("Index");
 
             }
-            catch
+            catch(Exception ex)
             {
                 return View();
             }
@@ -91,19 +96,21 @@ namespace MediLab.Controllers
         {
             try
             {
-                /*  ResultSet response = new ResultSet();
-                  MedicinaEntities db = new MedicinaEntities();
-                  Topico topico = db.Topico.Where(s => s.Id.Equals(id)).First();
-                  topico.Nombre = collection["Nombre"];
-                  topico.Descripcion = collection["Descripcion"];
-                  db.SaveChanges();
-                  response.Code = 1;
-                  response.Msg = String.Format("Se editó el topico {0}", topico.Nombre);
-                  return RedirectToAction("Index", new RouteValueDictionary(response)); */
+
+                ResultSet response = new ResultSet();
+                Articulo articulo = db.Articulo.Where(s => s.Id.Equals(id)).First();
+                articulo.Titulo = collection["Titulo"].Trim();
+                articulo.Comentarios = collection["Comentarios"].Trim();
+                articulo.IdTopico = Convert.ToInt32(collection["IdTopico"]);
+                db.SaveChanges();
+                response.Code = 1;
+                response.Msg = String.Format("Se editó el articulo {0}", articulo.Titulo);
+               
+                  /*return RedirectToAction("Index", new RouteValueDictionary(response)); */
                 return RedirectToAction("Index");
 
             }
-            catch
+            catch(Exception ex)
             {
                 return View();
             }
