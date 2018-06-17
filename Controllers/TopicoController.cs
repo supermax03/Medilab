@@ -52,11 +52,11 @@ namespace MediLab.Controllers
         public ActionResult Create(FormCollection collection)
         { try
             {
-                ResultSet response = new ResultSet();             
+                ResultSet response = new ResultSet();
                 Topico topico = new Topico()
                 {
-                    Nombre = collection["Nombre"],
-                    Descripcion = collection["Descripcion"]
+                    Nombre = collection["Nombre"].Trim(),
+                    Descripcion = collection["Descripcion"].Trim()
 
 
                 };
@@ -84,8 +84,8 @@ namespace MediLab.Controllers
             {
                 ResultSet response = new ResultSet();                       
                 Topico topico = db.Topico.Where(s => s.Id.Equals(id)).First();
-                topico.Nombre = collection["Nombre"];
-                topico.Descripcion = collection["Descripcion"];
+                topico.Nombre = collection["Nombre"].Trim();
+                topico.Descripcion = collection["Descripcion"].Trim();
                 db.SaveChanges();
                 response.Code = 1;
                 response.Msg = String.Format("Se editó el topico {0}", topico.Nombre);

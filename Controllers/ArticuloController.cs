@@ -19,9 +19,10 @@ namespace MediLab.Controllers
 
         }
 
-        public ActionResult Index(int topico = -1, int page = 1, int pageSize = 5)
+        public ActionResult Index(ResultSet response = null,int topico = -1, int page = 1, int pageSize = 5)
         {
             ViewBag.topico = topico;
+            ViewBag.Operacion = response;
             var articulos = GetArticulosPaginados(topico, page, pageSize);
             return View(articulos.AsEnumerable());
         }
@@ -77,8 +78,8 @@ namespace MediLab.Controllers
                 db.SaveChanges();
                 response.Code = 1;
                 response.Msg = String.Format("Se creó el artículo {0}", articulo.Titulo);               
-                /* return RedirectToAction("Index", new RouteValueDictionary(response));*/
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new RouteValueDictionary(response));
+               // return RedirectToAction("Index");
 
             }
             catch(Exception ex)
@@ -104,10 +105,9 @@ namespace MediLab.Controllers
                 articulo.IdTopico = Convert.ToInt32(collection["IdTopico"]);
                 db.SaveChanges();
                 response.Code = 1;
-                response.Msg = String.Format("Se editó el articulo {0}", articulo.Titulo);
-               
-                  /*return RedirectToAction("Index", new RouteValueDictionary(response)); */
-                return RedirectToAction("Index");
+                response.Msg = String.Format("Se editó el articulo {0}", articulo.Titulo);               
+                return RedirectToAction("Index", new RouteValueDictionary(response)); 
+                //return RedirectToAction("Index");
 
             }
             catch(Exception ex)
@@ -126,10 +126,14 @@ namespace MediLab.Controllers
         {
             try
             {
+                ResultSet response = new ResultSet();
                 Articulo articulo = db.Articulo.Where(s => s.Id.Equals(id)).First();
                 db.Articulo.Remove(articulo);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                response.Code = 1;
+                response.Msg = String.Format("Se borró el articulo {0}", articulo.Titulo);
+                return RedirectToAction("Index", new RouteValueDictionary(response));
+                
             }
             catch
             {

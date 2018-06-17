@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<MediLab.Models.Articulo>
+@using MediLab.Controllers.MyClasses;
 
 @{
     ViewBag.Title = "BuscarArticulos";
@@ -71,6 +72,18 @@
             </a>
         }
     </p>
+    {
+        if (ViewBag.Operacion != null)
+        {
+            ResultSet dato = (ResultSet)ViewBag.Operacion;
+            if (dato.Code.Equals(1))
+            {
+                <div class="alert alert-success">
+                    <strong>Operación Exitosa!</strong> @dato.Msg
+                </div>
+            }
+        }
+    }
 
     <table class="table">
         <tr>
