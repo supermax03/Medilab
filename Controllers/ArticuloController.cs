@@ -79,7 +79,7 @@ namespace MediLab.Controllers
                 response.Code = 1;
                 response.Msg = String.Format("Se creó el artículo {0}", articulo.Titulo);               
                 return RedirectToAction("Index", new RouteValueDictionary(response));
-               // return RedirectToAction("Index");
+              
 
             }
             catch(Exception ex)
@@ -107,7 +107,7 @@ namespace MediLab.Controllers
                 response.Code = 1;
                 response.Msg = String.Format("Se editó el articulo {0}", articulo.Titulo);               
                 return RedirectToAction("Index", new RouteValueDictionary(response)); 
-                //return RedirectToAction("Index");
+               
 
             }
             catch(Exception ex)
