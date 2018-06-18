@@ -103,28 +103,22 @@ namespace MediLab.Controllers
             return View(topico);
         }
         public ActionResult Delete(int id)
-        {            
-            Topico topico = db.Topico.Where(s => s.Id.Equals(id)).First();
-            return View(topico);
-        }
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
         {
             try
             {
-                ResultSet response = new ResultSet();             
+                ResultSet response = new ResultSet();
                 Topico topico = db.Topico.Where(s => s.Id.Equals(id)).First();
                 db.Topico.Remove(topico);
                 db.SaveChanges();
                 response.Code = 1;
                 response.Msg = String.Format("Se borró el topico {0}", topico.Nombre);
-                return RedirectToAction("Index", new RouteValueDictionary(response));              
+                return RedirectToAction("Index", new RouteValueDictionary(response));
 
             }
             catch
             {
                 return View();
             }
-        }
+        }     
     }
 }

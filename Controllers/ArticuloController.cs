@@ -117,13 +117,6 @@ namespace MediLab.Controllers
         }
         public ActionResult Delete(int id)
         {
-            Articulo articulo= db.Articulo.Where(s => s.Id.Equals(id)).First();
-            return View(articulo);
-            
-        }
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
             try
             {
                 ResultSet response = new ResultSet();
@@ -133,12 +126,12 @@ namespace MediLab.Controllers
                 response.Code = 1;
                 response.Msg = String.Format("Se borró el articulo {0}", articulo.Titulo);
                 return RedirectToAction("Index", new RouteValueDictionary(response));
-                
+
             }
             catch
             {
                 return View();
             }
-        }
+        }     
     }
 }

@@ -4,9 +4,20 @@
 <!DOCTYPE html>
 
 <html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
+<head>  
+        <title>Galería de tópicos</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+        <style>
+            .modal-dialog {
+                position: initial;
+            }
+        </style>
+  
 </head>
 <body>
     <p>
@@ -64,10 +75,9 @@
                     <img src="https://cdn.icon-icons.com/icons2/39/PNG/128/xmag_search_find_export_locate_5984.png" data-toggle="tooltip" data-placement="top" title="Ver" width="20" height="20" />
                 </a>
                 &nbsp
-                <a href='@Url.Action("Delete", "Topico",new { id=item.Id })'>
+                <a href='@Url.Action("Delete", "Topico",new { id=item.Id })' title='@item.Nombre' onclick="return confirmDelete(this);">
                     <img src="https://cdn.icon-icons.com/icons2/624/PNG/512/Delete-80_icon-icons.com_57340.png" data-toggle="tooltip" data-placement="top" title="Borrar" width="20" height="20" />
-                </a>
-                
+                </a>               
              
             </td>
         </tr>
@@ -82,4 +92,42 @@
     }    
 </body>
 </html>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
+<script>
+    function confirmDelete(sender) {
+
+        if ($(sender).attr("confirmed") == "true") { return true; }
+
+        bootbox.confirm({
+            title: "Atención",
+            message: "¿Confirma eliminar el item " + sender.title + "?",
+            buttons: {
+                confirm: {
+                    label: 'Aceptar',
+                    className: 'btn-success'
+                },
+                cancel: {
+                    label: 'Cancelar',
+                    className: 'btn-danger'
+                }
+            },
+            callback: function (confirmed) {
+                if (confirmed) {
+                    $(sender).attr("confirmed", confirmed);
+                    sender.click();
+                }
+
+            }
+        });
+        return false;
+    }
+
+
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+
+    });
+
+</script>
 

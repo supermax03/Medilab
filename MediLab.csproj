@@ -350,9 +350,6 @@
     <Content Include="Views\Imagen\Index.cshtml" />
     <Content Include="Views\Imagen\Create.cshtml" />
     <Content Include="Views\Imagen\Edit.cshtml" />
-    <Content Include="Views\Imagen\Delete.cshtml" />
-    <Content Include="Views\Topico\Delete.cshtml" />
-    <Content Include="Views\Articulo\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Adjuntos\" />

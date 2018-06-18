@@ -5,7 +5,14 @@
     ViewBag.Title = "BuscarArticulos";
 }
 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <style>
+
+     .modal-dialog {
+                position: initial;
+            }
     .search_button {
         display: inline-block;
         border-radius: 4px;
@@ -136,7 +143,7 @@
                             <img src="https://cdn.icon-icons.com/icons2/215/PNG/256/edit-validated256_25237.png" data-toggle="tooltip" data-placement="top" title="Editar" width="20" height="20" />
                         </a>
                         &nbsp;
-                        <a href='@Url.Action("Delete", "Articulo",new { id=item.Id })' target="_blank" data-toggle="confirmation" data-title="Confirma eliminar topico?">
+                        <a href='@Url.Action("Delete", "Articulo",new { id=item.Id })' title='@item.Titulo' onclick="return confirmDelete(this);">
                             <img src="https://cdn.icon-icons.com/icons2/624/PNG/512/Delete-80_icon-icons.com_57340.png" data-toggle="tooltip" data-placement="top" title="Borrar" width="20" height="20" />
                         </a>
                     </td>
@@ -208,9 +215,39 @@ else
 
 
 }
-@section scripts {
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
 <script>
+    function confirmDelete(sender) {
+
+        if ($(sender).attr("confirmed") == "true") { return true; }
+
+        bootbox.confirm({
+            title: "Atención",
+            message: "¿Confirma eliminar el item " + sender.title + "?",
+            buttons: {
+                confirm: {
+                    label: 'Aceptar',
+                    className: 'btn-success'
+                },
+                cancel: {
+                    label: 'Cancelar',
+                    className: 'btn-danger'
+                }
+            },
+            callback: function (confirmed) {
+                if (confirmed) {
+                    $(sender).attr("confirmed", confirmed);
+                    sender.click();
+                }
+
+            }
+        });
+        return false;
+    }
+
+
+
         $(document).ready(function () {
             $('[data-toggle="tooltip"]').tooltip();
         });
@@ -231,4 +268,3 @@ else
         </script>-->
 
 
-}

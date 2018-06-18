@@ -3,7 +3,7 @@
 
 
 <head>
-    <title>Bootstrap Example</title>
+    <title>Galerìa de Imágenes</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -19,7 +19,7 @@
 
 <p>
     <a href='@Url.Action("Create", "Imagen")'>
-        <img src="https://cdn.icon-icons.com/icons2/1146/PNG/512/1486485557-add-create-new-more-plus_81188.png" data-toggle="tooltip" data-placement="right" title="Crear nuevo tópico" width="30" height="30" />
+        <img src="https://cdn.icon-icons.com/icons2/1146/PNG/512/1486485557-add-create-new-more-plus_81188.png" data-toggle="tooltip" data-placement="right" title="Crear nueva imagen" width="30" height="30" />
     </a>
 </p>
 
@@ -118,7 +118,7 @@
     }
 
         $(document).ready(function () {
-            
+            $('[data-toggle="tooltip"]').tooltip();
            
         });
 </script>
