@@ -108,8 +108,9 @@
             <th>¿Qué hacer?</th>
         </tr>
 
-        @foreach (var item in Model)
-        {
+          @foreach (var item in Model)
+          {
+
             <tr>
                 <td>
                     @if (Convert.ToInt32(ViewBag.topico) != -1)
@@ -150,7 +151,7 @@
 
                 }
             </tr>
-        }
+           }
     </table>
     for (int i = 1; i <= ViewBag.dbCount; i++)
     {

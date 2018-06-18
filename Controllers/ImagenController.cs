@@ -43,7 +43,7 @@ namespace MediLab.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(HttpPostedFileBase file,FormCollection collection)
         { try
             {
                 ResultSet response = new ResultSet();
