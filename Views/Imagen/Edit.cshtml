@@ -7,9 +7,32 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Edit</title>
+    <style>
+        .btn-file {
+            position: relative;
+            overflow: hidden;
+        }
+
+            .btn-file input[type=file] {
+                position: absolute;
+                top: 0;
+                right: 0;
+                min-width: 100%;
+                min-height: 100%;
+                font-size: 100px;
+                text-align: right;
+                filter: alpha(opacity=0);
+                opacity: 0;
+                outline: none;
+                background: white;
+                cursor: inherit;
+                display: block;
+            }
+    </style>
 </head>
 <body>
-    @using (Html.BeginForm())
+    @using (Html.BeginForm("Edit", "Imagen", FormMethod.Post,
+                        new { enctype = "multipart/form-data" }))
     {
         @Html.AntiForgeryToken() 
            
@@ -59,12 +82,14 @@
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Path, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <label class="control-label col-md-2">Imagen</label>
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.Path, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Path, "", new { @class = "text-danger" })
+                        <span class="btn btn-primary btn-file">
+                            Archivo... <input type="file" name="file" id="file" accept="image/*" />
+                        </span>
                     </div>
-                </div>              
+                </div>   
+                              
 
                 @Html.HiddenFor(model => model.IdArticulo)
 

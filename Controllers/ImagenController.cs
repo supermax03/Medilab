@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using MediLab.Models;
 using MediLab.Controllers.MyClasses;
 using System.Web.Routing;
+using System.IO;
 
 namespace MediLab.Controllers
 {
@@ -18,7 +19,7 @@ namespace MediLab.Controllers
             db = new MedicinaEntities();
 
         }
-        public ActionResult Index(ResultSet response=null,int page=1,int pageSize=5)
+        public ActionResult Index(ResultSet response=null,int page=1,int pageSize=6)
         {
            
            if (page <= 0)
@@ -27,7 +28,7 @@ namespace MediLab.Controllers
             }
             if (pageSize <= 0)
             {
-                pageSize = 5;
+                pageSize = 6;
             }
             ViewBag.Operacion = response;
             int totalRecord = db.Imagen.Count();
@@ -46,20 +47,25 @@ namespace MediLab.Controllers
         public ActionResult Create(HttpPostedFileBase file,FormCollection collection)
         { try
             {
-                ResultSet response = new ResultSet();
-                Imagen imagen = new Imagen()
+                if (file != null && file.ContentLength > 0)
                 {
-                    Titulo = collection["Titulo"].Trim(),
-                    Comentarios = collection["Comentarios"].Trim(),
-                    Path = collection["Path"].Trim(),
-                    IdArticulo=Convert.ToInt32(collection["IdArticulo"])
-                };
-                db.Imagen.Add(imagen);
-                db.SaveChanges();
-                response.Code = 1;
-                response.Msg = String.Format("Se creó la imagen {0}", imagen.Titulo);             
-                return RedirectToAction("Index", new RouteValueDictionary(response));
-
+                    string path = Path.Combine(Server.MapPath("~/Imagenes"), Path.GetFileName(file.FileName));
+                    file.SaveAs(path); //Guardo el archivo en el server
+                    ResultSet response = new ResultSet();
+                    Imagen imagen = new Imagen()
+                    {
+                        Titulo = collection["Titulo"].Trim(),
+                        Comentarios = collection["Comentarios"].Trim(),
+                        Path = String.Format("~/Imagenes/{0}",file.FileName),
+                        IdArticulo = Convert.ToInt32(collection["IdArticulo"])
+                    };
+                    db.Imagen.Add(imagen);
+                    db.SaveChanges();
+                    response.Code = 1;
+                    response.Msg = String.Format("Se creó la imagen {0}", imagen.Titulo);
+                    return RedirectToAction("Index", new RouteValueDictionary(response));
+                }
+                else return View();
             }
             catch(Exception ex)
             {
@@ -73,15 +79,26 @@ namespace MediLab.Controllers
             return View(imagen);
         }
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(HttpPostedFileBase file,int id, FormCollection collection)
         {
             try
-            {                
+            {
                 ResultSet response = new ResultSet();
                 Imagen imagen = db.Imagen.Where(s => s.Id.Equals(id)).First();
+                if (file != null && file.ContentLength > 0)
+                {                   
+                    //Borramos el archivo anterior y damos de alta el nuevo archivo
+                    String oldfile = Server.MapPath(imagen.Path);
+                    if (System.IO.File.Exists(oldfile))
+                    {
+                        System.IO.File.Delete(oldfile);
+                    }
+                    string newpath = Path.Combine(Server.MapPath("~/Imagenes"), Path.GetFileName(file.FileName));
+                    file.SaveAs(newpath);
+                    imagen.Path = String.Format("~/Imagenes/{0}", file.FileName);
+                }               
                 imagen.Titulo = collection["Titulo"].Trim();
-                imagen.Comentarios = collection["Comentarios"].Trim();
-                imagen.Path = collection["Path"].Trim();
+                imagen.Comentarios = collection["Comentarios"].Trim();      
                 imagen.IdArticulo = Convert.ToInt32(collection["IdArticulo"]);
                 db.SaveChanges();
                 response.Code = 1;
@@ -106,6 +123,11 @@ namespace MediLab.Controllers
             {
                 ResultSet response = new ResultSet();
                 Imagen imagen = db.Imagen.Where(s => s.Id.Equals(id)).First();
+                String path = Server.MapPath(imagen.Path);
+                if (System.IO.File.Exists(path))
+                {
+                    System.IO.File.Delete(path);
+                }
                 db.Imagen.Remove(imagen);
                 db.SaveChanges();
                 response.Code = 1;
