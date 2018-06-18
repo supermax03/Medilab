@@ -93,19 +93,19 @@
     }
 
     <table class="table">
-        <tr>
-            <th bgcolor="#D9EDF7"></th>
-            <th bgcolor="#D9EDF7">
+        <tr style="background-color:#D9EDF7">
+            <th></th>
+            <th>
                 Título
             </th>
-            <th bgcolor="#D9EDF7">
+            <th>
                 Fecha de Publicación
             </th>
             @if (Convert.ToInt32(ViewBag.topico) == -1)
             {
-                <th bgcolor="#D9EDF7">Tópico</th>
+                <th>Tópico</th>
             }
-            <th bgcolor="#D9EDF7">¿Qué hacer?</th>
+            <th>¿Qué hacer?</th>
         </tr>
 
         @foreach (var item in Model)
