@@ -7,6 +7,24 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Create</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+    .modal-dialog {
+    position: initial;
+    }
+
+    .borderClass {
+          border: 2px solid red;
+          border-radius: 4px;
+  
+        }
+
+
+    </style>
+
+
 </head>
 <body>
     @using (Html.BeginForm()) 
@@ -37,7 +55,7 @@
     
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Guardar Cambios" class="btn btn-primary" /> 
+                    <input type="submit" value="Guardar Cambios" onclick="return validatefields();" class="btn btn-primary" /> 
                 </div>
             </div>
         </div>
@@ -50,3 +68,38 @@
     </div>
 </body>
 </html>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
+<script>
+ 
+    function validatefields() {               
+      
+        $("#Nombre").removeClass('borderClass');
+        $("#Descripcion").removeClass('borderClass');
+        var valor = $.trim($("#Nombre").val());       
+        if (valor.length == 0) {
+            bootbox.alert({
+                title: "Atención",
+                message: "Complete Nombre",
+                size: "small"
+
+            });        
+            $("#Nombre").addClass('borderClass');
+       
+            return false;
+        }
+        valor = $.trim($("#Descripcion").val());
+        if (valor.length == 0) {
+            bootbox.alert({
+                title: "Atención",
+                message: "Complete Descripción",
+                size: "small"
+
+            });
+            $("#Descripcion").addClass('borderClass');
+            return false;
+        }
+    }
+ </script>
