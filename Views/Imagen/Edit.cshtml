@@ -99,7 +99,7 @@
                               
 
                 @Html.HiddenFor(model => model.IdArticulo)
-
+                @Html.HiddenFor(model => model.Path)
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
                         <input type="submit" value="Guardar Cambios" onclick="return validatefields();"  class="btn btn-primary"  />
@@ -195,33 +195,34 @@
                     msg = "El artículo indicado no existe";
                     field = "#buscador";
                 }
-                else {
-                    valor = $("#file").val();
-                    if (valor.length == 0) {
-                        error_signal = 1;
-                        msg = "Seleccione un archivo";
-                        field = "#file";
-                    }
-                    else {//Extensiones de imagenes
-                        extensions = new Array(".bmp",
-                                               ".gif",
-                                               ".jpg",
-                                               ".png",
-                                               ".psd",
-                                                ".ai",
-                                                ".cdr",
-                                                ".dwg",
-                                                ".svg",
-                                                ".raw",
-                                                ".nef"
-                                           );
-                        var fileExt = valor.substring(valor.lastIndexOf('.'));
-                        if (extensions.indexOf(fileExt) < 0) {
+                else {                  
+                        valor = $("#file").val().length == 0 ? $("#Path").val() : $("#file").val();
+                        if (valor.length == 0) {
                             error_signal = 1;
-                            msg = "El archivo tiene que una imagen <b>(Extensiones válidas: .bmp,.gif,.jpg,.png,.psd,.ai,.cdr,.dwg,.svg,.raw,.nef)</b>";
+                            msg = "Seleccione un archivo";
                             field = "#file";
                         }
-                    }
+                        else {//Extensiones de imagenes
+                            extensions = new Array(".bmp",
+                                                   ".gif",
+                                                   ".jpg",
+                                                   ".png",
+                                                   ".psd",
+                                                    ".ai",
+                                                    ".cdr",
+                                                    ".dwg",
+                                                    ".svg",
+                                                    ".raw",
+                                                    ".nef"
+                                               );
+                            var fileExt = valor.substring(valor.lastIndexOf('.'));
+                            if (extensions.indexOf(fileExt) < 0) {
+                                error_signal = 1;
+                                msg = "El archivo tiene que una imagen <b>(Extensiones válidas: .bmp,.gif,.jpg,.png,.psd,.ai,.cdr,.dwg,.svg,.raw,.nef)</b>";
+                                field = "#file";
+                            }
+                        }
+                    
 
                 }
             }
