@@ -50,7 +50,10 @@ namespace MediLab.Controllers
                 if (file != null && file.ContentLength > 0)
                 {
                     string path = Path.Combine(Server.MapPath("~/Imagenes"), Path.GetFileName(file.FileName));
-                    file.SaveAs(path); //Guardo el archivo en el server
+                    if (!System.IO.File.Exists(path))
+                    {
+                        file.SaveAs(path); //Guardo el archivo en el server
+                    }
                     ResultSet response = new ResultSet();
                     Imagen imagen = new Imagen()
                     {
@@ -86,16 +89,23 @@ namespace MediLab.Controllers
                 ResultSet response = new ResultSet();
                 Imagen imagen = db.Imagen.Where(s => s.Id.Equals(id)).First();
                 if (file != null && file.ContentLength > 0)
-                {                   
-                    //Borramos el archivo anterior y damos de alta el nuevo archivo
-                    String oldfile = Server.MapPath(imagen.Path);
-                    if (System.IO.File.Exists(oldfile))
+                {
+                    //Borramos el archivo anterior y damos de alta el nuevo archivo siempre y cuando el archivo no este en uso
+                    String newpath = String.Format("~/Imagenes/{0}", file.FileName);
+                    if (!this.imagenenuso(imagen.Path, id))
                     {
-                        System.IO.File.Delete(oldfile);
+                        String oldfile = Server.MapPath(imagen.Path);
+                        if (System.IO.File.Exists(oldfile))
+                        {
+                            System.IO.File.Delete(oldfile);
+                        }
                     }
-                    string newpath = Path.Combine(Server.MapPath("~/Imagenes"), Path.GetFileName(file.FileName));
-                    file.SaveAs(newpath);
-                    imagen.Path = String.Format("~/Imagenes/{0}", file.FileName);
+                    string absnewpath = Path.Combine(Server.MapPath("~/Imagenes"), Path.GetFileName(file.FileName));
+                    if (!System.IO.File.Exists(absnewpath))
+                    {
+                        file.SaveAs(absnewpath);
+                    }
+                    imagen.Path = String.Format(newpath);
                 }               
                 imagen.Titulo = collection["Titulo"].Trim();
                 imagen.Comentarios = collection["Comentarios"].Trim();      
@@ -117,6 +127,15 @@ namespace MediLab.Controllers
             Topico topico = db.Topico.Where(s => s.Id.Equals(id)).First();
             return View(topico);
         }
+        private bool imagenenuso(String path, int id)
+        {
+            var img = db.Imagen.Where(s => (s.Path.Equals(path))
+                                            && !(s.Id.Equals(id)))
+                                     .FirstOrDefault();
+            return (img!=null);            
+
+        }
+        
         public ActionResult Delete(int id)
         {
             try
@@ -124,7 +143,7 @@ namespace MediLab.Controllers
                 ResultSet response = new ResultSet();
                 Imagen imagen = db.Imagen.Where(s => s.Id.Equals(id)).First();
                 String path = Server.MapPath(imagen.Path);
-                if (System.IO.File.Exists(path))
+                if (System.IO.File.Exists(path) && !this.imagenenuso(imagen.Path,id))
                 {
                     System.IO.File.Delete(path);
                 }
@@ -134,7 +153,7 @@ namespace MediLab.Controllers
                 response.Msg = String.Format("Se borró la imagen {0}", imagen.Titulo);
                 return RedirectToAction("Index", new RouteValueDictionary(response));
             }
-            catch
+            catch(Exception exc)
             {
                 return View();
             }

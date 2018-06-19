@@ -65,7 +65,7 @@
     }
 </style>
 
-@if (Model.Count() > 0)
+@if (Model.Count() > 0 || Convert.ToInt32(ViewBag.topico) == -1)
 {
     if (Convert.ToInt32(ViewBag.topico) != -1)
     {
