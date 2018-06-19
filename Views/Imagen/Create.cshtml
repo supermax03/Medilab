@@ -7,42 +7,43 @@
     <meta name="viewport" content="width=device-width" />
     <title>Create</title>
     <style>
+        .btn-file {
+            position: relative;
+            overflow: hidden;
+        }
 
-    .btn-file {
-    position: relative;
-    overflow: hidden;
-    }
-    .btn-file input[type=file] {
-    position: absolute;
-    top: 0;
-    right: 0;
-    min-width: 100%;
-    min-height: 100%;
-    font-size: 100px;
-    text-align: right;
-    filter: alpha(opacity=0);
-    opacity: 0;
-    outline: none;
-    background: white;
-    cursor: inherit;
-    display: block;
-    }
-    .borderClass {
+            .btn-file input[type=file] {
+                position: absolute;
+                top: 0;
+                right: 0;
+                min-width: 100%;
+                min-height: 100%;
+                font-size: 100px;
+                text-align: right;
+                filter: alpha(opacity=0);
+                opacity: 0;
+                outline: none;
+                background: white;
+                cursor: inherit;
+                display: block;
+            }
+
+        .borderClass {
             border: 2px solid red;
             border-radius: 4px;
         }
-      </style>
+    </style>
 </head>
 <body>
     @using (Html.BeginForm("Create","Imagen", FormMethod.Post,
                         new { enctype = "multipart/form-data" }))
     {
         @Html.AntiForgeryToken()
-        
+
         <div class="form-horizontal">
             <h4>Imagen</h4>
             <hr />
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })        
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div id="error">
             </div>
             <div class="form-group">
@@ -60,7 +61,7 @@
                     @Html.ValidationMessageFor(model => model.Articulo.Titulo, "", new { @class = "text-danger" })
                 </div>
             </div>
-    
+
             <div class="form-group">
                 @Html.LabelFor(model => model.Comentarios, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
@@ -74,19 +75,19 @@
                     <span class="btn btn-primary btn-file">
                         Archivo... <input type="file" name="file" id="file" accept="image/*" />
                     </span>
-                 </div>
-            </div>             
-
-                @Html.HiddenFor(model => model.IdArticulo)
-
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Guardar Cambios" onclick="return validatefields();" class="btn btn-primary" />
-                    </div>
                 </div>
             </div>
+
+            @Html.HiddenFor(model => model.IdArticulo)
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Guardar Cambios" onclick="return validatefields();" class="btn btn-primary" />
+                </div>
+            </div>
+        </div>
     }
-    
+
     <div>
         <a href='@Url.Action("Index", "Imagen")'>
             <img src="https://cdn.icon-icons.com/icons2/217/PNG/512/checklist_25365.png" data-toggle="tooltip" data-placement="top" title="Volver al listado" width="30" height="30" />
@@ -95,58 +96,57 @@
 </body>
 </html>
 
-    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('[data-toggle="tooltip"]').tooltip();
-        });    
-         
-        $("#buscador").autocomplete(
-         {
-             minLength: 3, //Empieza a buscar a partir de los 3 caracteres ingresados
-             focus: function (event, ui) {
-                 event.preventDefault(); //Con esta llamada evito que se cargue con el value del autocomplete
-                 $("#buscador").val(ui.item.label);
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
 
-             },
-             select: function (event, ui) { //Cuando finaliza configuro los valores del campo oculto
-                 event.preventDefault();
-                 $("#buscador").val(ui.item.label);
-                 $("#IdArticulo").val(ui.item.value);
-             },
-             source: function (request, response) {
+    $("#buscador").autocomplete(
+     {
+         minLength: 3, //Empieza a buscar a partir de los 3 caracteres ingresados
+         focus: function (event, ui) {
+             event.preventDefault(); //Con esta llamada evito que se cargue con el value del autocomplete
+             $("#buscador").val(ui.item.label);
 
-                 $.ajax({
-                     url: '/Articulo/BuscarArticulo',
-                     type: 'POST',
-                     data: { term: $("#buscador").val() },
-                     cache: false,
-                     dataType: 'json',
-                     success: function (json) {
-                         if (json.length > 0) {
-                             response($.map(json, function (data) {
-                                 return {
-                                     label: data.value,
-                                     value: data.Id
-                                 };
-                             }));
-                         }
-                         else { $("#IdArticulo").val(0); }//Si no lo encuentra limpia el campo oculto del articulo
-                     },
-                 })
+         },
+         select: function (event, ui) { //Cuando finaliza configuro los valores del campo oculto
+             event.preventDefault();
+             $("#buscador").val(ui.item.label);
+             $("#IdArticulo").val(ui.item.value);
+         },
+         source: function (request, response) {
 
-             }
-         });
-    </script>
+             $.ajax({
+                 url: '/Articulo/BuscarArticulo',
+                 type: 'POST',
+                 data: { term: $("#buscador").val() },
+                 cache: false,
+                 dataType: 'json',
+                 success: function (json) {
+                     if (json.length > 0) {
+                         response($.map(json, function (data) {
+                             return {
+                                 label: data.value,
+                                 value: data.Id
+                             };
+                         }));
+                     }
+                     else { $("#IdArticulo").val(0); }//Si no lo encuentra limpia el campo oculto del articulo
+                 },
+             })
+
+         }
+     });
+</script>
 <script>
     function validatefields() {
         $("#error").removeClass('alert alert-danger');
         $("#Titulo").removeClass('borderClass');
         $("#buscador").removeClass('borderClass');
         $("#error").html("");
-        window.alert($("#file").val());
         var error_signal = 0
         var msg = "";
         var field = "";
@@ -177,7 +177,7 @@
                         msg = "Seleccione un archivo";
                         field = "#file";
                     }
-                    else {
+                    else {//Extensiones de imagenes
                         extensions = new Array(".bmp",
                                                ".gif",
                                                ".jpg",
@@ -193,12 +193,12 @@
                         var fileExt = valor.substring(valor.lastIndexOf('.'));
                         if (extensions.indexOf(fileExt) < 0) {
                             error_signal = 1;
-                            msg = "El archivo tiene que una imagen (.bmp,.gif,.jpg,.png,.psd,.ai,.cdr,.dwg,.svg,.raw,.nef)";
+                            msg = "El archivo tiene que una imagen <b>(Extensiones válidas: .bmp,.gif,.jpg,.png,.psd,.ai,.cdr,.dwg,.svg,.raw,.nef)</b>";
                             field = "#file";
                         }
                     }
 
-                   }
+                }
             }
         }
         if (error_signal == 1) {

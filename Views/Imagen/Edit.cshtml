@@ -9,6 +9,11 @@
     <title>Edit</title>
 
     <style>
+          .borderClass {
+            border: 2px solid red;
+            border-radius: 4px;
+        }
+
         .btn-file {
             position: relative;
             overflow: hidden;
@@ -57,7 +62,8 @@
                 </div>
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 @Html.HiddenFor(model => model.Id)
-
+                <div id="error">
+                </div>
                 <div class="form-group">
                     @Html.LabelFor(model => model.Titulo, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
@@ -96,7 +102,7 @@
 
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Guardar Cambios"  class="btn btn-primary"  />
+                        <input type="submit" value="Guardar Cambios" onclick="return validatefields();"  class="btn btn-primary"  />
                     </div>
                 </div>
             </div>
@@ -110,9 +116,8 @@
 </body>
 </html>
 
-@section scripts {
 
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -120,7 +125,7 @@
 <script>
         $(document).ready(function () {
             $('[data-toggle="tooltip"]').tooltip();
-
+        });
             $("#buscador").autocomplete(
             {
                 minLength: 3, //Empieza a buscar a partir de los 3 caracteres ingresados
@@ -143,19 +148,94 @@
                         cache: false,
                         dataType: 'json',
                         success: function (json) {
-                            response($.map(json, function (data) {
-                                return {
-                                    label: data.value,
-                                    value: data.Id
-                                };
-                            }));
+                            if (json.length > 0) {
+                                response($.map(json, function (data) {
+                                    return {
+                                        label: data.value,
+                                        value: data.Id
+                                    };
+                                }));
+                            }
+                            else { $("#IdArticulo").val(0); } //Si no lo encuentra limpia el campo oculto del artículo
                         },
                     })
 
                 }
             }
          );
-        });
+        
 </script>
 
-}
+<script>
+    function validatefields() {
+        $("#error").removeClass('alert alert-danger');
+        $("#Titulo").removeClass('borderClass');
+        $("#buscador").removeClass('borderClass');
+        $("#error").html("");
+        var error_signal = 0
+        var msg = "";
+        var field = "";
+        var valor = $.trim($("#Titulo").val());
+        if (valor.length == 0) {
+            error_signal = 1;
+            msg = "Complete campo <b>Título</b>";
+            field = "#Titulo";
+        }
+        else {
+            valor = $.trim($("#buscador").val());
+            if (valor.length == 0) {
+                error_signal = 1;
+                msg = "Complete campo <b>Artículo</b>";
+                field = "#buscador";
+            }
+            else {
+                valor = $("#IdArticulo").val();
+                if (valor == 0) {
+                    error_signal = 1;
+                    msg = "El artículo indicado no existe";
+                    field = "#buscador";
+                }
+                else {
+                    valor = $("#file").val();
+                    if (valor.length == 0) {
+                        error_signal = 1;
+                        msg = "Seleccione un archivo";
+                        field = "#file";
+                    }
+                    else {//Extensiones de imagenes
+                        extensions = new Array(".bmp",
+                                               ".gif",
+                                               ".jpg",
+                                               ".png",
+                                               ".psd",
+                                                ".ai",
+                                                ".cdr",
+                                                ".dwg",
+                                                ".svg",
+                                                ".raw",
+                                                ".nef"
+                                           );
+                        var fileExt = valor.substring(valor.lastIndexOf('.'));
+                        if (extensions.indexOf(fileExt) < 0) {
+                            error_signal = 1;
+                            msg = "El archivo tiene que una imagen <b>(Extensiones válidas: .bmp,.gif,.jpg,.png,.psd,.ai,.cdr,.dwg,.svg,.raw,.nef)</b>";
+                            field = "#file";
+                        }
+                    }
+
+                }
+            }
+        }
+        if (error_signal == 1) {
+            $("#error").addClass("alert alert-danger");
+            $("#error").html("<strong>Atención!</strong> " + msg);
+            $(field).addClass('borderClass');
+            return false;
+        }
+        return true;
+
+    }
+
+</script>
+
+
