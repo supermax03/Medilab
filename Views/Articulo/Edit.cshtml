@@ -7,22 +7,27 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Edit</title>
+    <style>
+        .borderClass {
+            border: 2px solid red;
+            border-radius: 4px;
+        }
+    </style>
 </head>
 <body>
-
-
     <div class="container">
         @using (Html.BeginForm())
         {
 
             @Html.AntiForgeryToken()
-            
+
             <div class="form-horizontal">
                 <h4>Articulo</h4>
                 <hr />
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 @Html.HiddenFor(model => model.Id)
-
+                <div id="error">
+                </div>
                 <div class="form-group">
                     @Html.LabelFor(model => model.Titulo, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
@@ -48,7 +53,7 @@
 
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Guardar Cambios" class="btn btn-primary" />
+                        <input type="submit" value="Guardar Cambios" onclick="return validatefields();" class="btn btn-primary" />
                     </div>
                 </div>
             </div>
@@ -62,47 +67,95 @@
     </div>
 </body>
 </html>
-@section scripts {
+
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script>
-        $(document).ready(function () {
-            $('[data-toggle="tooltip"]').tooltip();
-        });
-        $("#buscador").autocomplete(
-           {
-               minLength: 3, //Empieza a buscar a partir de los 3 caracteres ingresados
-               focus: function (event, ui) {
-                   event.preventDefault(); //Con esta llamada evito que se cargue con el value del autocomplete
-                   $("#buscador").val(ui.item.label);
+<script>
+    function validatefields() {
 
-               },
-               select: function (event, ui) { //Cuando finaliza configuro los valores del campo oculto
-                   event.preventDefault();
-                   $("#buscador").val(ui.item.label);
-                   $("#IdTopico").val(ui.item.value);
-               },
-               source: function (request, response) {
+        $("#error").removeClass('alert alert-danger');
+        $("#Titulo").removeClass('borderClass');
+        $("#buscador").removeClass('borderClass');
+        $("#error").html("");
+        var error_signal = 0
+        var msg = "";
+        var field = "";
+        var valor = $.trim($("#Titulo").val());
+        if (valor.length == 0) {
+            error_signal = 1;
+            msg = "Complete campo <b>Título</b>";
+            field = "#Titulo";
+        }
+        else {
+            valor = $.trim($("#buscador").val());
+            if (valor.length == 0) {
+                error_signal = 1;
+                msg = "Complete campo <b>Tópico</b>";
+                field = "#buscador";
+            }
+            else {
+                valor = $("#IdTopico").val();
+                if (valor == 0) {
+                    error_signal = 1;
+                    msg = "El tópico indicado no existe";
+                    field = "#buscador";
+                }
+            }
+        }
 
-                   $.ajax({
-                       url: '/Topico/BuscarTopico',
-                       type: 'POST',
-                       data: { term: $("#buscador").val() },
-                       cache: false,
-                       dataType: 'json',
-                       success: function (json) {
+        if (error_signal == 1) {
+            $("#error").addClass("alert alert-danger");
+            $("#error").html("<strong>Atención!</strong> " + msg);
+            $(field).addClass('borderClass');
+            return false;
+        }
+        return true;
+    }
+
+</script>
+
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+    $("#buscador").autocomplete(
+       {
+           minLength: 3, //Empieza a buscar a partir de los 3 caracteres ingresados
+           focus: function (event, ui) {
+               event.preventDefault(); //Con esta llamada evito que se cargue con el value del autocomplete
+               $("#buscador").val(ui.item.label);
+
+           },
+           select: function (event, ui) { //Cuando finaliza configuro los valores del campo oculto
+               event.preventDefault();
+               $("#buscador").val(ui.item.label);
+               $("#IdTopico").val(ui.item.value);
+           },
+           source: function (request, response) {
+
+               $.ajax({
+                   url: '/Topico/BuscarTopico',
+                   type: 'POST',
+                   data: { term: $("#buscador").val() },
+                   cache: false,
+                   dataType: 'json',
+                   success: function (json) {
+                       if (json.length > 0) {
                            response($.map(json, function (data) {
                                return {
                                    label: data.value,
                                    value: data.Id
                                };
                            }));
-                       },
-                   })
+                       }
+                       else { $("#IdTopico").val(0); } //Si no lo encuentra limpia el campo oculto del tópico
 
-               }
+                   },
+               })
+
            }
-        );
-    </script>
-}
+       }
+    );
+</script>
+

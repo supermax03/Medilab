@@ -11,26 +11,23 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <style>
-    .modal-dialog {
-    position: initial;
-    }
-
-    .borderClass {
-          border: 2px solid red;
-          border-radius: 4px;
-  
+        .modal-dialog {
+            position: initial;
         }
 
-
+        .borderClass {
+            border: 2px solid red;
+            border-radius: 4px;
+        }
     </style>
 
 
 </head>
 <body>
-    @using (Html.BeginForm()) 
+    @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
-        
+
         <div class="form-horizontal">
             <h4>Topico</h4>
             <hr />
@@ -42,28 +39,28 @@
                     @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
                 </div>
             </div>
-    
+
             <div class="form-group">
                 @Html.LabelFor(model => model.Descripcion, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.EditorFor(model => model.Descripcion, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
                 </div>
-            </div>  
-           
-   
-    
+            </div>
+
+
+
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Guardar Cambios" onclick="return validatefields();" class="btn btn-primary" /> 
+                    <input type="submit" value="Guardar Cambios" onclick="return validatefields();" class="btn btn-primary" />
                 </div>
             </div>
         </div>
     }
-    
+
     <div>
         <a href='@Url.Action("Index", "Topico")'>
-            <img src="https://cdn.icon-icons.com/icons2/217/PNG/512/checklist_25365.png" data-toggle="tooltip" data-placement="top" title="Volver al listado" width="30" height="30" />
+            <img src="https://cdn.icon-icons.com/icons2/217/PNG/512/checklist_25365.png"  title="Volver al listado" width="30" height="30" />
         </a>
     </div>
 </body>
@@ -73,33 +70,32 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
 <script>
- 
-    function validatefields() {               
-      
+
+    function validatefields() {
+
         $("#Nombre").removeClass('borderClass');
         $("#Descripcion").removeClass('borderClass');
-        var valor = $.trim($("#Nombre").val());       
+        var valor = $.trim($("#Nombre").val());
         if (valor.length == 0) {
             bootbox.alert({
-                title: "Atención",
-                message: "Complete Nombre",
+                message: "<img src='https://cdn.icon-icons.com/icons2/208/PNG/256/Open-Folder-Warning256_24778.png' height='40' width='40'/> Complete Nombre!",
                 size: "small"
 
-            });        
+            });
             $("#Nombre").addClass('borderClass');
-       
+
             return false;
         }
         valor = $.trim($("#Descripcion").val());
         if (valor.length == 0) {
             bootbox.alert({
-                title: "Atención",
-                message: "Complete Descripción",
+                message: "<img src='https://cdn.icon-icons.com/icons2/208/PNG/256/Open-Folder-Warning256_24778.png' height='40' width='40'/> Complete Descripción",
                 size: "small"
 
             });
             $("#Descripcion").addClass('borderClass');
             return false;
         }
+        return true;
     }
- </script>
+</script>
