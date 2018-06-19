@@ -101,45 +101,44 @@
     <script>
         $(document).ready(function () {
             $('[data-toggle="tooltip"]').tooltip();
+        });    
+         
+        $("#buscador").autocomplete(
+         {
+             minLength: 3, //Empieza a buscar a partir de los 3 caracteres ingresados
+             focus: function (event, ui) {
+                 event.preventDefault(); //Con esta llamada evito que se cargue con el value del autocomplete
+                 $("#buscador").val(ui.item.label);
 
-            $("#buscador").autocomplete(
-            {
-                minLength: 3, //Empieza a buscar a partir de los 3 caracteres ingresados
-                focus: function (event, ui) {
-                    event.preventDefault(); //Con esta llamada evito que se cargue con el value del autocomplete
-                    $("#buscador").val(ui.item.label);
+             },
+             select: function (event, ui) { //Cuando finaliza configuro los valores del campo oculto
+                 event.preventDefault();
+                 $("#buscador").val(ui.item.label);
+                 $("#IdArticulo").val(ui.item.value);
+             },
+             source: function (request, response) {
 
-                },
-                select: function (event, ui) { //Cuando finaliza configuro los valores del campo oculto
-                    event.preventDefault();
-                    $("#buscador").val(ui.item.label);
-                    $("#IdArticulo").val(ui.item.value);
-                },
-                source: function (request, response) {
+                 $.ajax({
+                     url: '/Articulo/BuscarArticulo',
+                     type: 'POST',
+                     data: { term: $("#buscador").val() },
+                     cache: false,
+                     dataType: 'json',
+                     success: function (json) {
+                         if (json.length > 0) {
+                             response($.map(json, function (data) {
+                                 return {
+                                     label: data.value,
+                                     value: data.Id
+                                 };
+                             }));
+                         }
+                         else { $("#IdArticulo").val(0); }//Si no lo encuentra limpia el campo oculto del articulo
+                     },
+                 })
 
-                    $.ajax({
-                        url: '/Articulo/BuscarArticulo',
-                        type: 'POST',
-                        data: { term: $("#buscador").val() },
-                        cache: false,
-                        dataType: 'json',
-                        success: function (json) {                            
-                            if (json.length > 0) {
-                                response($.map(json, function (data) {
-                                    return {
-                                        label: data.value,
-                                        value: data.Id
-                                    };
-                                }));
-                            }
-                            else { $("#IdArticulo").val(0); }//Si no lo encuentra limpia el campo oculto del articulo
-                        },
-                    })
-
-                }
-            }
-         );
-        });
+             }
+         });
     </script>
 <script>
     function validatefields() {
@@ -147,6 +146,7 @@
         $("#Titulo").removeClass('borderClass');
         $("#buscador").removeClass('borderClass');
         $("#error").html("");
+        window.alert($("#file").val());
         var error_signal = 0
         var msg = "";
         var field = "";
@@ -170,9 +170,37 @@
                     msg = "El artículo indicado no existe";
                     field = "#buscador";
                 }
+                else {
+                    valor = $("#file").val();
+                    if (valor.length == 0) {
+                        error_signal = 1;
+                        msg = "Seleccione un archivo";
+                        field = "#file";
+                    }
+                    else {
+                        extensions = new Array(".bmp",
+                                               ".gif",
+                                               ".jpg",
+                                               ".png",
+                                               ".psd",
+                                                ".ai",
+                                                ".cdr",
+                                                ".dwg",
+                                                ".svg",
+                                                ".raw",
+                                                ".nef"
+                                           );
+                        var fileExt = valor.substring(valor.lastIndexOf('.'));
+                        if (extensions.indexOf(fileExt) < 0) {
+                            error_signal = 1;
+                            msg = "El archivo tiene que una imagen (.bmp,.gif,.jpg,.png,.psd,.ai,.cdr,.dwg,.svg,.raw,.nef)";
+                            field = "#file";
+                        }
+                    }
+
+                   }
             }
         }
-
         if (error_signal == 1) {
             $("#error").addClass("alert alert-danger");
             $("#error").html("<strong>Atención!</strong> " + msg);
