@@ -80,6 +80,7 @@
         $("#error").removeClass('alert alert-danger');
         $("#Titulo").removeClass('borderClass');
         $("#buscador").removeClass('borderClass');
+        $("#Comentarios").removeClass('borderClass');
         $("#error").html("");
         var error_signal = 0
         var msg = "";
@@ -95,8 +96,9 @@
             if (valor.length == 0) {
                 error_signal = 1;
                 msg = "Complete campo <b>Tópico</b>";
-                field = "#buscador";
+                field = "#buscador";            
             }
+
             else {
                 valor = $("#IdTopico").val();
                 if (valor == 0) {
@@ -104,6 +106,13 @@
                     msg = "El tópico indicado no existe";
                     field = "#buscador";
                 }
+                else {
+                    valor = $.trim($("#Comentarios").val());              
+                    if (valor.length == 0) {
+                        error_signal = 1;
+                        msg = "Complete Comentarios";
+                        field = "#Comentarios";
+                    }
             }
         }
 
@@ -117,6 +126,7 @@
     }
 
 </script>
+
 <script>
  $(document).ready(function () {
         $('[data-toggle="tooltip"]').tooltip();

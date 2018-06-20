@@ -91,7 +91,7 @@
                 <div class="form-group">
                     <label class="control-label col-md-2">Imagen</label>
                     <div class="col-md-10">
-                        <span class="btn btn-primary btn-file">
+                        <span id="cargador" class="btn btn-primary btn-file">
                             Archivo... <input type="file" name="file" id="file" accept="image/*" />
                         </span>
                     </div>
@@ -171,6 +171,8 @@
         $("#error").removeClass('alert alert-danger');
         $("#Titulo").removeClass('borderClass');
         $("#buscador").removeClass('borderClass');
+        $("#cargador").removeClass('borderClass');
+        $("#Comentarios").removeClass('borderClass');
         $("#error").html("");
         var error_signal = 0
         var msg = "";
@@ -195,12 +197,19 @@
                     msg = "El artículo indicado no existe";
                     field = "#buscador";
                 }
-                else {                  
+                else {
+                    valor = $.trim($("#Comentarios").val());
+                    if (valor.length == 0) {
+                        error_signal = 1;
+                        msg = "Complete Comentarios";
+                        field = "#Comentarios";
+                    }
+                    else {
                         valor = $("#file").val().length == 0 ? $("#Path").val() : $("#file").val();
                         if (valor.length == 0) {
                             error_signal = 1;
                             msg = "Seleccione un archivo";
-                            field = "#file";
+                            field = "#cargador";
                         }
                         else {//Extensiones de imagenes
                             extensions = new Array(".bmp",
@@ -219,11 +228,11 @@
                             if (extensions.indexOf(fileExt) < 0) {
                                 error_signal = 1;
                                 msg = "El archivo tiene que una imagen <b>(Extensiones válidas: .bmp,.gif,.jpg,.png,.psd,.ai,.cdr,.dwg,.svg,.raw,.nef)</b>";
-                                field = "#file";
+                                field = "#cargador";
                             }
                         }
-                    
 
+                    }
                 }
             }
         }

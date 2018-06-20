@@ -77,6 +77,7 @@
         $("#error").removeClass('alert alert-danger');
         $("#Titulo").removeClass('borderClass');
         $("#buscador").removeClass('borderClass');
+        $("#Comentarios").removeClass('borderClass');
         $("#error").html("");
         var error_signal = 0
         var msg = "";
@@ -100,6 +101,14 @@
                     error_signal = 1;
                     msg = "El tópico indicado no existe";
                     field = "#buscador";
+                }
+                else {
+                    valor = $.trim($("#Comentarios").val());
+                    if (valor.length == 0) {
+                        error_signal = 1;
+                        msg = "Complete Comentarios";
+                        field = "#Comentarios";
+                    }
                 }
             }
         }
