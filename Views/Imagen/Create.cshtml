@@ -49,7 +49,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.Titulo, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.Titulo, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(model => model.Titulo, new { htmlAttributes = new { @class = "form-control", @maxlength = "50" } })
                     @Html.ValidationMessageFor(model => model.Titulo, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -57,7 +57,7 @@
             <div class="form-group">
                 <label class="control-label col-md-2">Articulo</label>
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.Articulo.Titulo, new { htmlAttributes = new { @class = "form-control", @id = "buscador" } })
+                    @Html.EditorFor(model => model.Articulo.Titulo, new { htmlAttributes = new { @class = "form-control", @id = "buscador", @maxlength = "50" } })
                     @Html.ValidationMessageFor(model => model.Articulo.Titulo, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -65,7 +65,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.Comentarios, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.TextAreaFor(model => model.Comentarios, 5, 5, htmlAttributes: new { @class = "form-control", style = "width: 40%; max-width: 40%;" })
+                    @Html.TextAreaFor(model => model.Comentarios, 5, 5, htmlAttributes: new { @class = "form-control", style = "width: 40%; max-width: 40%;", @maxlength = "200" })
                     @Html.ValidationMessageFor(model => model.Comentarios, "", new { @class = "text-danger" })
                 </div>
             </div>
