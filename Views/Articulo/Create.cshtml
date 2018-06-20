@@ -96,7 +96,7 @@
             if (valor.length == 0) {
                 error_signal = 1;
                 msg = "Complete campo <b>Tópico</b>";
-                field = "#buscador";            
+                field = "#buscador";
             }
 
             else {
@@ -107,15 +107,15 @@
                     field = "#buscador";
                 }
                 else {
-                    valor = $.trim($("#Comentarios").val());              
+                    valor = $.trim($("#Comentarios").val());
                     if (valor.length == 0) {
                         error_signal = 1;
                         msg = "Complete Comentarios";
                         field = "#Comentarios";
                     }
+                }
             }
         }
-
         if (error_signal == 1) {
             $("#error").addClass("alert alert-danger");
             $("#error").html("<strong>Atención!</strong> " + msg);

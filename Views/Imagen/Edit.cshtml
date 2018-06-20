@@ -85,6 +85,7 @@
                     <div class="col-md-10">
                         @Html.TextAreaFor(model => model.Comentarios, 5, 5, htmlAttributes: new { @class = "form-control", style = "width: 40%; max-width: 40%;", @maxlength = "200" })
                         @Html.ValidationMessageFor(model => model.Comentarios, "", new { @class = "text-danger" })
+                        <span id="counter" style="color:#FF6601;"></span>
                     </div>
                 </div>
 
@@ -126,6 +127,10 @@
         $(document).ready(function () {
             $('[data-toggle="tooltip"]').tooltip();
         });
+        $("#Comentarios").keyup(function () {
+            $("#counter").text("Caracteres restantes: " + (200 - $(this).val().length));
+        });
+
             $("#buscador").autocomplete(
             {
                 minLength: 3, //Empieza a buscar a partir de los 3 caracteres ingresados
