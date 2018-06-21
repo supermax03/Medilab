@@ -134,6 +134,16 @@
  });
 
 
+ $('#Titulo').blur(function () {
+     var valor = $('#Titulo').val()
+     $('#Titulo').val(valor.charAt(0).toUpperCase() + valor.substr(1).toLowerCase());
+ });
+
+ $('#buscador').blur(function () {
+     var valor = $('#buscador').val()
+     $('#buscador').val(valor.charAt(0).toUpperCase() + valor.substr(1).toLowerCase());
+ });
+
  $("#Titulo").keyup(function () {
      $("#counterTitulo").text("Caracteres restantes: " + (50 - $(this).val().length));
  });
