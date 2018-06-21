@@ -13,6 +13,7 @@
             border: 2px solid red;
             border-radius: 4px;
         }
+       
     </style>
 
 
@@ -105,6 +106,16 @@
 <script>
     $(document).ready(function () {
         $('[data-toggle="tooltip"]').tooltip();
+    });
+
+    $('#Nombre').blur(function () {        
+        var valor = $('#Nombre').val()
+        $('#Nombre').val(valor.charAt(0).toUpperCase()+valor.substr(1).toLowerCase());
+    });
+
+    $('#Descripcion').blur(function () {
+        var valor = $('#Descripcion').val()
+        $('#Descripcion').val(valor.charAt(0).toUpperCase() + valor.substr(1).toLowerCase());
     });
 
     $("#Nombre").keyup(function () {
