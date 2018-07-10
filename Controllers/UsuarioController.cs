@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using MediLab.Models;
 using MediLab.Controllers.MyClasses;
 using System.Web.Routing;
+using MediLab.Servicios;
 
 namespace MediLab.Controllers
 {
@@ -16,7 +17,7 @@ namespace MediLab.Controllers
         public UsuarioController()
         {
             db = new MedicinaEntities();
-
+            string status = Servicios.Servicios.getStatusServiceUsuarios();
         }     
         public ActionResult Index(ResultSet response = null, int page = 1, int pageSize = 5)
         {
@@ -79,6 +80,7 @@ namespace MediLab.Controllers
         
         public ActionResult Create()
         {
+            
             ViewBag.Rol = getRoles();
             ViewBag.Estado = getEstados();           
             return View();
@@ -89,6 +91,7 @@ namespace MediLab.Controllers
         {
             try
             {
+                
                 ResultSet response = new ResultSet();
                 Usuario usuario = new Usuario()
                 {                   
@@ -120,6 +123,7 @@ namespace MediLab.Controllers
         {
             try
             {
+
                 ResultSet response = new ResultSet();
                 Usuario usuario = db.Usuario.Where(s => s.Id.Equals(id)).First();
                 usuario.Username = collection["Username"].Trim();
