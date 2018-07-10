@@ -1,0 +1,77 @@
+﻿@model MediLab.Models.Usuario
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div>
+        <h4>Usuario</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                Usuario
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Username)
+            </dd>
+
+
+            <dt>
+                Fecha de Alta
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.RegDate)
+            </dd>
+
+            <dt>
+                Email
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Email)
+            </dd>
+
+            <dt>
+                Rol
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Rol1.Nombre)
+            </dd>
+
+            <dt>
+                Estado
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.EstadoUsuario.Nombre)
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        <a href='@Url.Action("Index", "Usuario")'>
+            <img src="https://cdn.icon-icons.com/icons2/217/PNG/512/checklist_25365.png" data-toggle="tooltip" data-placement="top" title="Volver al listado" width="30" height="30" />
+        </a>
+        &nbsp;
+        <a href='@Url.Action("Edit", "Usuario",new { id=Model.Id })'>
+            <img src="https://cdn.icon-icons.com/icons2/215/PNG/256/edit-validated256_25237.png" data-toggle="tooltip" data-placement="top" title="Editar" width="30" height="30" />
+        </a>
+    </p>
+</body>
+</html>
+@section scripts {
+    
+    <script>
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
+}

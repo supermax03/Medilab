@@ -13,6 +13,24 @@
             border-radius: 4px;
         }
     </style>
+
+
+    <!--<script type="text/javascript" src="http://js.nicedit.com/nicEdit-latest.js"></script>-->
+    <script src="http://tinymce.cachefly.net/4.0/tinymce.min.js"></script>
+    <script type="application/x-javascript">
+
+        tinymce.init({selector:'#Comentarios'});
+
+    </script>
+    <!--<script type="text/javascript">
+//<![CDATA[
+  bkLib.onDomLoaded(function() {
+        new nicEditor().panelInstance('Comentarios');
+
+  });
+  //]]>
+    </script>-->
+
 </head>
 <body>
     @using (Html.BeginForm()) 
@@ -128,10 +146,14 @@
 
 </script>
 
+
+
 <script>
  $(document).ready(function () {
         $('[data-toggle="tooltip"]').tooltip();
  });
+
+
 
 
  $('#Titulo').blur(function () {

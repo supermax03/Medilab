@@ -208,6 +208,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Controllers\MyClasses\ResultSet.cs" />
     <Compile Include="Controllers\ImagenController.cs" />
     <Compile Include="Controllers\TopicoController.cs" />
@@ -219,6 +220,9 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Articulo.cs">
+      <DependentUpon>MediLabManagement.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EstadoUsuario.cs">
       <DependentUpon>MediLabManagement.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
@@ -244,7 +248,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MediLabManagement.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Rol.cs">
+      <DependentUpon>MediLabManagement.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Topico.cs">
+      <DependentUpon>MediLabManagement.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Usuario.cs">
       <DependentUpon>MediLabManagement.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -350,6 +360,10 @@
     <Content Include="Views\Imagen\Index.cshtml" />
     <Content Include="Views\Imagen\Create.cshtml" />
     <Content Include="Views\Imagen\Edit.cshtml" />
+    <Content Include="Views\Usuario\Index.cshtml" />
+    <Content Include="Views\Usuario\Details.cshtml" />
+    <Content Include="Views\Usuario\Edit.cshtml" />
+    <Content Include="Views\Usuario\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Adjuntos\" />
