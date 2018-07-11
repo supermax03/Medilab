@@ -1,5 +1,11 @@
 ﻿@model IEnumerable<MediLab.Models.Usuario>
 @using MediLab.Controllers.MyClasses;
+@using MediLab.Servicios;
+
+@{
+    ViewBag.estadoServicio = Servicios.getStatusServiceUsuarios();
+
+}
 
 <!DOCTYPE html>
 
@@ -113,7 +119,7 @@
             <div id="collapse1" class="panel-collapse collapse in">
                 
                 <div class="panel-body">
-                    <h4><span class="label label-default">Apagado</span></h4>
+                    <h4><span class="label label-default">@ViewBag.estadoServicio</span></h4>
                     <div class="btn-group">
                         <button type="button" class="btn btn-success">On</button>
                         <button type="button" class="btn btn-danger">Off</button>

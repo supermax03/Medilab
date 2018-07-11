@@ -17,7 +17,7 @@ namespace MediLab.Controllers
         public UsuarioController()
         {
             db = new MedicinaEntities();
-            string status = Servicios.Servicios.getStatusServiceUsuarios();
+        
         }     
         public ActionResult Index(ResultSet response = null, int page = 1, int pageSize = 5)
         {

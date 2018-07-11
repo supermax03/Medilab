@@ -9,7 +9,9 @@ namespace MediLab.Servicios
     
     public static class Servicios
     {
-        private static ServiceController scUsuarios = new ServiceController("Programador de tareas");
+        private static String scUsuariosDisplayName = "Unlock Users";
+        private static ServiceController scUsuarios = new ServiceController(scUsuariosDisplayName);
+        
         public static String getStatusServiceUsuarios()
         {
             return scUsuarios.Status.ToString();
@@ -22,6 +24,10 @@ namespace MediLab.Servicios
                 scUsuarios.Stop();
                 scUsuarios.Refresh();
             }
+        }
+        public static String getUUProcName()
+        {
+            return Servicios.scUsuariosDisplayName;
         }
         public static void turnOnServiceUsuarios()
         {
