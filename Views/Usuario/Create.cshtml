@@ -108,6 +108,7 @@
         var error_signal = 0
         var msg = "";
         var field = "";
+
         var valor = $.trim($("#Username").val());
         if (valor.length == 0) {
             error_signal = 1;
@@ -115,30 +116,49 @@
             field = "#Username";
         }
         else {
-            valor = $.trim($("#Email").val());
-            if (valor.length == 0) {
-                error_signal = 1;
-                msg = "Complete campo <b>Email</b>";
-                field = "#Email";
+            re = /^\w+$/;
 
+            if (!re.test(valor)) {
+                error_signal = 1;
+                msg = "El campo <b>Username</b> debe contener solo caracteres, números y guiones bajos";
+                field = "#Username";
             }
             else {
-                valor = $("#Rol option:selected").text();
-                if (valor.startsWith("Seleccione")) {
+                re = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/;
+                valor = $.trim($("#Password").val());               
+                if (!re.test(valor)) {
                     error_signal = 1;
-                    msg = "Seleccione un <b>Rol</b>";
-                    field = "#Rol";
+                    msg = "El campo <b>Password</b> debe contener al menos un número, una letra minúscula, una letra en mayúscula y al menos 6 caracteres";
+                    field = "#Password";
                 }
                 else {
-                    valor = $("#Estado option:selected").text();
-                    if (valor.startsWith("Seleccione")) {
+
+                    valor = $.trim($("#Email").val());
+                    if (valor.length == 0) {
                         error_signal = 1;
-                        msg = "Seleccione un <b>Estado</b>";
-                        field = "#Estado";
+                        msg = "Complete campo <b>Email</b>";
+                        field = "#Email";
+
                     }
+                    else {
+                        valor = $("#Rol option:selected").text();
+                        if (valor.startsWith("Seleccione")) {
+                            error_signal = 1;
+                            msg = "Seleccione un <b>Rol</b>";
+                            field = "#Rol";
+                        }
+                        else {
+                            valor = $("#Estado option:selected").text();
+                            if (valor.startsWith("Seleccione")) {
+                                error_signal = 1;
+                                msg = "Seleccione un <b>Estado</b>";
+                                field = "#Estado";
+                            }
 
+                        }
+
+                    }
                 }
-
             }
         }
         if (error_signal == 1) {
