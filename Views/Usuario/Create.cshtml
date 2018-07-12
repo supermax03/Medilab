@@ -17,13 +17,17 @@
             <h4>Crear Usuario</h4>
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div id="error">
+            </div>
             <div class="form-group">
                 @Html.LabelFor(model => model.Username, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                        @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                        @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off", @maxlength = "50" } })
                         @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+                        &nbsp;
+                        <span id="counterUserName" style="color:#FF6601;"></span>
                     </div>
                 </div>
             </div>
@@ -44,8 +48,10 @@
                     <div class="col-md-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @maxlength = "50",@autocomplete = "off", @type = "email" } })
                             @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                            &nbsp;
+                            <span id="counterEmail" style="color:#FF6601;"></span>
                         </div>
 
                 </div>
@@ -77,7 +83,7 @@
     
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Guardar Cambios" class="btn btn-primary" />
+                    <input type="submit" value="Guardar Cambios" onclick="return validatefields();" class="btn btn-primary" />
                 </div>
             </div>
         </div>
@@ -94,7 +100,83 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
+    function validatefields() {
+        $("#error").removeClass('alert alert-warning');
+        $("#Username").removeClass('borderClass');
+        $("#Email").removeClass('borderClass');
+        $("#error").html("");
+        var error_signal = 0
+        var msg = "";
+        var field = "";
+        var valor = $.trim($("#Username").val());
+        if (valor.length == 0) {
+            error_signal = 1;
+            msg = "Complete campo <b>Username</b>";
+            field = "#Username";
+        }
+        else {
+            valor = $.trim($("#Email").val());
+            if (valor.length == 0) {
+                error_signal = 1;
+                msg = "Complete campo <b>Email</b>";
+                field = "#Email";
+
+            }
+            else {
+                valor = $("#Rol option:selected").text();
+                if (valor.startsWith("Seleccione")) {
+                    error_signal = 1;
+                    msg = "Seleccione un <b>Rol</b>";
+                    field = "#Rol";
+                }
+                else {
+                    valor = $("#Estado option:selected").text();
+                    if (valor.startsWith("Seleccione")) {
+                        error_signal = 1;
+                        msg = "Seleccione un <b>Estado</b>";
+                        field = "#Estado";
+                    }
+
+                }
+
+            }
+        }
+        if (error_signal == 1) {
+            $("#error").addClass("alert alert-warning");
+            $("#error").attr("role", "alert");
+            $("#error").html("<strong>Atención!</strong> " + msg);
+            $(field).addClass('borderClass');
+            return false;
+        }
+        return true;
+
+
+    }
+
+
+</script>
+<script>
     $(document).ready(function () {
         $('[data-toggle="tooltip"]').tooltip();
     });
+
+    $('#Username').blur(function () {
+        var valor = $('#Username').val()
+        $('#Username').val(valor.charAt(0).toUpperCase() + valor.substr(1).toLowerCase());
+    });
+
+    $("#Username").keyup(function () {
+        $("#counterUserName").text("Caracteres restantes: " + (50 - $(this).val().length));
+    });
+
+
+    $('#Email').blur(function () {
+        var valor = $('#Email').val()
+        $('#Email').val(valor.charAt(0).toUpperCase() + valor.substr(1).toLowerCase());
+    });
+
+    $("#Email").keyup(function () {
+        $("#counterEmail").text("Caracteres restantes: " + (50 - $(this).val().length));
+    });
+
 </script>
