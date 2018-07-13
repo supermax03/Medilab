@@ -86,6 +86,27 @@ namespace MediLab.Controllers
             return View();
         }
 
+        public JsonResult GetEstadoUnlockUsers()
+        {
+
+            var resultado = Servicios.Servicios.getStatusServiceUsuarios();
+            return Json(resultado, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult StopUnlockUsers()
+        {
+
+            Servicios.Servicios.turnOffServiceUsuarios();
+            return Json(Servicios.Servicios.getStatusServiceUsuarios(), JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult StartUnlockUsers()
+        {
+
+            Servicios.Servicios.turnOnServiceUsuarios();
+            return Json(Servicios.Servicios.getStatusServiceUsuarios(), JsonRequestBehavior.AllowGet);
+        }
+
+
+
         [HttpPost]
         public ActionResult Create(FormCollection collection)
         {

@@ -9,21 +9,28 @@ namespace MediLab.Servicios
     
     public static class Servicios
     {
-        private static String scUsuariosDisplayName = "Unlock Users";
+        private static String scUsuariosDisplayName = "UnlockUsersService";//"Unlock Users";
         private static ServiceController scUsuarios = new ServiceController(scUsuariosDisplayName);
         
         public static String getStatusServiceUsuarios()
         {
+            scUsuarios.Refresh();
             return scUsuarios.Status.ToString();
         }
         public static void turnOffServiceUsuarios()
         {
-            if ((!scUsuarios.Status.Equals(ServiceControllerStatus.Stopped)) &&
-                  (!scUsuarios.Status.Equals(ServiceControllerStatus.StopPending)))
+            try
             {
-                scUsuarios.Stop();
-                scUsuarios.Refresh();
+                if ((!scUsuarios.Status.Equals(ServiceControllerStatus.Stopped)) &&
+                      (!scUsuarios.Status.Equals(ServiceControllerStatus.StopPending)))
+                {
+                    
+                    scUsuarios.Stop();
+                    scUsuarios.Refresh();
+                }
             }
+            catch(Exception exc)
+            { }
         }
         public static String getUUProcName()
         {
@@ -31,13 +38,20 @@ namespace MediLab.Servicios
         }
         public static void turnOnServiceUsuarios()
         {
+            try
+            {
 
-            if ((scUsuarios.Status.Equals(ServiceControllerStatus.Stopped)) ||
-                   (scUsuarios.Status.Equals(ServiceControllerStatus.StopPending)))
-            {           
-                            
-                scUsuarios.Start();
-                scUsuarios.Refresh();
+                if ((scUsuarios.Status.Equals(ServiceControllerStatus.Stopped)) ||
+                       (scUsuarios.Status.Equals(ServiceControllerStatus.StopPending)))
+                {
+
+                    scUsuarios.Start();
+                    scUsuarios.Refresh();
+                }
+            }
+            catch(Exception ex)
+            {
+
             }
 
         }
