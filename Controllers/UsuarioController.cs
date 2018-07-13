@@ -92,12 +92,16 @@ namespace MediLab.Controllers
             var resultado = Servicios.Servicios.getStatusServiceUsuarios();
             return Json(resultado, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpPost]
         public JsonResult StopUnlockUsers()
         {
 
             Servicios.Servicios.turnOffServiceUsuarios();
             return Json(Servicios.Servicios.getStatusServiceUsuarios(), JsonRequestBehavior.AllowGet);
         }
+
+        [HttpPost]
         public JsonResult StartUnlockUsers()
         {
 

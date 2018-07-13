@@ -193,8 +193,7 @@
         $('#btnConsultaEstado').click(function () {           
             $.ajax({
                 type: 'GET',
-                url: "/Usuario/GetEstadoUnlockUsers",
-                type: 'POST',
+                url: "/Usuario/GetEstadoUnlockUsers",             
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
                 success: function (response) {                   
@@ -211,9 +210,8 @@
 
         $('#btnApagarServicio').click(function () {
             $.ajax({
-                type: 'GET',
-                url: "/Usuario/StopUnlockUsers",
                 type: 'POST',
+                url: "/Usuario/StopUnlockUsers",                
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
                 success: function (response) {
@@ -230,9 +228,8 @@
 
         $('#btnPrenderServicio').click(function () {
             $.ajax({
-                type: 'GET',
-                url: "/Usuario/StartUnlockUsers",
                 type: 'POST',
+                url: "/Usuario/StartUnlockUsers",           
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
                 success: function (response) {
