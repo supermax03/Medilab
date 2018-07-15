@@ -92,6 +92,12 @@ namespace MediLab.Controllers
             var resultado = Servicios.Servicios.getStatusServiceUsuarios();
             return Json(resultado, JsonRequestBehavior.AllowGet);
         }
+        public JsonResult GetEstadoMailer()
+        {
+
+            var resultado = Servicios.Servicios.getStatusMailerService();
+            return Json(resultado, JsonRequestBehavior.AllowGet);
+        }
 
         [HttpPost]
         public JsonResult StopUnlockUsers()
@@ -102,11 +108,27 @@ namespace MediLab.Controllers
         }
 
         [HttpPost]
+        public JsonResult StopMailer()
+        {
+
+            Servicios.Servicios.turnOffMailer();
+            return Json(Servicios.Servicios.getStatusMailerService(), JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
         public JsonResult StartUnlockUsers()
         {
 
             Servicios.Servicios.turnOnServiceUsuarios();
             return Json(Servicios.Servicios.getStatusServiceUsuarios(), JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult StartMailer()
+        {
+
+            Servicios.Servicios.turnOnMailer();
+            return Json(Servicios.Servicios.getStatusMailerService(), JsonRequestBehavior.AllowGet);
         }
 
 
@@ -129,6 +151,18 @@ namespace MediLab.Controllers
                     Email=collection["Email"].Trim()
 
                 };
+
+               
+
+                Novedad novedad = new Novedad()
+                {
+                    IdUser = usuario.Id,
+                    FechaPublicacion = DateTime.Now,
+                    IdTemplate = (int)MyTemplate.TypeOp.CreateUser
+
+                };
+
+                db.Novedad.Add(novedad);
                 db.Usuario.Add(usuario);
                 db.SaveChanges();
                 response.Code = 1;

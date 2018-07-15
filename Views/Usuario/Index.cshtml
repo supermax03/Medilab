@@ -139,11 +139,11 @@
             </div>
             <div id="collapse3" class="panel-collapse collapse">
                 <div class="panel-body">
-                    <h4><span class="label label-default">Apagado</span></h4>
+                    <h4><span class="label label-default"  id="lblEstadoMailer">Apagado</span></h4>
                     <div class="btn-group">
-                        <button type="button" class="btn btn-danger">Prender</button>
-                        <button type="button" class="btn btn-success">Apagar</button>
-                        <button type="button" class="btn btn-warning">Estado</button>                
+                        <button type="button" id="btnPrenderMailer" class="btn btn-success">Prender</button>
+                        <button type="button" id="btnApagarMailer" class="btn btn-danger">Apagar</button>
+                        <button type="button" id="btnEstadoMailer" class="btn btn-warning">Estado</button>                
                     </div>
                 </div>
             </div>
@@ -244,7 +244,61 @@
 
     });
 
+    $(function () {
+        $('#btnEstadoMailer').click(function () {
+            $.ajax({
+                type: 'GET',
+                url: "/Usuario/GetEstadoMailer",
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                success: function (response) {
+                    $('#lblEstadoMailer').html(response);
+                },
+                error: function (error) {
 
+                    // alert('Request Status: ' + error.status + ' Status Text: ' +error.statusText + ' ' + error.responseText);
+                    console.log(error);
+                }
+            });
+        });
+
+
+        $('#btnApagarMailer').click(function () {
+            $.ajax({
+                type: 'POST',
+                url: "/Usuario/StopMailer",
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                success: function (response) {
+                    $('#lblEstadoMailer').html(response);
+                },
+                error: function (error) {
+
+                    //alert('Request Status: ' + error.status + ' Status Text: ' + error.statusText + ' ' + error.responseText);
+                    console.log(error);
+                }
+            });
+        });
+
+
+        $('#btnPrenderMailer').click(function () {
+            $.ajax({
+                type: 'POST',
+                url: "/Usuario/StartMailer",
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                success: function (response) {
+                    $('#lblEstadoMailer').html(response);
+                },
+                error: function (error) {
+
+                    //alert('Request Status: ' + error.status + ' Status Text: ' + error.statusText + ' ' + error.responseText);
+                    console.log(error);
+                }
+            });
+        });
+
+    });
 
 
 </script>

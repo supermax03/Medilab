@@ -209,6 +209,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\MyClasses\Template.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Controllers\MyClasses\ResultSet.cs" />
     <Compile Include="Controllers\ImagenController.cs" />
@@ -249,7 +250,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MediLabManagement.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Novedad.cs">
+      <DependentUpon>MediLabManagement.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Rol.cs">
+      <DependentUpon>MediLabManagement.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Template.cs">
       <DependentUpon>MediLabManagement.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Topico.cs">

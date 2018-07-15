@@ -12,24 +12,20 @@ namespace MediLab.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Usuario
+    public partial class Template
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Usuario()
+        public Template()
         {
             this.Novedad = new HashSet<Novedad>();
         }
     
         public int Id { get; set; }
-        public string Username { get; set; }
-        public string Password { get; set; }
-        public System.DateTime RegDate { get; set; }
-        public string Email { get; set; }
-        public int Rol { get; set; }
-        public int Estado { get; set; }
+        public string Nombre { get; set; }
+        public string Content { get; set; }
+        public string Title { get; set; }
+        public string Msg { get; set; }
     
-        public virtual Rol Rol1 { get; set; }
-        public virtual EstadoUsuario EstadoUsuario { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Novedad> Novedad { get; set; }
     }

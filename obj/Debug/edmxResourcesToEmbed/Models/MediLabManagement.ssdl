@@ -38,12 +38,31 @@
     <Property Name="Padre" Type="int" />
     <Property Name="Hermano" Type="int" />
   </EntityType>
+  <EntityType Name="Novedad">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FechaPublicacion" Type="datetime" />
+    <Property Name="IdTemplate" Type="int" Nullable="false" />
+    <Property Name="IdUser" Type="int" />
+  </EntityType>
   <EntityType Name="Rol">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Nombre" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Template">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Content" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Title" Type="nvarchar" MaxLength="100" />
+    <Property Name="Msg" Type="nvarchar" MaxLength="100" />
   </EntityType>
   <EntityType Name="Topico">
     <Key>
@@ -95,6 +114,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK__Novedad__IdTempl__571DF1D5">
+    <End Role="Template" Type="Self.Template" Multiplicity="1" />
+    <End Role="Novedad" Type="Self.Novedad" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Template">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Novedad">
+        <PropertyRef Name="IdTemplate" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Novedad__IdUser__5812160E">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+    <End Role="Novedad" Type="Self.Novedad" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Novedad">
+        <PropertyRef Name="IdUser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Usuario_EstadoUsuario">
     <End Role="EstadoUsuario" Type="Self.EstadoUsuario" Multiplicity="1" />
     <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
@@ -126,7 +169,9 @@
     <EntitySet Name="EstadoUsuario" EntityType="Self.EstadoUsuario" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Imagen" EntityType="Self.Imagen" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Item" EntityType="Self.Item" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Novedad" EntityType="Self.Novedad" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Rol" EntityType="Self.Rol" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Template" EntityType="Self.Template" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Topico" EntityType="Self.Topico" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK__Articulo__IdTopi__34C8D9D1" Association="Self.FK__Articulo__IdTopi__34C8D9D1">
@@ -136,6 +181,14 @@
     <AssociationSet Name="FK__Imagen__IdArticu__3E52440B" Association="Self.FK__Imagen__IdArticu__3E52440B">
       <End Role="Articulo" EntitySet="Articulo" />
       <End Role="Imagen" EntitySet="Imagen" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Novedad__IdTempl__571DF1D5" Association="Self.FK__Novedad__IdTempl__571DF1D5">
+      <End Role="Template" EntitySet="Template" />
+      <End Role="Novedad" EntitySet="Novedad" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Novedad__IdUser__5812160E" Association="Self.FK__Novedad__IdUser__5812160E">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="Novedad" EntitySet="Novedad" />
     </AssociationSet>
     <AssociationSet Name="FK_Usuario_EstadoUsuario" Association="Self.FK_Usuario_EstadoUsuario">
       <End Role="EstadoUsuario" EntitySet="EstadoUsuario" />

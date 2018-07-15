@@ -181,7 +181,7 @@
 
     $('#Username').blur(function () {
         var valor = $('#Username').val()
-        $('#Username').val(valor.charAt(0).toUpperCase() + valor.substr(1).toLowerCase());
+        $('#Username').val(valor.toLowerCase());
     });
 
     $("#Username").keyup(function () {
