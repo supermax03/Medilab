@@ -198,9 +198,7 @@
                 success: function (response) {
                     $('#lblEstadoUnlockUsers').html(response);
                 },
-                error: function (error) {
-
-                    // alert('Request Status: ' + error.status + ' Status Text: ' +error.statusText + ' ' + error.responseText);
+                error: function (error) {                   
                     console.log(error);
                 }
             });
@@ -215,9 +213,7 @@
                 success: function (response) {
                     $('#lblEstadoUnlockUsers').html(response);
                 },
-                error: function (error) {
-
-                    //alert('Request Status: ' + error.status + ' Status Text: ' + error.statusText + ' ' + error.responseText);
+                error: function (error) {                 
                     console.log(error);
                 }
             });
@@ -233,9 +229,7 @@
                 success: function (response) {
                     $('#lblEstadoUnlockUsers').html(response);
                 },
-                error: function (error) {
-
-                    //alert('Request Status: ' + error.status + ' Status Text: ' + error.statusText + ' ' + error.responseText);
+                error: function (error) {                   
                     console.log(error);
                 }
             });
@@ -250,16 +244,13 @@
                 success: function (response) {
                     $('#lblEstadoMailer').html(response);
                 },
-                error: function (error) {
-
-                    // alert('Request Status: ' + error.status + ' Status Text: ' +error.statusText + ' ' + error.responseText);
+                error: function (error) {                    
                     console.log(error);
                 }
             });
         });
 
-        $('#btnApagarMailer').click(
-           function () {
+        $('#btnApagarMailer').click(function () {
                $.ajax({
                    type: 'POST',
                    url: "/Usuario/StopMailer",
@@ -268,9 +259,7 @@
                    success: function (response) {
                        $('#lblEstadoMailer').html(response);
                    },
-                   error: function (error) {
-
-                       //alert('Request Status: ' + error.status + ' Status Text: ' + error.statusText + ' ' + error.responseText);
+                   error: function (error) {                       
                        console.log(error);
                    }
                });
@@ -285,9 +274,7 @@
                 success: function (response) {
                     $('#lblEstadoMailer').html(response);
                 },
-                error: function (error) {
-
-                    //alert('Request Status: ' + error.status + ' Status Text: ' + error.statusText + ' ' + error.responseText);
+                error: function (error) {              
                     console.log(error);
                 }
             });
