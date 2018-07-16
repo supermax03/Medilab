@@ -4,6 +4,7 @@
 
 @{
     ViewBag.estadoServicio = Servicios.getStatusServiceUsuarios();
+    ViewBag.estadoMailer = Servicios.getStatusMailerService();
 
 }
 
@@ -139,7 +140,7 @@
             </div>
             <div id="collapse3" class="panel-collapse collapse">
                 <div class="panel-body">
-                    <h4><span class="label label-default" id="lblEstadoMailer">Apagado</span></h4>
+                    <h4><span class="label label-default" id="lblEstadoMailer">@ViewBag.estadoMailer</span></h4>
                     <div class="btn-group">
                         <button type="button" id="btnPrenderMailer" class="btn btn-success">Prender</button>
                         <button type="button" id="btnApagarMailer" class="btn btn-danger">Apagar</button>
@@ -279,10 +280,7 @@
                 }
             });
         });
-
     });
-
-
 
 </script>
 
