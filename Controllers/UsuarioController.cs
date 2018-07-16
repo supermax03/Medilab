@@ -186,10 +186,7 @@ namespace MediLab.Controllers
             {
 
                 ResultSet response = new ResultSet();
-                Usuario usuario = db.Usuario.Where(s => s.Id.Equals(id)).First();
-                usuario.Username = collection["Username"].Trim();
-
-
+                Usuario usuario = db.Usuario.Where(s => s.Id.Equals(id)).First();              
                 if (!usuario.Password.Equals(collection["Password"].Trim()))//Aplicar modulo de encriptacion y desencriptacion
                 {
                     Novedad novedad = new Novedad()
