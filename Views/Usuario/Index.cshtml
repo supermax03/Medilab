@@ -106,7 +106,7 @@
         <ul class="pagination">
             <li>@Html.ActionLink(@i.ToString(), "Index", "Usuario", new { page = @i }, null)</li>
         </ul>
-    }   
+    }
     <div class="panel-group" id="accordion">
         <div class="panel panel-primary">
             <div class="panel-heading">
@@ -117,18 +117,18 @@
                 </h4>
             </div>
             <div id="collapse1" class="panel-collapse collapse in">
-                
+
                 <div class="panel-body">
                     <h4><span class="label label-default" id="lblEstadoUnlockUsers">@ViewBag.estadoServicio</span></h4>
                     <div class="btn-group">
                         <button type="button" id="btnPrenderServicio" class="btn btn-success">Prender</button>
                         <button type="button" id="btnApagarServicio" class="btn btn-danger">Apagar</button>
-                        <button type="button"  id="btnConsultaEstado" class="btn btn-warning">Estado</button>
+                        <button type="button" id="btnConsultaEstado" class="btn btn-warning">Estado</button>
                     </div>
-                 
+
                 </div>
             </div>
-        </div>             
+        </div>
         <div class="panel panel-primary">
             <div class="panel-heading">
                 <h4 class="panel-title">
@@ -139,15 +139,15 @@
             </div>
             <div id="collapse3" class="panel-collapse collapse">
                 <div class="panel-body">
-                    <h4><span class="label label-default"  id="lblEstadoMailer">Apagado</span></h4>
+                    <h4><span class="label label-default" id="lblEstadoMailer">Apagado</span></h4>
                     <div class="btn-group">
                         <button type="button" id="btnPrenderMailer" class="btn btn-success">Prender</button>
                         <button type="button" id="btnApagarMailer" class="btn btn-danger">Apagar</button>
-                        <button type="button" id="btnEstadoMailer" class="btn btn-warning">Estado</button>                
+                        <button type="button" id="btnEstadoMailer" class="btn btn-warning">Estado</button>
                     </div>
                 </div>
             </div>
-        </div>         
+        </div>
     </div>
 
 </body>
@@ -189,28 +189,27 @@
     });
 
     $(function () {
-        $('#btnConsultaEstado').click(function () {           
+        $('#btnConsultaEstado').click(function () {
             $.ajax({
                 type: 'GET',
-                url: "/Usuario/GetEstadoUnlockUsers",             
+                url: "/Usuario/GetEstadoUnlockUsers",
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
-                success: function (response) {                   
+                success: function (response) {
                     $('#lblEstadoUnlockUsers').html(response);
                 },
                 error: function (error) {
-                   
-                   // alert('Request Status: ' + error.status + ' Status Text: ' +error.statusText + ' ' + error.responseText);
+
+                    // alert('Request Status: ' + error.status + ' Status Text: ' +error.statusText + ' ' + error.responseText);
                     console.log(error);
                 }
             });
         });
 
-
         $('#btnApagarServicio').click(function () {
             $.ajax({
                 type: 'POST',
-                url: "/Usuario/StopUnlockUsers",                
+                url: "/Usuario/StopUnlockUsers",
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
                 success: function (response) {
@@ -228,7 +227,7 @@
         $('#btnPrenderServicio').click(function () {
             $.ajax({
                 type: 'POST',
-                url: "/Usuario/StartUnlockUsers",           
+                url: "/Usuario/StartUnlockUsers",
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8',
                 success: function (response) {
@@ -242,9 +241,6 @@
             });
         });
 
-    });
-
-    $(function () {
         $('#btnEstadoMailer').click(function () {
             $.ajax({
                 type: 'GET',
@@ -262,24 +258,23 @@
             });
         });
 
+        $('#btnApagarMailer').click(
+           function () {
+               $.ajax({
+                   type: 'POST',
+                   url: "/Usuario/StopMailer",
+                   dataType: 'json',
+                   contentType: 'application/json; charset=utf-8',
+                   success: function (response) {
+                       $('#lblEstadoMailer').html(response);
+                   },
+                   error: function (error) {
 
-        $('#btnApagarMailer').click(function () {
-            $.ajax({
-                type: 'POST',
-                url: "/Usuario/StopMailer",
-                dataType: 'json',
-                contentType: 'application/json; charset=utf-8',
-                success: function (response) {
-                    $('#lblEstadoMailer').html(response);
-                },
-                error: function (error) {
-
-                    //alert('Request Status: ' + error.status + ' Status Text: ' + error.statusText + ' ' + error.responseText);
-                    console.log(error);
-                }
-            });
-        });
-
+                       //alert('Request Status: ' + error.status + ' Status Text: ' + error.statusText + ' ' + error.responseText);
+                       console.log(error);
+                   }
+               });
+           });
 
         $('#btnPrenderMailer').click(function () {
             $.ajax({
@@ -299,6 +294,7 @@
         });
 
     });
+
 
 
 </script>

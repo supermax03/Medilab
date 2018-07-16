@@ -209,7 +209,6 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\MyClasses\Template.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Controllers\MyClasses\ResultSet.cs" />
     <Compile Include="Controllers\ImagenController.cs" />
@@ -388,6 +387,12 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Libreria\Libreria.csproj">
+      <Project>{408dc9ec-2cbb-47e9-bfa0-09c233c71d16}</Project>
+      <Name>Libreria</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -107,3 +107,6 @@ C:\Users\DELL\Documents\Visual Studio 2015\Projects\MediLab\MediLab\bin\es\Micro
 C:\Users\DELL\Documents\Visual Studio 2015\Projects\MediLab\MediLab\bin\es\Microsoft.Owin.Security.MicrosoftAccount.resources.dll
 C:\Users\DELL\Documents\Visual Studio 2015\Projects\MediLab\MediLab\obj\Debug\MediLab.dll
 C:\Users\DELL\Documents\Visual Studio 2015\Projects\MediLab\MediLab\obj\Debug\MediLab.pdb
+C:\Users\DELL\Documents\Visual Studio 2015\Projects\MediLab\MediLab\bin\Libreria.dll
+C:\Users\DELL\Documents\Visual Studio 2015\Projects\MediLab\MediLab\bin\Libreria.pdb
+C:\Users\DELL\Documents\Visual Studio 2015\Projects\MediLab\MediLab\obj\Debug\MediLab.csprojResolveAssemblyReference.cache

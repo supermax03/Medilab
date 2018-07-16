@@ -7,6 +7,8 @@ using MediLab.Models;
 using MediLab.Controllers.MyClasses;
 using System.Web.Routing;
 using MediLab.Servicios;
+using Libreria;
+
 
 namespace MediLab.Controllers
 {
@@ -186,7 +188,22 @@ namespace MediLab.Controllers
                 ResultSet response = new ResultSet();
                 Usuario usuario = db.Usuario.Where(s => s.Id.Equals(id)).First();
                 usuario.Username = collection["Username"].Trim();
-                usuario.Password = collection["Password"].Trim();
+
+
+                if (!usuario.Password.Equals(collection["Password"].Trim()))//Aplicar modulo de encriptacion y desencriptacion
+                {
+                    Novedad novedad = new Novedad()
+                    {
+                        IdUser = usuario.Id,
+                        FechaPublicacion = DateTime.Now,
+                        IdTemplate = (int)MyTemplate.TypeOp.ChangePassword
+
+                    };
+                    db.Novedad.Add(novedad);
+                    
+                }
+
+                usuario.Password = collection["Password"].Trim();                         
                 usuario.Rol = Convert.ToInt32(collection["Rol"].Trim());
                 usuario.Estado = Convert.ToInt32(collection["Estado"].Trim());
                 usuario.Email = collection["Email"].Trim();              
@@ -208,7 +225,7 @@ namespace MediLab.Controllers
             try
             {
                 ResultSet response = new ResultSet();
-                Usuario usuario = db.Usuario.Where(s => s.Id.Equals(id)).First();                
+                Usuario usuario = db.Usuario.Where(s => s.Id.Equals(id)).First();
                 db.Usuario.Remove(usuario);
                 db.SaveChanges();
                 response.Code = 1;
