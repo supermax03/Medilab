@@ -132,43 +132,67 @@ namespace MediLab.Controllers
             Servicios.Servicios.turnOnMailer();
             return Json(Servicios.Servicios.getStatusMailerService(), JsonRequestBehavior.AllowGet);
         }
+        private bool mailenuso(string email,int idUser=0)
+        {
+            var resultado = db.Usuario.Where(s => s.Email.Equals(email) && (!s.Id.Equals(idUser))).FirstOrDefault();
+            return (resultado!=null);
 
+        }
+        private bool usernameenuso(string username, int idUser=0)
+        {
+            var resultado = db.Usuario.Where(s => s.Username.Equals(username) && (!s.Id.Equals(idUser))).FirstOrDefault();
+            return (resultado != null);
+        }
 
 
         [HttpPost]
         public ActionResult Create(FormCollection collection)
         {
             try
-            {
+            {                
+                ResultSet response = new ResultSet();                
                 
-                ResultSet response = new ResultSet();
-                Usuario usuario = new Usuario()
-                {                   
-
-                    Username = collection["Username"].Trim(),
-                    Password = collection["Password"].Trim(),
-                    Rol = Convert.ToInt32(collection["Rol"].Trim()),
-                    RegDate= DateTime.Now,
-                    Estado =Convert.ToInt32(collection["Estado"].Trim()),
-                    Email=collection["Email"].Trim()
-
-                };
-
-               
-
-                Novedad novedad = new Novedad()
+                if (usernameenuso(collection["Username"].Trim()))              
                 {
-                    IdUser = usuario.Id,
-                    FechaPublicacion = DateTime.Now,
-                    IdTemplate = (int)MyTemplate.TypeOp.CreateUser
+                    response.Code = -1;
+                    response.Msg = String.Format("El Username {0} ya esta siendo utilizado", collection["Username"].Trim());
+                }
+                else
+                {
+                    if (mailenuso(collection["Email"].Trim()))
+                    {
+                        response.Code = -1;
+                        response.Msg = String.Format("El mail {0} ya esta siendo utilizado", collection["Email"].Trim());
+                    }
+                    else
+                    {
+                        Usuario usuario = new Usuario()
+                        {
 
-                };
+                            Username = collection["Username"].Trim(),
+                            Password = collection["Password"].Trim(),
+                            Rol = Convert.ToInt32(collection["Rol"].Trim()),
+                            RegDate = DateTime.Now,
+                            Estado = Convert.ToInt32(collection["Estado"].Trim()),
+                            Email = collection["Email"].Trim()
+                        };
 
-                db.Novedad.Add(novedad);
-                db.Usuario.Add(usuario);
-                db.SaveChanges();
-                response.Code = 1;
-                response.Msg = String.Format("Se creó el usuario {0}", usuario.Username);
+                        Novedad novedad = new Novedad()
+                        {
+                            IdUser = usuario.Id,
+                            FechaPublicacion = DateTime.Now,
+                            IdTemplate = (int)MyTemplate.TypeOp.CreateUser
+
+                        };
+
+                        db.Novedad.Add(novedad);
+                        db.Usuario.Add(usuario);
+                        db.SaveChanges();
+                        response.Code = 1;
+                        response.Msg = String.Format("Se creó el usuario {0}", usuario.Username);
+                    }
+                }       
+             
                 return RedirectToAction("Index", new RouteValueDictionary(response));
 
             }
@@ -185,30 +209,36 @@ namespace MediLab.Controllers
             try
             {
 
-                ResultSet response = new ResultSet();
-                Usuario usuario = db.Usuario.Where(s => s.Id.Equals(id)).First();              
-                if (!usuario.Password.Equals(collection["Password"].Trim()))//Aplicar modulo de encriptacion y desencriptacion
+                ResultSet response = new ResultSet();            
+                if (mailenuso(collection["Email"].Trim(), id))
                 {
-                    Novedad novedad = new Novedad()
-                    {
-                        IdUser = usuario.Id,
-                        FechaPublicacion = DateTime.Now,
-                        IdTemplate = (int)MyTemplate.TypeOp.ChangePassword
-
-                    };
-                    db.Novedad.Add(novedad);
-                    
+                        response.Code = -1;
+                        response.Msg = String.Format("El mail {0} ya esta siendo utilizado", collection["Email"].Trim());
                 }
+                else
+                {
+                    Usuario usuario = db.Usuario.Where(s => s.Id.Equals(id)).First();
+                    if (!usuario.Password.Equals(collection["Password"].Trim()))//Aplicar modulo de encriptacion y desencriptacion
+                        {
+                            Novedad novedad = new Novedad()
+                            {
+                                IdUser = usuario.Id,
+                                FechaPublicacion = DateTime.Now,
+                                IdTemplate = (int)MyTemplate.TypeOp.ChangePassword
 
-                usuario.Password = collection["Password"].Trim();                         
-                usuario.Rol = Convert.ToInt32(collection["Rol"].Trim());
-                usuario.Estado = Convert.ToInt32(collection["Estado"].Trim());
-                usuario.Email = collection["Email"].Trim();              
-                db.SaveChanges();
-                response.Code = 1;
-                response.Msg = String.Format("Se editó el usuario {0}", usuario.Username);
+                            };
+                            db.Novedad.Add(novedad);
+                        }
+                        usuario.Password = collection["Password"].Trim();
+                        usuario.Rol = Convert.ToInt32(collection["Rol"].Trim());
+                        usuario.Estado = Convert.ToInt32(collection["Estado"].Trim());
+                        usuario.Email = collection["Email"].Trim();
+                        db.SaveChanges();
+                        response.Code = 1;
+                        response.Msg = String.Format("Se editó el usuario {0}", usuario.Username);                       
+                 }
+                            
                 return RedirectToAction("Index", new RouteValueDictionary(response));
-
             }
             catch(Exception e)
             {
