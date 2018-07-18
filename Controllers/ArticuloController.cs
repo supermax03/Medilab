@@ -53,9 +53,20 @@ namespace MediLab.Controllers
 
         public ActionResult GetArticulo(int codigo)
         {
-           
-            var articulo = db.Articulo.Where(s => s.Id.Equals(codigo)).First();
-            return View(articulo);
+
+            var articulo = db.Articulo.Where(s => s.Id.Equals(codigo)).FirstOrDefault();
+            if (articulo != null)
+            {
+                return View(articulo);
+            }
+            else
+            {
+                ResultSet response = new ResultSet();
+                response.Code = -1;
+                response.Msg = String.Format("El artículo seleccionado ya no existe");
+                return RedirectToAction("Index", new RouteValueDictionary(response));
+
+            }
         }
         public ActionResult Create()
         {
@@ -88,9 +99,20 @@ namespace MediLab.Controllers
             }
         }
         public ActionResult Edit(int id)
-        {                     
-            Articulo articulo= db.Articulo.Where(s => s.Id.Equals(id)).First();
-            return View(articulo);
+        {
+            Articulo articulo = db.Articulo.Where(s => s.Id.Equals(id)).FirstOrDefault();
+            if (articulo != null)
+            {
+                return View(articulo);
+            }
+            else
+            {
+                ResultSet response = new ResultSet();
+                response.Code = -1;
+                response.Msg = String.Format("El artículo seleccionado ya no existe");
+                return RedirectToAction("Index", new RouteValueDictionary(response));
+
+            }
         }
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection)
@@ -99,13 +121,21 @@ namespace MediLab.Controllers
             {
 
                 ResultSet response = new ResultSet();
-                Articulo articulo = db.Articulo.Where(s => s.Id.Equals(id)).First();
-                articulo.Titulo = collection["Titulo"].Trim();
-                articulo.Comentarios = collection["Comentarios"].Trim();
-                articulo.IdTopico = Convert.ToInt32(collection["IdTopico"]);
-                db.SaveChanges();
-                response.Code = 1;
-                response.Msg = String.Format("Se editó el articulo {0}", articulo.Titulo);               
+                Articulo articulo = db.Articulo.Where(s => s.Id.Equals(id)).FirstOrDefault();
+                if (articulo != null)
+                {
+                    articulo.Titulo = collection["Titulo"].Trim();
+                    articulo.Comentarios = collection["Comentarios"].Trim();
+                    articulo.IdTopico = Convert.ToInt32(collection["IdTopico"]);
+                    db.SaveChanges();
+                    response.Code = 1;
+                    response.Msg = String.Format("Se editó el articulo {0}", articulo.Titulo);
+                }
+                else
+                {
+                    response.Code = -1;
+                    response.Msg = String.Format("El artículo seleccionado ya no existe");
+                }             
                 return RedirectToAction("Index", new RouteValueDictionary(response)); 
                
 
@@ -120,11 +150,20 @@ namespace MediLab.Controllers
             try
             {
                 ResultSet response = new ResultSet();
-                Articulo articulo = db.Articulo.Where(s => s.Id.Equals(id)).First();
-                db.Articulo.Remove(articulo);
-                db.SaveChanges();
-                response.Code = 1;
-                response.Msg = String.Format("Se borró el articulo {0}", articulo.Titulo);
+                Articulo articulo = db.Articulo.Where(s => s.Id.Equals(id)).FirstOrDefault();
+                if (articulo != null)
+                {
+                    db.Articulo.Remove(articulo);
+                    db.SaveChanges();
+                    response.Code = 1;
+                    response.Msg = String.Format("Se borró el articulo {0}", articulo.Titulo);
+                    
+                }
+                else
+                {
+                    response.Code = -1;
+                    response.Msg = String.Format("El artículo seleccionado ya no existe");
+                }
                 return RedirectToAction("Index", new RouteValueDictionary(response));
 
             }

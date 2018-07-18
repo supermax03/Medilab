@@ -47,7 +47,7 @@ namespace MediLab.Controllers
             else
             {
                 ResultSet response = new ResultSet();
-                response.Code = -2;
+                response.Code = -1;
                 response.Msg = String.Format("El usuario seleccionado ya no existe");
                 return RedirectToAction("Index", new RouteValueDictionary(response));
             }
@@ -84,6 +84,7 @@ namespace MediLab.Controllers
 
         public ActionResult Edit(int id)
         {
+          
             Usuario usuario = db.Usuario.Where(s => s.Id.Equals(id)).FirstOrDefault();
             if (usuario != null)
             {
@@ -94,7 +95,7 @@ namespace MediLab.Controllers
             else
             {
                 ResultSet response = new ResultSet();
-                response.Code = -2;
+                response.Code = -1;
                 response.Msg = String.Format("El usuario seleccionado ya no existe");
                 return RedirectToAction("Index", new RouteValueDictionary(response));
             }
@@ -237,8 +238,10 @@ namespace MediLab.Controllers
                 }
                 else
                 {
-                    Usuario usuario = db.Usuario.Where(s => s.Id.Equals(id)).First();
-                    if (!usuario.Password.Equals(collection["Password"].Trim()))//Aplicar modulo de encriptacion y desencriptacion
+                    Usuario usuario = db.Usuario.Where(s => s.Id.Equals(id)).FirstOrDefault();
+                    if (usuario != null)
+                    {
+                        if (!usuario.Password.Equals(collection["Password"].Trim()))//Aplicar modulo de encriptacion y desencriptacion
                         {
                             Novedad novedad = new Novedad()
                             {
@@ -255,7 +258,13 @@ namespace MediLab.Controllers
                         usuario.Email = collection["Email"].Trim();
                         db.SaveChanges();
                         response.Code = 1;
-                        response.Msg = String.Format("Se editó el usuario {0}", usuario.Username);                       
+                        response.Msg = String.Format("Se editó el usuario {0}", usuario.Username);
+                    }
+                    else
+                    {
+                        response.Code = -1;
+                        response.Msg = String.Format("El usuario seleccionado ya no existe");
+                    }               
                  }
                             
                 return RedirectToAction("Index", new RouteValueDictionary(response));
@@ -282,7 +291,7 @@ namespace MediLab.Controllers
                 }
                 else
                 {
-                    response.Code = -2;
+                    response.Code = -1;
                     response.Msg = String.Format("El usuario seleccionado ya no existe");
 
                 }

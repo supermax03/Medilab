@@ -46,18 +46,9 @@
             {  if (dato.Code.Equals(-1))
                 {
                     <div class="alert alert-danger">
-                        <strong>Registración Fallida!</strong> @dato.Msg
+                        <strong>Operación Fallida!</strong> @dato.Msg
                     </div>
-                }
-                else
-                {
-                    if (dato.Code.Equals(-2))
-                    {
-                        <div class="alert alert-danger">
-                            <strong>Operacion Fallida</strong> @dato.Msg
-                        </div>
-                    }
-                }
+                }              
             }
         }
     }

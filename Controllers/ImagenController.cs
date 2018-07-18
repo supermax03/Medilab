@@ -77,9 +77,22 @@ namespace MediLab.Controllers
         }
         public ActionResult Edit(int id)
         {
+          
+
+                Imagen imagen = db.Imagen.Where(s => s.Id.Equals(id)).FirstOrDefault();
+                if (imagen != null)
+                {
+                    return View(imagen);
+                }
+                else
+                {
+                    ResultSet response = new ResultSet();
+                    response.Code = -1;
+                    response.Msg = String.Format("La imagen seleccionada ya no existe");
+                    return RedirectToAction("Index", new RouteValueDictionary(response));
+                }
             
-            Imagen imagen = db.Imagen.Where(s => s.Id.Equals(id)).First();            
-            return View(imagen);
+           
         }
         [HttpPost]
         public ActionResult Edit(HttpPostedFileBase file,int id, FormCollection collection)
@@ -87,45 +100,63 @@ namespace MediLab.Controllers
             try
             {
                 ResultSet response = new ResultSet();
-                Imagen imagen = db.Imagen.Where(s => s.Id.Equals(id)).First();
-                if (file != null && file.ContentLength > 0)
+                Imagen imagen = db.Imagen.Where(s => s.Id.Equals(id)).FirstOrDefault();
+                if (imagen != null)
                 {
-                    //Borramos el archivo anterior y damos de alta el nuevo archivo siempre y cuando el archivo no este en uso
-                    String newpath = String.Format("~/Imagenes/{0}", file.FileName);
-                    if (!this.imagenenuso(imagen.Path, id))
+                    if (file != null && file.ContentLength > 0)
                     {
-                        String oldfile = Server.MapPath(imagen.Path);
-                        if (System.IO.File.Exists(oldfile))
+                        //Borramos el archivo anterior y damos de alta el nuevo archivo siempre y cuando el archivo no este en uso
+                        String newpath = String.Format("~/Imagenes/{0}", file.FileName);
+                        if (!this.imagenenuso(imagen.Path, id))
                         {
-                            System.IO.File.Delete(oldfile);
+                            String oldfile = Server.MapPath(imagen.Path);
+                            if (System.IO.File.Exists(oldfile))
+                            {
+                                System.IO.File.Delete(oldfile);
+                            }
                         }
+                        string absnewpath = Path.Combine(Server.MapPath("~/Imagenes"), Path.GetFileName(file.FileName));
+                        if (!System.IO.File.Exists(absnewpath))
+                        {
+                            file.SaveAs(absnewpath);
+                        }
+                        imagen.Path = String.Format(newpath);
                     }
-                    string absnewpath = Path.Combine(Server.MapPath("~/Imagenes"), Path.GetFileName(file.FileName));
-                    if (!System.IO.File.Exists(absnewpath))
-                    {
-                        file.SaveAs(absnewpath);
-                    }
-                    imagen.Path = String.Format(newpath);
-                }               
-                imagen.Titulo = collection["Titulo"].Trim();
-                imagen.Comentarios = collection["Comentarios"].Trim();      
-                imagen.IdArticulo = Convert.ToInt32(collection["IdArticulo"]);
-                db.SaveChanges();
-                response.Code = 1;
-                response.Msg = String.Format("Se editó la imagen {0}", imagen.Titulo);           
+                    imagen.Titulo = collection["Titulo"].Trim();
+                    imagen.Comentarios = collection["Comentarios"].Trim();
+                    imagen.IdArticulo = Convert.ToInt32(collection["IdArticulo"]);
+                    db.SaveChanges();
+                    response.Code = 1;
+                    response.Msg = String.Format("Se editó la imagen {0}", imagen.Titulo);
+                }
+                else
+                {
+                    response.Code = -1;
+                    response.Msg = String.Format("La imagen seleccionada ya no existe");
+                }  
                 return RedirectToAction("Index", new RouteValueDictionary(response));
                 
             }
             catch(Exception ex)
             {
                 return View();
-            }
+            }           
         }
         public ActionResult Details(int id)
         {
             MedicinaEntities db = new MedicinaEntities();
-            Topico topico = db.Topico.Where(s => s.Id.Equals(id)).First();
-            return View(topico);
+            Topico topico = db.Topico.Where(s => s.Id.Equals(id)).FirstOrDefault();
+            if (topico != null)
+            {
+                return View(topico);
+            }
+            else
+            {
+                ResultSet response = new ResultSet();
+                response.Code = -1;
+                response.Msg = String.Format("La imagen seleccionada ya no existe");
+                return RedirectToAction("Index", new RouteValueDictionary(response));
+            }
         }
         private bool imagenenuso(String path, int id)
         {
@@ -138,25 +169,35 @@ namespace MediLab.Controllers
         
         public ActionResult Delete(int id)
         {
+            ResultSet response = new ResultSet();
             try
             {
-                ResultSet response = new ResultSet();
-                Imagen imagen = db.Imagen.Where(s => s.Id.Equals(id)).First();
-                String path = Server.MapPath(imagen.Path);
-                if (System.IO.File.Exists(path) && !this.imagenenuso(imagen.Path,id))
+                
+                Imagen imagen = db.Imagen.Where(s => s.Id.Equals(id)).FirstOrDefault();
+                if (imagen != null)
                 {
-                    System.IO.File.Delete(path);
+                    String path = Server.MapPath(imagen.Path);
+                    if (System.IO.File.Exists(path) && !this.imagenenuso(imagen.Path, id))
+                    {
+                        System.IO.File.Delete(path);
+                    }
+                    db.Imagen.Remove(imagen);
+                    db.SaveChanges();
+                    response.Code = 1;
+                    response.Msg = String.Format("Se borró la imagen {0}", imagen.Titulo);
                 }
-                db.Imagen.Remove(imagen);
-                db.SaveChanges();
-                response.Code = 1;
-                response.Msg = String.Format("Se borró la imagen {0}", imagen.Titulo);
-                return RedirectToAction("Index", new RouteValueDictionary(response));
+                else
+                {
+                    response.Code = -1;
+                    response.Msg = String.Format("La imagen seleccionada ya no existe");
+                }
+                
             }
             catch(Exception exc)
             {
                 return View();
             }
+            return RedirectToAction("Index", new RouteValueDictionary(response));
         }      
     }
 }

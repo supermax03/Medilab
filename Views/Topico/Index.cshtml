@@ -35,9 +35,21 @@
              <div class="alert alert-success">
             <strong>Operación Exitosa!</strong> @dato.Msg
             </div>
+            }
+            else
+            {
+                if (dato.Code.Equals(-1))
+                {
+                    <div class="alert alert-danger">
+                        <strong>Operación Fallida!</strong> @dato.Msg
+                    </div>
                 }
             }
         }
+
+
+
+    }
     
     <table class="table">
         <tr style="background-color:#D9EDF7">
