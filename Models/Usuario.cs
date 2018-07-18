@@ -18,6 +18,7 @@ namespace MediLab.Models
         public Usuario()
         {
             this.Novedad = new HashSet<Novedad>();
+            this.Novedad1 = new HashSet<Novedad>();
         }
     
         public int Id { get; set; }
@@ -32,5 +33,7 @@ namespace MediLab.Models
         public virtual EstadoUsuario EstadoUsuario { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Novedad> Novedad { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Novedad> Novedad1 { get; set; }
     }
 }

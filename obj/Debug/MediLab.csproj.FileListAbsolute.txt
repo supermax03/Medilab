@@ -17,6 +17,7 @@ C:\Users\DELL\Documents\Visual Studio 2015\Projects\MediLab\MediLab\bin\MediLab.
 C:\Users\DELL\Documents\Visual Studio 2015\Projects\MediLab\MediLab\bin\Antlr3.Runtime.dll
 C:\Users\DELL\Documents\Visual Studio 2015\Projects\MediLab\MediLab\bin\EntityFramework.dll
 C:\Users\DELL\Documents\Visual Studio 2015\Projects\MediLab\MediLab\bin\EntityFramework.SqlServer.dll
+C:\Users\DELL\Documents\Visual Studio 2015\Projects\MediLab\MediLab\bin\Libreria.dll
 C:\Users\DELL\Documents\Visual Studio 2015\Projects\MediLab\MediLab\bin\Microsoft.AI.Agent.Intercept.dll
 C:\Users\DELL\Documents\Visual Studio 2015\Projects\MediLab\MediLab\bin\Microsoft.AI.DependencyCollector.dll
 C:\Users\DELL\Documents\Visual Studio 2015\Projects\MediLab\MediLab\bin\Microsoft.AI.PerfCounterCollector.dll
@@ -51,6 +52,7 @@ C:\Users\DELL\Documents\Visual Studio 2015\Projects\MediLab\MediLab\bin\System.W
 C:\Users\DELL\Documents\Visual Studio 2015\Projects\MediLab\MediLab\bin\System.Web.WebPages.dll
 C:\Users\DELL\Documents\Visual Studio 2015\Projects\MediLab\MediLab\bin\System.Web.WebPages.Razor.dll
 C:\Users\DELL\Documents\Visual Studio 2015\Projects\MediLab\MediLab\bin\WebGrease.dll
+C:\Users\DELL\Documents\Visual Studio 2015\Projects\MediLab\MediLab\bin\Libreria.pdb
 C:\Users\DELL\Documents\Visual Studio 2015\Projects\MediLab\MediLab\bin\Microsoft.AI.DependencyCollector.xml
 C:\Users\DELL\Documents\Visual Studio 2015\Projects\MediLab\MediLab\bin\Microsoft.AI.ServerTelemetryChannel.xml
 C:\Users\DELL\Documents\Visual Studio 2015\Projects\MediLab\MediLab\bin\Microsoft.AI.Web.xml
@@ -105,8 +107,6 @@ C:\Users\DELL\Documents\Visual Studio 2015\Projects\MediLab\MediLab\bin\es\Micro
 C:\Users\DELL\Documents\Visual Studio 2015\Projects\MediLab\MediLab\bin\es\Microsoft.Owin.Security.Google.resources.dll
 C:\Users\DELL\Documents\Visual Studio 2015\Projects\MediLab\MediLab\bin\es\Microsoft.Owin.Security.Twitter.resources.dll
 C:\Users\DELL\Documents\Visual Studio 2015\Projects\MediLab\MediLab\bin\es\Microsoft.Owin.Security.MicrosoftAccount.resources.dll
+C:\Users\DELL\Documents\Visual Studio 2015\Projects\MediLab\MediLab\obj\Debug\MediLab.csprojResolveAssemblyReference.cache
 C:\Users\DELL\Documents\Visual Studio 2015\Projects\MediLab\MediLab\obj\Debug\MediLab.dll
 C:\Users\DELL\Documents\Visual Studio 2015\Projects\MediLab\MediLab\obj\Debug\MediLab.pdb
-C:\Users\DELL\Documents\Visual Studio 2015\Projects\MediLab\MediLab\bin\Libreria.dll
-C:\Users\DELL\Documents\Visual Studio 2015\Projects\MediLab\MediLab\bin\Libreria.pdb
-C:\Users\DELL\Documents\Visual Studio 2015\Projects\MediLab\MediLab\obj\Debug\MediLab.csprojResolveAssemblyReference.cache

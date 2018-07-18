@@ -39,8 +39,18 @@ namespace MediLab.Controllers
         }
         public ActionResult Details(int id)
         {
-            Usuario usuario = db.Usuario.Where(s => s.Id.Equals(id)).First();
-            return View(usuario);
+            Usuario usuario = db.Usuario.Where(s => s.Id.Equals(id)).FirstOrDefault();
+            if (usuario!=null)
+            {
+                return View(usuario);
+            }
+            else
+            {
+                ResultSet response = new ResultSet();
+                response.Code = -2;
+                response.Msg = String.Format("El usuario seleccionado ya no existe");
+                return RedirectToAction("Index", new RouteValueDictionary(response));
+            }
         }
 
         private IQueryable<SelectListItem> getEstados(int estado=0)
@@ -74,10 +84,20 @@ namespace MediLab.Controllers
 
         public ActionResult Edit(int id)
         {
-            Usuario usuario = db.Usuario.Where(s => s.Id.Equals(id)).First();  
-            ViewBag.Rol = getRoles(usuario.Rol);
-            ViewBag.Estado = getEstados(usuario.Estado);
-            return View(usuario);
+            Usuario usuario = db.Usuario.Where(s => s.Id.Equals(id)).FirstOrDefault();
+            if (usuario != null)
+            {
+                ViewBag.Rol = getRoles(usuario.Rol);
+                ViewBag.Estado = getEstados(usuario.Estado);
+                return View(usuario);
+            }
+            else
+            {
+                ResultSet response = new ResultSet();
+                response.Code = -2;
+                response.Msg = String.Format("El usuario seleccionado ya no existe");
+                return RedirectToAction("Index", new RouteValueDictionary(response));
+            }
         }
         
         public ActionResult Create()
@@ -252,15 +272,24 @@ namespace MediLab.Controllers
             try
             {
                 ResultSet response = new ResultSet();
-                Usuario usuario = db.Usuario.Where(s => s.Id.Equals(id)).First();
-                db.Usuario.Remove(usuario);
-                db.SaveChanges();
-                response.Code = 1;
-                response.Msg = String.Format("Se borró el usuario {0}", usuario.Username);
+                Usuario usuario = db.Usuario.Where(s => s.Id.Equals(id)).FirstOrDefault();
+                if (usuario!=null)
+                {
+                    db.Usuario.Remove(usuario);
+                    db.SaveChanges();
+                    response.Code = 1;
+                    response.Msg = String.Format("Se borró el usuario {0}", usuario.Username);
+                }
+                else
+                {
+                    response.Code = -2;
+                    response.Msg = String.Format("El usuario seleccionado ya no existe");
+
+                }
                 return RedirectToAction("Index", new RouteValueDictionary(response));
 
             }
-            catch
+            catch(Exception ex)
             {
                 return View();
             }

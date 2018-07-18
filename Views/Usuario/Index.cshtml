@@ -48,10 +48,19 @@
                     <div class="alert alert-danger">
                         <strong>Registración Fallida!</strong> @dato.Msg
                     </div>
-                 }
-             }
-          }
+                }
+                else
+                {
+                    if (dato.Code.Equals(-2))
+                    {
+                        <div class="alert alert-danger">
+                            <strong>Operacion Fallida</strong> @dato.Msg
+                        </div>
+                    }
+                }
+            }
         }
+    }
     <table class="table">
         <tr style="background-color:#337AB7; color:#FFFFFF">
             <th>

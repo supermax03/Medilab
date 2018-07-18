@@ -16,11 +16,12 @@
         <AssociationConnector Association="MedicinaModel.FK_Usuario_Rol" />
         <EntityTypeShape EntityType="MedicinaModel.EstadoUsuario" Width="1.5" PointX="3.375" PointY="8.625" />
         <AssociationConnector Association="MedicinaModel.FK_Usuario_EstadoUsuario" />
-        <EntityTypeShape EntityType="MedicinaModel.Novedad" Width="1.5" PointX="7.875" PointY="5.375" />
         <EntityTypeShape EntityType="MedicinaModel.Template" Width="1.5" PointX="5.625" PointY="9.375" />
+        <EntityTypeShape EntityType="MedicinaModel.Novedad" Width="1.5" PointX="7.875" PointY="7.125" />
         <AssociationConnector Association="MedicinaModel.FK__Novedad__IdTempl__571DF1D5" />
         <AssociationConnector Association="MedicinaModel.FK__Novedad__IdUser__5812160E" />
-      </Diagram>
+        <AssociationConnector Association="MedicinaModel.FK__Novedad__IdUser__59063A47" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

@@ -138,6 +138,20 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK__Novedad__IdUser__59063A47">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Novedad" Type="Self.Novedad" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Novedad">
+        <PropertyRef Name="IdUser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Usuario_EstadoUsuario">
     <End Role="EstadoUsuario" Type="Self.EstadoUsuario" Multiplicity="1" />
     <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
@@ -187,6 +201,10 @@
       <End Role="Novedad" EntitySet="Novedad" />
     </AssociationSet>
     <AssociationSet Name="FK__Novedad__IdUser__5812160E" Association="Self.FK__Novedad__IdUser__5812160E">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="Novedad" EntitySet="Novedad" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Novedad__IdUser__59063A47" Association="Self.FK__Novedad__IdUser__59063A47">
       <End Role="Usuario" EntitySet="Usuario" />
       <End Role="Novedad" EntitySet="Novedad" />
     </AssociationSet>

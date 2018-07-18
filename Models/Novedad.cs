@@ -21,5 +21,6 @@ namespace MediLab.Models
     
         public virtual Template Template { get; set; }
         public virtual Usuario Usuario { get; set; }
+        public virtual Usuario Usuario1 { get; set; }
     }
 }
