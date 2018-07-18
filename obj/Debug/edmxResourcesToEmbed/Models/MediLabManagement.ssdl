@@ -9,6 +9,7 @@
     <Property Name="Comentarios" Type="ntext" />
     <Property Name="FechaPublicacion" Type="datetime" />
     <Property Name="IdTopico" Type="int" Nullable="false" />
+    <Property Name="visible" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="EstadoUsuario">
     <Key>
@@ -27,6 +28,7 @@
     <Property Name="Path" Type="nvarchar" MaxLength="250" />
     <Property Name="esPadre" Type="int" />
     <Property Name="IdArticulo" Type="int" Nullable="false" />
+    <Property Name="visible" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="Item">
     <Key>
@@ -73,6 +75,7 @@
     <Property Name="Descripcion" Type="nvarchar" MaxLength="100" />
     <Property Name="Padre" Type="int" />
     <Property Name="Hermano" Type="int" />
+    <Property Name="visible" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="Usuario">
     <Key>

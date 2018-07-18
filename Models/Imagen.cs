@@ -20,6 +20,7 @@ namespace MediLab.Models
         public string Path { get; set; }
         public Nullable<int> esPadre { get; set; }
         public int IdArticulo { get; set; }
+        public bool visible { get; set; }
     
         public virtual Articulo Articulo { get; set; }
     }

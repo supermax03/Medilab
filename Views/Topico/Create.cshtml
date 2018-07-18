@@ -13,6 +13,7 @@
             border: 2px solid red;
             border-radius: 4px;
         }
+  
        
     </style>
 
@@ -48,11 +49,23 @@
                     <div class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-wrench"></i></span>
                         @Html.EditorFor(model => model.Descripcion, new { htmlAttributes = new { @class = "form-control", @maxlength = "100", @autocomplete = "off" } })
-                        @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })                       
-                    </div>
+                        @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })                      
+                    </div>                 
+                    
                     <span id="counterDescripcion" style="color:#FF6601;"></span>
                  </div>
             </div>
+            <div class="form-check">
+                <div class="form-check">   
+                    <p></p>              
+                    <label class="container">
+                        Visible
+                        <input type="checkbox" checked="checked">
+                        <span class="checkmark"></span>
+                    </label>                      
+                    </div>
+             </div>
+           
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
                     <input type="submit" value="Guardar Cambios" onclick="return validatefields();" class="btn btn-primary" />

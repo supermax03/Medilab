@@ -72,7 +72,7 @@ namespace MediLab.Controllers
         {
             return View();
         }
-        [HttpPost]
+        [HttpPost,ValidateInput(false)]
         public ActionResult Create(FormCollection collection)
         {
             try

@@ -26,13 +26,13 @@ namespace MediLab.Models
         }
     
         public virtual DbSet<Item> Item { get; set; }
-        public virtual DbSet<Articulo> Articulo { get; set; }
-        public virtual DbSet<Topico> Topico { get; set; }
-        public virtual DbSet<Imagen> Imagen { get; set; }
         public virtual DbSet<Rol> Rol { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
         public virtual DbSet<EstadoUsuario> EstadoUsuario { get; set; }
         public virtual DbSet<Template> Template { get; set; }
         public virtual DbSet<Novedad> Novedad { get; set; }
+        public virtual DbSet<Articulo> Articulo { get; set; }
+        public virtual DbSet<Imagen> Imagen { get; set; }
+        public virtual DbSet<Topico> Topico { get; set; }
     }
 }

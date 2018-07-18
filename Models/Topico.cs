@@ -25,6 +25,7 @@ namespace MediLab.Models
         public string Descripcion { get; set; }
         public Nullable<int> Padre { get; set; }
         public Nullable<int> Hermano { get; set; }
+        public bool visible { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Articulo> Articulo { get; set; }
