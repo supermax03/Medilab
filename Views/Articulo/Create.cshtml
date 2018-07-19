@@ -15,14 +15,14 @@
     </style>
 
 
-    <script type="text/javascript" src="http://js.nicedit.com/nicEdit-latest.js"></script>
+   <script type="text/javascript" src="http://js.nicedit.com/nicEdit-latest.js"></script>
     <!--<script src="http://tinymce.cachefly.net/4.0/tinymce.min.js"></script>
     <script type="application/x-javascript">
 
         tinymce.init({selector:'#Comentarios'});
 
     </script>-->
-    <script type="text/javascript">
+   <script type="text/javascript">
 //<![CDATA[
   bkLib.onDomLoaded(function() {
         new nicEditor().panelInstance('misComentarios');
@@ -30,6 +30,16 @@
   });
   //]]>
     </script>
+  <!--<script src="http://tinymce.cachefly.net/4.0/tinymce.min.js"></script>
+    <script>
+
+        tinymce.init({
+            selector: '#misComentarios',  // change this value according to your HTML
+            plugins: 'advlist autolink link image lists charmap print preview'
+        });
+
+    </script>-->
+
 
 </head>
 <body>
@@ -65,8 +75,7 @@
                 @Html.LabelFor(model => model.Comentarios, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">                   
                    @Html.TextAreaFor(model => model.Comentarios, 15, 50, htmlAttributes: new { @class = "form-control", style = "width: 100%; max-width: 100%;", @maxlength = "8000",@autocomplete = "off" ,@id="misComentarios"})
-                   @Html.ValidationMessageFor(model => model.Comentarios, "", new { @class = "text-danger"})
-                   <span id="counter" style="color:#FF6601;"></span>
+                   @Html.ValidationMessageFor(model => model.Comentarios, "", new { @class = "text-danger"})                 
                 </div>
             </div>       
                         @Html.HiddenFor(model=>model.IdTopico)
@@ -124,15 +133,7 @@
                     error_signal = 1;
                     msg = "El tópico indicado no existe";
                     field = "#buscador";
-                }
-                else {
-                    valor = $.trim($("#Comentarios").val());
-                   /* if (valor.length == 0) {
-                        error_signal = 1;
-                        msg = "Complete Comentarios";
-                        field = "#Comentarios";
-                    }*/
-                }
+                }               
             }
         }
         if (error_signal == 1) {
@@ -174,9 +175,7 @@
      $("#counterTopico").text("Caracteres restantes: " + (30 - $(this).val().length));
  });
 
- $("#Comentarios").keyup(function () {
-     $("#counter").text("Caracteres restantes: " + (8000 - $(this).val().length));
- });
+
     $("#buscador").autocomplete(
        {
            minLength: 3, //Empieza a buscar a partir de los 3 caracteres ingresados

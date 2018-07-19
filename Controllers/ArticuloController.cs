@@ -114,7 +114,7 @@ namespace MediLab.Controllers
 
             }
         }
-        [HttpPost]
+        [HttpPost, ValidateInput(false)]
         public ActionResult Edit(int id, FormCollection collection)
         {
             try

@@ -119,14 +119,7 @@
                     msg = "El tópico indicado no existe";
                     field = "#buscador";
                 }
-                else {
-                    valor = $.trim($("#Comentarios").val());
-                    if (valor.length == 0) {
-                        error_signal = 1;
-                        msg = "Complete Comentarios";
-                        field = "#Comentarios";
-                    }
-                }
+              
             }
         }
 
@@ -165,12 +158,7 @@
     $("#buscador").keyup(function () {
         $("#counterTopico").text("Caracteres restantes: " + (30 - $(this).val().length));
     });
-
-
-    $("#Comentarios").keyup(function () {
-        $("#counter").text("Caracteres restantes: " + (8000 - $(this).val().length));
-    });
-
+    
     $("#buscador").autocomplete(
        {
            minLength: 3, //Empieza a buscar a partir de los 3 caracteres ingresados
