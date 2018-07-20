@@ -39,7 +39,7 @@ namespace MediLab.Controllers
         public JsonResult BuscarTopico(string term)
         {
            
-            var resultado = db.Topico.Where(s => s.Nombre.Contains(term))
+            var resultado = db.Topico.Where(s => s.Nombre.Contains(term) && s.visible.Equals(true))
                 .Select(s => new { value = s.Nombre, Id = s.Id }).Take(5).ToList();
             return Json(resultado, JsonRequestBehavior.AllowGet);
         }
@@ -120,6 +120,7 @@ namespace MediLab.Controllers
                 {
                     topico.Nombre = collection["Nombre"].Trim();
                     topico.Descripcion = collection["Descripcion"].Trim();
+                    topico.visible = Convert.ToBoolean(collection["visible"].Split(',')[0]);
                     db.SaveChanges();
                     response.Code = 1;
                     response.Msg = String.Format("Se editó el topico {0}", topico.Nombre);
