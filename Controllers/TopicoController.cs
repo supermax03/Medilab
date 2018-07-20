@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using MediLab.Models;
 using MediLab.Controllers.MyClasses;
 using System.Web.Routing;
+using System.Collections;
 
 namespace MediLab.Controllers
 {
@@ -64,11 +65,13 @@ namespace MediLab.Controllers
 
                 if (!topicoenuso(collection["Nombre"].Trim()))
                 {
+                    
                     Topico topico = new Topico()
                     {
                         Nombre = collection["Nombre"].Trim(),
-                        Descripcion = collection["Descripcion"].Trim()
-
+                        Descripcion = collection["Descripcion"].Trim(),
+                        visible=Convert.ToBoolean(collection["visible"].Split(',')[0])
+                        
 
                     };
 
