@@ -39,9 +39,9 @@ namespace MediLab.Controllers
                 pageSize = 5;
             }
           
-            int totalRecord = db.Articulo.Where(s => (s.IdTopico.Equals(topico) && !topico.Equals(-1)) || (s.IdTopico.Equals(s.IdTopico) && topico.Equals(-1))).Count();
+            int totalRecord = db.Articulo.Where(s => (s.IdTopico.Equals(topico) && !topico.Equals(-1) && s.visible.Equals(true)) || (s.IdTopico.Equals(s.IdTopico) && topico.Equals(-1))).Count();
             ViewBag.dbcount = (totalRecord / pageSize) + ((totalRecord % pageSize) > 0 ? 1 : 0);
-            var articulos = db.Articulo.Where(s => (s.IdTopico.Equals(topico) && !topico.Equals(-1)) || (s.IdTopico.Equals(s.IdTopico) && topico.Equals(-1))).OrderBy(s => s.Id).Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            var articulos = db.Articulo.Where(s => (s.IdTopico.Equals(topico) && !topico.Equals(-1) && s.visible.Equals(true)) || (s.IdTopico.Equals(s.IdTopico) && topico.Equals(-1))).OrderBy(s => s.Id).Skip((page - 1) * pageSize).Take(pageSize).ToList();
             return articulos;
         }
         public JsonResult BuscarArticulo(string term)
@@ -83,7 +83,8 @@ namespace MediLab.Controllers
                     Titulo = collection["Titulo"].Trim(),
                     Comentarios = collection["Comentarios"].Trim(),
                     FechaPublicacion = DateTime.Now,
-                    IdTopico = Convert.ToInt32(collection["IdTopico"])
+                    IdTopico = Convert.ToInt32(collection["IdTopico"]),
+                    visible = Convert.ToBoolean(collection["visible"].Split(',')[0])
                 };
                 db.Articulo.Add(articulo);
                 db.SaveChanges();
@@ -127,6 +128,7 @@ namespace MediLab.Controllers
                     articulo.Titulo = collection["Titulo"].Trim();
                     articulo.Comentarios = collection["Comentarios"].Trim();
                     articulo.IdTopico = Convert.ToInt32(collection["IdTopico"]);
+                    articulo.visible = Convert.ToBoolean(collection["visible"].Split(',')[0]);
                     db.SaveChanges();
                     response.Code = 1;
                     response.Msg = String.Format("Se editó el articulo {0}", articulo.Titulo);

@@ -36,7 +36,7 @@
             @Html.AntiForgeryToken()
 
             <div class="form-horizontal">
-                <h4>Articulo</h4>
+                <h4>Editar Articulo</h4>
                 <hr />
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 @Html.HiddenFor(model => model.Id)
@@ -58,6 +58,16 @@
                         <span id="counterTopico" style="color:#FF6601;"></span>
                     </div>
                 </div>
+                <div class="form-group">
+                    @Html.Label("Publicado", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <div class="form-check">
+                            <label class="checkbox-inline">
+                                @Html.CheckBoxFor(model => model.visible)
+                            </label>
+                        </div>
+                    </div>
+                </div>   
                 <div class="form-group">
                     @Html.LabelFor(model => model.Comentarios, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
