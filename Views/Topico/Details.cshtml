@@ -11,6 +11,9 @@
     <div>
         <h4>Topico</h4>
         <hr />
+        <div class="alert alert-info">
+            <strong>@ViewBag.estado</strong>
+        </div>
         <dl class="dl-horizontal">
             <dt>
                 @Html.DisplayNameFor(model => model.Nombre)
@@ -31,6 +34,8 @@
         </dl>
     </div>
     <p>
+    
+
        
         <a href='@Url.Action("Index", "Topico")'>
             <img src="https://cdn.icon-icons.com/icons2/217/PNG/512/checklist_25365.png" data-toggle="tooltip" data-placement="top" title="Volver al listado" width="30" height="30" />

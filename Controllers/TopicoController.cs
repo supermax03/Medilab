@@ -144,6 +144,7 @@ namespace MediLab.Controllers
             Topico topico = db.Topico.Where(s => s.Id.Equals(id)).FirstOrDefault();
             if (topico != null)
             {
+                ViewBag.estado = (topico.visible) ? "Este tópico no se encuentra disponible para su visualización":"Este tópico se encuentra visible";
                 return View(topico);
             }
             else
