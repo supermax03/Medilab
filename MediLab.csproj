@@ -389,6 +389,10 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Helper\Helper.csproj">
+      <Project>{098a3e5f-0f81-46d5-90c4-2efbfbb9f3a0}</Project>
+      <Name>Helper</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Libreria\Libreria.csproj">
       <Project>{408dc9ec-2cbb-47e9-bfa0-09c233c71d16}</Project>
       <Name>Libreria</Name>

@@ -8,6 +8,7 @@ using MediLab.Controllers.MyClasses;
 using System.Web.Routing;
 using MediLab.Servicios;
 using Libreria;
+using Helper;
 
 
 namespace MediLab.Controllers
@@ -89,7 +90,7 @@ namespace MediLab.Controllers
             if (usuario != null)
             {
                 ViewBag.Rol = getRoles(usuario.Rol);
-                ViewBag.Estado = getEstados(usuario.Estado);
+                ViewBag.Estado = getEstados(usuario.Estado);           
                 return View(usuario);
             }
             else
@@ -171,6 +172,7 @@ namespace MediLab.Controllers
         {
             try
             {                
+
                 ResultSet response = new ResultSet();                
                 
                 if (usernameenuso(collection["Username"].Trim()))              
@@ -187,11 +189,13 @@ namespace MediLab.Controllers
                     }
                     else
                     {
+                        byte[] newsalt = Helper.Helper.Get_SALT();
                         Usuario usuario = new Usuario()
                         {
 
                             Username = collection["Username"].Trim(),
-                            Password = collection["Password"].Trim(),
+                            Password = Helper.Helper.Get_HASH_SHA512(collection["Password"].Trim(), collection["Username"].Trim(), newsalt),
+                            salt=newsalt,
                             Rol = Convert.ToInt32(collection["Rol"].Trim()),
                             RegDate = DateTime.Now,
                             Estado = Convert.ToInt32(collection["Estado"].Trim()),
@@ -241,8 +245,13 @@ namespace MediLab.Controllers
                     Usuario usuario = db.Usuario.Where(s => s.Id.Equals(id)).FirstOrDefault();
                     if (usuario != null)
                     {
-                        if (!usuario.Password.Equals(collection["Password"].Trim()))//Aplicar modulo de encriptacion y desencriptacion
+                        
+                        if (!usuario.Password.Equals(collection["Password"].Trim()))
                         {
+
+                            byte[] newsalt = Helper.Helper.Get_SALT();
+                            usuario.Password = Helper.Helper.Get_HASH_SHA512(collection["Password"].Trim(),usuario.Username,newsalt);
+                            usuario.salt = newsalt;
                             Novedad novedad = new Novedad()
                             {
                                 IdUser = usuario.Id,
@@ -251,8 +260,7 @@ namespace MediLab.Controllers
 
                             };
                             db.Novedad.Add(novedad);
-                        }
-                        usuario.Password = collection["Password"].Trim();
+                        }                   
                         usuario.Rol = Convert.ToInt32(collection["Rol"].Trim());
                         usuario.Estado = Convert.ToInt32(collection["Estado"].Trim());
                         usuario.Email = collection["Email"].Trim();

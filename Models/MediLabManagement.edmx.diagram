@@ -7,20 +7,20 @@
       <Diagram DiagramId="b7c3112f9171464d8d1ab727263a3d5b" Name="Diagram1">
         <EntityTypeShape EntityType="MedicinaModel.Item" Width="1.5" PointX="0.75" PointY="6.75" />
         <EntityTypeShape EntityType="MedicinaModel.Rol" Width="1.5" PointX="3.375" PointY="5.375" />
-        <EntityTypeShape EntityType="MedicinaModel.Usuario" Width="1.5" PointX="5.625" PointY="5" />
-        <AssociationConnector Association="MedicinaModel.FK_Usuario_Rol" />
         <EntityTypeShape EntityType="MedicinaModel.EstadoUsuario" Width="1.5" PointX="3.375" PointY="8.625" />
-        <AssociationConnector Association="MedicinaModel.FK_Usuario_EstadoUsuario" />
         <EntityTypeShape EntityType="MedicinaModel.Template" Width="1.5" PointX="5.625" PointY="9.375" />
         <EntityTypeShape EntityType="MedicinaModel.Novedad" Width="1.5" PointX="7.875" PointY="7.125" />
         <AssociationConnector Association="MedicinaModel.FK__Novedad__IdTempl__571DF1D5" />
-        <AssociationConnector Association="MedicinaModel.FK__Novedad__IdUser__5812160E" />
-        <AssociationConnector Association="MedicinaModel.FK__Novedad__IdUser__59063A47" />
         <EntityTypeShape EntityType="MedicinaModel.Articulo" Width="1.5" PointX="3" PointY="1" />
         <EntityTypeShape EntityType="MedicinaModel.Imagen" Width="1.5" PointX="5.25" PointY="1" />
         <EntityTypeShape EntityType="MedicinaModel.Topico" Width="1.5" PointX="0.75" PointY="1" />
         <AssociationConnector Association="MedicinaModel.FK__Articulo__IdTopi__34C8D9D1" />
         <AssociationConnector Association="MedicinaModel.FK__Imagen__IdArticu__3E52440B" />
+        <EntityTypeShape EntityType="MedicinaModel.Usuario" Width="1.5" PointX="5.625" PointY="5.125" />
+        <AssociationConnector Association="MedicinaModel.FK_Usuario_EstadoUsuario" />
+        <AssociationConnector Association="MedicinaModel.FK__Novedad__IdUser__5812160E" />
+        <AssociationConnector Association="MedicinaModel.FK__Novedad__IdUser__59063A47" />
+        <AssociationConnector Association="MedicinaModel.FK_Usuario_Rol" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

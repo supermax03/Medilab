@@ -110,3 +110,5 @@ C:\Users\DELL\Documents\Visual Studio 2015\Projects\MediLab\MediLab\bin\es\Micro
 C:\Users\DELL\Documents\Visual Studio 2015\Projects\MediLab\MediLab\obj\Debug\MediLab.csprojResolveAssemblyReference.cache
 C:\Users\DELL\Documents\Visual Studio 2015\Projects\MediLab\MediLab\obj\Debug\MediLab.dll
 C:\Users\DELL\Documents\Visual Studio 2015\Projects\MediLab\MediLab\obj\Debug\MediLab.pdb
+C:\Users\DELL\Documents\Visual Studio 2015\Projects\MediLab\MediLab\bin\Helper.dll
+C:\Users\DELL\Documents\Visual Studio 2015\Projects\MediLab\MediLab\bin\Helper.pdb

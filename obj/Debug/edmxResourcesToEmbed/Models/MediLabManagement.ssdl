@@ -88,6 +88,7 @@
     <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="Rol" Type="int" Nullable="false" />
     <Property Name="Estado" Type="int" Nullable="false" />
+    <Property Name="salt" Type="varbinary" MaxLength="512" Nullable="false" />
   </EntityType>
   <Association Name="FK__Articulo__IdTopi__34C8D9D1">
     <End Role="Topico" Type="Self.Topico" Multiplicity="1">

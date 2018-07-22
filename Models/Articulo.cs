@@ -11,9 +11,7 @@ namespace MediLab.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.Web;
-    using System.Web.Mvc;
-
+    
     public partial class Articulo
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -24,7 +22,6 @@ namespace MediLab.Models
     
         public int Id { get; set; }
         public string Titulo { get; set; }
-        [AllowHtml]
         public string Comentarios { get; set; }
         public Nullable<System.DateTime> FechaPublicacion { get; set; }
         public int IdTopico { get; set; }

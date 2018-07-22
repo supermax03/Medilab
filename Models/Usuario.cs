@@ -28,12 +28,13 @@ namespace MediLab.Models
         public string Email { get; set; }
         public int Rol { get; set; }
         public int Estado { get; set; }
+        public byte[] salt { get; set; }
     
-        public virtual Rol Rol1 { get; set; }
         public virtual EstadoUsuario EstadoUsuario { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Novedad> Novedad { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Novedad> Novedad1 { get; set; }
+        public virtual Rol Rol1 { get; set; }
     }
 }

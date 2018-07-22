@@ -93,6 +93,7 @@
           <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Rol" Type="int" Nullable="false" />
           <Property Name="Estado" Type="int" Nullable="false" />
+          <Property Name="salt" Type="varbinary" MaxLength="512" Nullable="false" />
         </EntityType>
         <Association Name="FK__Articulo__IdTopi__34C8D9D1">
           <End Role="Topico" Type="Self.Topico" Multiplicity="1">
@@ -232,28 +233,11 @@
         <EntityContainer Name="MedicinaEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Item" EntityType="MedicinaModel.Item" />
           <EntitySet Name="Rol" EntityType="MedicinaModel.Rol" />
-          <EntitySet Name="Usuario" EntityType="MedicinaModel.Usuario" />
-          <AssociationSet Name="FK_Usuario_Rol" Association="MedicinaModel.FK_Usuario_Rol">
-            <End Role="Rol" EntitySet="Rol" />
-            <End Role="Usuario" EntitySet="Usuario" />
-          </AssociationSet>
           <EntitySet Name="EstadoUsuario" EntityType="MedicinaModel.EstadoUsuario" />
-          <AssociationSet Name="FK_Usuario_EstadoUsuario" Association="MedicinaModel.FK_Usuario_EstadoUsuario">
-            <End Role="EstadoUsuario" EntitySet="EstadoUsuario" />
-            <End Role="Usuario" EntitySet="Usuario" />
-          </AssociationSet>
           <EntitySet Name="Template" EntityType="MedicinaModel.Template" />
           <EntitySet Name="Novedad" EntityType="MedicinaModel.Novedad" />
           <AssociationSet Name="FK__Novedad__IdTempl__571DF1D5" Association="MedicinaModel.FK__Novedad__IdTempl__571DF1D5">
             <End Role="Template" EntitySet="Template" />
-            <End Role="Novedad" EntitySet="Novedad" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Novedad__IdUser__5812160E" Association="MedicinaModel.FK__Novedad__IdUser__5812160E">
-            <End Role="Usuario" EntitySet="Usuario" />
-            <End Role="Novedad" EntitySet="Novedad" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Novedad__IdUser__59063A47" Association="MedicinaModel.FK__Novedad__IdUser__59063A47">
-            <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Novedad" EntitySet="Novedad" />
           </AssociationSet>
           <EntitySet Name="Articulo" EntityType="MedicinaModel.Articulo" />
@@ -266,6 +250,23 @@
           <AssociationSet Name="FK__Imagen__IdArticu__3E52440B" Association="MedicinaModel.FK__Imagen__IdArticu__3E52440B">
             <End Role="Articulo" EntitySet="Articulo" />
             <End Role="Imagen" EntitySet="Imagen" />
+          </AssociationSet>
+          <EntitySet Name="Usuario" EntityType="MedicinaModel.Usuario" />
+          <AssociationSet Name="FK_Usuario_EstadoUsuario" Association="MedicinaModel.FK_Usuario_EstadoUsuario">
+            <End Role="EstadoUsuario" EntitySet="EstadoUsuario" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Novedad__IdUser__5812160E" Association="MedicinaModel.FK__Novedad__IdUser__5812160E">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Novedad" EntitySet="Novedad" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Novedad__IdUser__59063A47" Association="MedicinaModel.FK__Novedad__IdUser__59063A47">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Novedad" EntitySet="Novedad" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuario_Rol" Association="MedicinaModel.FK_Usuario_Rol">
+            <End Role="Rol" EntitySet="Rol" />
+            <End Role="Usuario" EntitySet="Usuario" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Item">
@@ -286,36 +287,6 @@
           <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Usuario" Relationship="MedicinaModel.FK_Usuario_Rol" FromRole="Rol" ToRole="Usuario" />
         </EntityType>
-        <EntityType Name="Usuario">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Username" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Password" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="RegDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Rol" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Rol1" Relationship="MedicinaModel.FK_Usuario_Rol" FromRole="Usuario" ToRole="Rol" />
-          <Property Name="Estado" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="EstadoUsuario" Relationship="MedicinaModel.FK_Usuario_EstadoUsuario" FromRole="Usuario" ToRole="EstadoUsuario" />
-          <NavigationProperty Name="Novedad" Relationship="MedicinaModel.FK__Novedad__IdUser__5812160E" FromRole="Usuario" ToRole="Novedad" />
-          <NavigationProperty Name="Novedad1" Relationship="MedicinaModel.FK__Novedad__IdUser__59063A47" FromRole="Usuario" ToRole="Novedad" />
-        </EntityType>
-        <Association Name="FK_Usuario_Rol">
-          <End Type="MedicinaModel.Rol" Role="Rol" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="MedicinaModel.Usuario" Role="Usuario" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Rol">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Usuario">
-              <PropertyRef Name="Rol" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="EstadoUsuario">
           <Key>
             <PropertyRef Name="Id" />
@@ -324,18 +295,6 @@
           <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Usuario" Relationship="MedicinaModel.FK_Usuario_EstadoUsuario" FromRole="EstadoUsuario" ToRole="Usuario" />
         </EntityType>
-        <Association Name="FK_Usuario_EstadoUsuario">
-          <End Type="MedicinaModel.EstadoUsuario" Role="EstadoUsuario" Multiplicity="1" />
-          <End Type="MedicinaModel.Usuario" Role="Usuario" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="EstadoUsuario">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Usuario">
-              <PropertyRef Name="Estado" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="Template">
           <Key>
             <PropertyRef Name="Id" />
@@ -358,7 +317,7 @@
           <NavigationProperty Name="Template" Relationship="MedicinaModel.FK__Novedad__IdTempl__571DF1D5" FromRole="Novedad" ToRole="Template" />
           <NavigationProperty Name="Usuario" Relationship="MedicinaModel.FK__Novedad__IdUser__5812160E" FromRole="Novedad" ToRole="Usuario" />
           <NavigationProperty Name="Usuario1" Relationship="MedicinaModel.FK__Novedad__IdUser__59063A47" FromRole="Novedad" ToRole="Usuario" />
-        </EntityType>
+          </EntityType>
         <Association Name="FK__Novedad__IdTempl__571DF1D5">
           <End Type="MedicinaModel.Template" Role="Template" Multiplicity="1" />
           <End Type="MedicinaModel.Novedad" Role="Novedad" Multiplicity="*" />
@@ -368,32 +327,6 @@
             </Principal>
             <Dependent Role="Novedad">
               <PropertyRef Name="IdTemplate" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Novedad__IdUser__5812160E">
-          <End Type="MedicinaModel.Usuario" Role="Usuario" Multiplicity="0..1" />
-          <End Type="MedicinaModel.Novedad" Role="Novedad" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Usuario">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Novedad">
-              <PropertyRef Name="IdUser" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Novedad__IdUser__59063A47">
-          <End Type="MedicinaModel.Usuario" Role="Usuario" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="MedicinaModel.Novedad" Role="Novedad" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Usuario">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Novedad">
-              <PropertyRef Name="IdUser" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -463,6 +396,75 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="RegDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Rol" Type="Int32" Nullable="false" />
+          <Property Name="Estado" Type="Int32" Nullable="false" />
+          <Property Name="salt" Type="Binary" Nullable="false" MaxLength="512" FixedLength="false" />
+          <NavigationProperty Name="EstadoUsuario" Relationship="MedicinaModel.FK_Usuario_EstadoUsuario" FromRole="Usuario" ToRole="EstadoUsuario" />
+          <NavigationProperty Name="Novedad" Relationship="MedicinaModel.FK__Novedad__IdUser__5812160E" FromRole="Usuario" ToRole="Novedad" />
+          <NavigationProperty Name="Novedad1" Relationship="MedicinaModel.FK__Novedad__IdUser__59063A47" FromRole="Usuario" ToRole="Novedad" />
+          <NavigationProperty Name="Rol1" Relationship="MedicinaModel.FK_Usuario_Rol" FromRole="Usuario" ToRole="Rol" />
+        </EntityType>
+        <Association Name="FK_Usuario_EstadoUsuario">
+          <End Type="MedicinaModel.EstadoUsuario" Role="EstadoUsuario" Multiplicity="1" />
+          <End Type="MedicinaModel.Usuario" Role="Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EstadoUsuario">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="Estado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Novedad__IdUser__5812160E">
+          <End Type="MedicinaModel.Usuario" Role="Usuario" Multiplicity="0..1" />
+          <End Type="MedicinaModel.Novedad" Role="Novedad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Novedad">
+              <PropertyRef Name="IdUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Novedad__IdUser__59063A47">
+          <End Type="MedicinaModel.Usuario" Role="Usuario" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="MedicinaModel.Novedad" Role="Novedad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Novedad">
+              <PropertyRef Name="IdUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuario_Rol">
+          <End Type="MedicinaModel.Rol" Role="Rol" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="MedicinaModel.Usuario" Role="Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rol">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="Rol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -484,19 +486,6 @@
             <EntityTypeMapping TypeName="MedicinaModel.Rol">
               <MappingFragment StoreEntitySet="Rol">
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Usuario">
-            <EntityTypeMapping TypeName="MedicinaModel.Usuario">
-              <MappingFragment StoreEntitySet="Usuario">
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
-                <ScalarProperty Name="Rol" ColumnName="Rol" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="RegDate" ColumnName="RegDate" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -563,6 +552,20 @@
                 <ScalarProperty Name="Padre" ColumnName="Padre" />
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuario">
+            <EntityTypeMapping TypeName="MedicinaModel.Usuario">
+              <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="salt" ColumnName="salt" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Rol" ColumnName="Rol" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="RegDate" ColumnName="RegDate" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
